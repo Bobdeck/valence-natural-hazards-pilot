@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="noindex,nofollow">
-  <title>SLS Natural Hazard Pilot v0.4</title>
+  <title>SLS Natural Hazard Pilot v0.5</title>
   <style data-bundled-library="leaflet-1.9.4">/* required styles */
 
 .leaflet-pane,
@@ -693,6 +693,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .overview-cell:first-child strong{color:#fff;font-size:17px}.overview-cell small{font-size:10px;line-height:1.35;color:var(--muted);margin-top:2px}
     .overview-authorities strong{font-size:11px;line-height:1.45}.overview-status strong{display:flex;align-items:center;gap:7px;font-size:12px}
     .overview-status-dot{width:9px;height:9px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px rgba(23,125,131,.12);flex:0 0 auto}
+    .view-toolbar{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 12px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow)}
+    .view-toolbar-copy strong{display:block;color:var(--navy);font-size:13px}.view-toolbar-copy span{display:block;color:var(--muted);font-size:10px;line-height:1.4;margin-top:2px}
+    .view-switch{display:inline-flex;border:1px solid #bfcdd4;border-radius:9px;padding:3px;background:#f3f7f9;flex:0 0 auto}.view-switch button{border:0;background:transparent;color:var(--muted);padding:8px 13px;border-radius:6px;font-size:11px;font-weight:800}.view-switch button.active{background:var(--navy);color:#fff;box-shadow:0 2px 7px rgba(16,44,69,.2)}
     .panel{background:var(--white);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);min-width:0;overflow:hidden}
     .panel-head{padding:14px 16px;border-bottom:1px solid var(--line)}
     .panel-head h2{font-size:15px;margin:0;color:var(--navy)}
@@ -753,6 +756,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .state{display:inline-flex;align-items:center;max-width:175px;padding:4px 7px;border-radius:10px;font-size:10px;font-weight:750;line-height:1.2;text-align:right}
     .state.hit{background:var(--info-bg);color:var(--info)}.state.published{background:#e9e7f6;color:#51457c}
     .state.no-hit{background:var(--warn-bg);color:var(--warn)}.state.nodata,.state.unassessed,.state.source{background:#eef1f3;color:#596876}
+    .portfolio-panel{grid-column:1/-1;display:none;min-width:0}.dashboard.portfolio-mode>.sidebar,.dashboard.portfolio-mode>.map-panel,.dashboard.portfolio-mode>.right-column,.dashboard.portfolio-mode>.evidence-panel{display:none}.dashboard.portfolio-mode>.portfolio-panel{display:block}
+    .portfolio-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#fff,#f2f8f8)}.portfolio-head h1{font-size:20px;color:var(--navy);margin:0}.portfolio-head p{max-width:760px;font-size:12px;line-height:1.5;color:var(--muted);margin:5px 0 0}.portfolio-badge{flex:0 0 auto;padding:7px 10px;border-radius:16px;background:var(--warn-bg);color:var(--warn);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.035em}
+    .portfolio-grid{display:grid;grid-template-columns:minmax(360px,.9fr) minmax(660px,1.65fr);gap:16px;padding:16px;background:var(--paper)}.portfolio-map-card,.portfolio-matrix-card{min-width:0;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}.portfolio-card-head{padding:12px 14px;border-bottom:1px solid var(--line)}.portfolio-card-head strong{display:block;color:var(--navy);font-size:13px}.portfolio-card-head span{display:block;margin-top:3px;color:var(--muted);font-size:10px;line-height:1.4}
+    #portfolioMap{height:500px;background:#e8eef1}.portfolio-context{padding:12px 14px;border-top:1px solid var(--line);font-size:10px;line-height:1.5;color:var(--muted)}.portfolio-context strong{display:block;color:var(--navy);font-size:11px;margin-bottom:3px}.portfolio-marker{background:transparent!important;border:0!important}.portfolio-dot{display:grid;place-items:center;width:30px;height:30px;border:3px solid #fff;border-radius:50%;background:var(--teal);color:#fff;box-shadow:0 3px 10px rgba(16,44,69,.4);font-size:10px;font-weight:900}.portfolio-dot.selected{background:#d12e52;transform:scale(1.18)}
+    .portfolio-table-wrap{overflow:auto;max-width:100%}.portfolio-table{width:100%;min-width:1030px;border-collapse:separate;border-spacing:0;font-size:10px}.portfolio-table th,.portfolio-table td{padding:8px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);vertical-align:middle}.portfolio-table th:last-child,.portfolio-table td:last-child{border-right:0}.portfolio-table tr:last-child td{border-bottom:0}.portfolio-table thead th{position:sticky;top:0;z-index:2;background:#f3f7f9;color:var(--navy);font-size:9px;line-height:1.25;text-align:left}.portfolio-table thead th:first-child{left:0;z-index:3;min-width:155px}.portfolio-table tbody td:first-child{position:sticky;left:0;z-index:1;background:#fff;min-width:155px}.portfolio-site-button{width:100%;border:0;background:transparent;text-align:left;color:var(--navy);padding:2px}.portfolio-site-button strong{display:block;font-size:11px}.portfolio-site-button span{display:block;color:var(--muted);font-size:9px;line-height:1.3;margin-top:2px}.portfolio-state{display:block;width:100%;min-height:42px;border:1px solid var(--line);border-left-width:4px;border-radius:7px;padding:6px;background:#f8fafb;color:#596875;text-align:left;font-size:9px;font-weight:800;line-height:1.25}.portfolio-state small{display:block;margin-top:3px;font-size:8px;font-weight:600;color:inherit;opacity:.82}.portfolio-state.status-zone{border-color:#efc3cd;border-left-color:#bd3451;background:#fff5f7;color:#9b203c}.portfolio-state.status-reported{border-color:#efcfb4;border-left-color:#cf5d25;background:#fff7f0;color:#9b421a}.portfolio-state.status-hit{border-color:#bfd9e7;border-left-color:#2878a0;background:#f3f9fc;color:#1f6688}.portfolio-state.status-caution{border-color:#ecdba7;border-left-color:#c28a18;background:#fffaf0;color:#805b0f}.portfolio-state.status-neutral{border-color:#dce3e7;border-left-color:#8796a1;background:#f8fafb;color:#596875}.portfolio-foot{padding:11px 14px;border-top:1px solid var(--line);color:var(--muted);font-size:10px;line-height:1.45}.portfolio-legend{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.portfolio-legend span{padding:4px 7px;border-radius:10px;background:#eef2f4;color:#526574;font-size:9px;font-weight:700}
     .valence-site-marker{background:transparent!important;border:0!important}
     .site-pin{display:block;position:relative;width:44px;height:44px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#d12e52;border:4px solid #fff;box-shadow:0 4px 13px rgba(16,44,69,.48)}
     .site-pin:before{content:'';position:absolute;inset:7px;border-radius:50%;background:var(--navy);box-shadow:inset 0 0 0 4px #fff}
@@ -774,23 +782,52 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .toast{position:fixed;right:18px;bottom:18px;z-index:9999;max-width:360px;background:var(--navy);color:#fff;padding:11px 14px;border-radius:8px;box-shadow:0 10px 30px #0004;font-size:12px;line-height:1.4;opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s}
     .toast.show{opacity:1;transform:translateY(0)}
     @media(max-width:1280px){.dashboard{grid-template-columns:210px minmax(520px,1fr) 330px;gap:12px;padding:12px}.overview-strip{grid-template-columns:1fr .55fr .55fr 1.7fr 1fr}.overview-cell{padding:10px 11px}.state{max-width:140px}#map{height:620px}.hazard-status{white-space:normal}}
-    @media(max-width:1000px){.dashboard{display:block;padding:9px}.overview-strip{display:grid;grid-template-columns:1fr 1fr;margin-bottom:10px}.overview-cell{border-left:0;border-top:1px solid var(--line)}.overview-cell:first-child{grid-column:1/-1;border-top:0}.sidebar{position:static;min-height:0;margin-bottom:10px}.map-panel,.right-column,.evidence-panel{margin-bottom:10px}.right-column{display:block}.right-column>.panel{margin-bottom:10px}.evidence-panel{grid-column:auto}#map{height:500px}.method-note{grid-column:auto}.topbar{display:block}.top-status{text-align:left;margin-top:8px}.club-list{grid-template-columns:1fr 1fr}.region-note{margin-bottom:14px}}
-    @media(max-width:560px){.club-list{grid-template-columns:1fr}.map-toolbar,.map-foot,.evidence-head{display:block}.segmented,.map-actions{margin-top:10px}.evidence-grid{grid-template-columns:1fr}.evidence-grid b{margin-top:5px}#map{height:390px}}
+    @media(max-width:1100px){.portfolio-grid{grid-template-columns:1fr}.portfolio-map-card{display:grid;grid-template-columns:minmax(0,1fr) 260px}.portfolio-map-card>.portfolio-card-head{grid-column:1/-1}.portfolio-context{border-top:0;border-left:1px solid var(--line)}#portfolioMap{height:390px}}
+    @media(max-width:1000px){.dashboard{display:block;padding:9px}.overview-strip{display:grid;grid-template-columns:1fr 1fr;margin-bottom:10px}.overview-cell{border-left:0;border-top:1px solid var(--line)}.overview-cell:first-child{grid-column:1/-1;border-top:0}.view-toolbar{margin-bottom:10px}.sidebar{position:static;min-height:0;margin-bottom:10px}.map-panel,.right-column,.evidence-panel,.portfolio-panel{margin-bottom:10px}.right-column{display:block}.right-column>.panel{margin-bottom:10px}.evidence-panel{grid-column:auto}#map{height:500px}.method-note{grid-column:auto}.topbar{display:block}.top-status{text-align:left;margin-top:8px}.club-list{grid-template-columns:1fr 1fr}.region-note{margin-bottom:14px}}
+    @media(max-width:700px){.portfolio-grid{padding:9px}.portfolio-map-card{display:block}.portfolio-context{border-left:0;border-top:1px solid var(--line)}#portfolioMap{height:340px}.portfolio-head{display:block}.portfolio-badge{display:inline-flex;margin-top:10px}}
+    @media(max-width:560px){.club-list{grid-template-columns:1fr}.map-toolbar,.map-foot,.evidence-head,.view-toolbar{display:block}.segmented,.map-actions,.view-switch{margin-top:10px}.view-switch{display:flex}.view-switch button{flex:1}.evidence-grid{grid-template-columns:1fr}.evidence-grid b{margin-top:5px}#map{height:390px}}
   </style>
 </head>
 <body>
   <header class="topbar">
-    <div><div class="brand">VALENCE TEST INSTANCE</div><div class="subtitle">SLS Natural Hazard Pilot v0.4 · Portfolio Proof · Region → Club → Hazard</div></div>
+    <div><div class="brand">VALENCE TEST INSTANCE</div><div class="subtitle">SLS Natural Hazard Pilot v0.5 · Regional Portfolio + Configurable Screening Model</div></div>
     <div class="top-status">Working pilot<br>Not a safety clearance</div>
   </header>
 
-  <main class="dashboard">
+  <main class="dashboard portfolio-mode">
     <section class="overview-strip" aria-label="Bay of Plenty regional overview">
       <div class="overview-cell"><span class="overview-label">Regional overview</span><strong id="overviewRegion"></strong><small>Comparative hazard evidence screening</small></div>
       <div class="overview-cell"><span class="overview-label">Clubs</span><strong id="overviewClubCount"></strong><small>Verified site points</small></div>
       <div class="overview-cell"><span class="overview-label">Hazard types</span><strong id="overviewHazardCount"></strong><small>Per club</small></div>
       <div class="overview-cell overview-authorities"><span class="overview-label">Source authorities</span><strong id="overviewAuthorities"></strong></div>
       <div class="overview-cell overview-status"><span class="overview-label">Data status</span><strong><span class="overview-status-dot"></span><span id="overviewDataStatus"></span></strong><small>Source links retained</small></div>
+    </section>
+
+    <nav class="view-toolbar" aria-label="Dashboard view">
+      <div class="view-toolbar-copy"><strong id="viewTitle">Regional portfolio</strong><span id="viewDescription">Compare published screening evidence across all five Bay of Plenty clubs.</span></div>
+      <div class="view-switch">
+        <button type="button" id="viewPortfolio" data-view="portfolio" aria-pressed="true">Regional portfolio</button>
+        <button type="button" id="viewSite" data-view="site" aria-pressed="false">Site detail</button>
+      </div>
+    </nav>
+
+    <section class="panel portfolio-panel" id="portfolioPanel" aria-labelledby="portfolioTitle">
+      <div class="portfolio-head">
+        <div><p class="eyebrow">Bay of Plenty pilot</p><h1 id="portfolioTitle">Regional portfolio screening</h1><p>Compare the current published evidence state for five verified clubhouse points. Select any site or hazard cell to drill into the existing site dashboard and its full evidence trail.</p></div>
+        <span class="portfolio-badge">Evidence triage · no risk score</span>
+      </div>
+      <div class="portfolio-grid">
+        <section class="portfolio-map-card" aria-labelledby="portfolioMapTitle">
+          <div class="portfolio-card-head"><strong id="portfolioMapTitle">Five-site regional map</strong><span>All markers are verified clubhouse points. Property and lease boundaries are not shown.</span></div>
+          <div id="portfolioMap" role="region" aria-label="Regional map showing all five Bay of Plenty pilot sites"></div>
+          <div class="portfolio-context" id="portfolioContext"></div>
+        </section>
+        <section class="portfolio-matrix-card" aria-labelledby="portfolioMatrixTitle">
+          <div class="portfolio-card-head"><strong id="portfolioMatrixTitle">Site × hazard evidence matrix</strong><span>Cells show screening states, not professional risk ratings. Select a cell for source, scenario, rule and result details.</span></div>
+          <div class="portfolio-table-wrap" id="portfolioMatrix"></div>
+          <div class="portfolio-foot">No-hit and NoData remain non-clearance states. A missing scenario means the source or model has not yet been connected—not that the hazard is absent.<div class="portfolio-legend"><span>Pink · mapped zone</span><span>Orange · reported evidence</span><span>Blue · point result</span><span>Yellow · no hit, not cleared</span><span>Grey · evidence gap / NoData</span></div></div>
+        </section>
+      </div>
     </section>
 
     <aside class="panel sidebar" aria-label="Region and club selector">
@@ -843,7 +880,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <div class="evidence-body" id="hazardEvidence"></div>
     </section>
 
-    <div class="method-note">No-hit and NoData results remain unassessed and never become green. Lee's company will define thresholds, consequences and professional ratings. Property and lease boundaries remain outside this iteration.</div>
+    <div class="method-note">No-hit and NoData results remain non-clearance states and never become green. Lee's company will define thresholds, consequences and professional ratings. Property parcel sources are identified but not connected; no suitable public portfolio dataset for club lease boundaries was identified in this review.</div>
   </main>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -864,6 +901,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
     bopHazards:'https://gis.boprc.govt.nz/server2/rest/services/BayOfPlentyMaps/Natural_Hazards/MapServer',
     bopLandslide:'https://gis.boprc.govt.nz/image/rest/services/Environment/Landslide_Susceptibility_Rainfall_and_Earthquake/MapServer',
     bopCoastal:'https://gis.boprc.govt.nz/Geocortex/Essentials/REST/sites/Catalogue/map/mapservices/179/layers',
+    bopCoastalErosion:'https://www.boprc.govt.nz/living-in-the-bay/natural-hazards/coastal-erosion/',
+    bopCoastalInundation:'https://www.boprc.govt.nz/living-in-the-bay/natural-hazards/coastal-flooding-inundation/',
+    bopHazardsViewer:'https://experience.arcgis.com/experience/95e1cfa7733b46a7b85179556e1937c3',
+    wbopFlood:'https://www.westernbay.govt.nz/property-rates-and-building/natural-hazards/b-flooding',
+    whakataneFlood:'https://koreromai.whakatane.govt.nz/planchange4',
+    linzParcels:'https://data.linz.govt.nz/layer/50772-nz-primary-parcels/',
     mountQlra:'https://newsbeat.tauranga.govt.nz/news-article/artmid/24836/articleid/15909/landslide-risk-assessment-provides-important-next-step-in-mauao-recovery'
   };
 
@@ -879,6 +922,17 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
   const HAZARD_ICONS={flooding:'≋',landslide:'▲',liquefaction:'◫',tsunami:'≈',coastalErosion:'↔',coastalInundation:'∿',activeFaults:'╱'};
 
+  const EVIDENCE_STATES={
+    source_connected:{label:'Source connected',description:'An authoritative source is connected; a more specific scenario state may also apply.'},
+    source_found_scenario_not_connected:{label:'Scenario not yet connected',description:'An authoritative source was found, but no reproducible scenario query is connected.'},
+    source_not_yet_found:{label:'Source not yet identified',description:'No authoritative source has yet been identified for this evidence need.'},
+    source_reviewed_no_suitable_public_dataset:{label:'No suitable public dataset identified',description:'Authoritative public sources were reviewed without identifying a suitable portfolio dataset.'},
+    query_returned_nodata:{label:'NoData returned',description:'A source query ran, but the dataset returned no classification at the site point.'},
+    no_point_hit_not_clearance:{label:'No point hit — not cleared',description:'The point did not intersect this layer or scenario; this is not a clearance.'},
+    scenario_result_available:{label:'Scenario result available',description:'A reproducible source/scenario result is available for the site point.'},
+    unassessed:{label:'Unassessed',description:'No assessment has yet been completed for this evidence need.'}
+  };
+
   const LAYERS={
     floodTcc:{name:'TCC rainfall flood',hazard:'flooding',service:SERVICES.tccFlood,layer:1,opacity:.62},
     historicFlood:{name:'BOPRC historic flood',hazard:'flooding',service:SERVICES.bopHazards,layer:5,opacity:.62},
@@ -891,12 +945,26 @@ svg.leaflet-image-layer.leaflet-interactive path {
     activeFaults:{name:'Active faults',hazard:'activeFaults',service:SERVICES.bopHazards,layer:1,opacity:.8}
   };
 
+  function evidenceStateFromQuery(queryStatus){
+    return ({hit:'scenario_result_available','document-evidence':'scenario_result_available','no-hit':'no_point_hit_not_clearance','no-data':'query_returned_nodata',connected:'source_connected','source-found':'source_found_scenario_not_connected','source-not-found':'source_not_yet_found','no-suitable-public-dataset':'source_reviewed_no_suitable_public_dataset'})[queryStatus]||'unassessed';
+  }
+
   function source(org,dataset,classification,result,scenario,queryPoint,queryDate,url,crossCheck,limitations,attrs={},extra={}){
+    const queryStatus=extra.queryStatus||'unassessed',evidenceState=extra.evidenceState||evidenceStateFromQuery(queryStatus),layerId=extra.layerId==null?'Document or unconnected source':extra.layerId;
+    const ruleType=extra.ruleType||(queryStatus==='no-data'?'raster_identify':queryStatus==='document-evidence'?'published_evidence_review':queryStatus==='hit'||queryStatus==='no-hit'?'point_intersection':'not_connected');
+    const ruleDescription=extra.ruleDescription||(ruleType==='raster_identify'?'Identify the published raster value at the verified clubhouse point.':ruleType==='published_evidence_review'?'Review the cited published statement or assessment for evidence applicable to the site.':ruleType==='point_intersection'?'Test the verified clubhouse point against the published layer geometry.':'No reproducible scenario query is connected.');
+    const presentation=EVIDENCE_STATES[evidenceState]||EVIDENCE_STATES.unassessed;
+    const knownPlanningHorizon=extra.planningHorizon||(/\b2130\b/.test(scenario||'')?'2130':null),knownClimateAllowance=extra.climateChangeAllowance||(/RCP\s*8\.5/i.test(scenario||'')?'RCP 8.5':null),knownFloodType=extra.floodType||(/rainfall[- ]flood/i.test(dataset||'')?'Rainfall / pluvial':/historic flood/i.test(dataset||'')?'Published historic flood extent':null);
     return {sourceOrganisation:org,dataset,originalClassification:classification,result,scenario,
       aepReturnPeriod:extra.aepReturnPeriod||'Not specified by this source result',
       modelPublicationYear:extra.modelPublicationYear||'Not recorded in the returned feature',
-      queryPoint,queryDate,sourceUrl:url,crossCheck,limitations,originalReturnedAttributes:attrs,
-      layerId:extra.layerId==null?'Document or unconnected source':extra.layerId,queryStatus:extra.queryStatus||'unassessed'};
+      queryPoint,queryDate,sourceUrl:url,crossCheck,limitations,originalReturnedAttributes:attrs,layerId,queryStatus,evidenceState,
+      source:{sourceId:extra.sourceId||[org,dataset,layerId].join('|'),organisation:org,dataset,layerId,url,dateOrVersion:extra.sourceDateVersion||extra.modelPublicationYear||'Not recorded'},
+      scenarioModel:{scenarioId:extra.scenarioId||null,name:scenario||null,returnPeriodAep:extra.aepReturnPeriod||null,planningHorizon:knownPlanningHorizon,climateChangeAllowance:knownClimateAllowance,modelVersion:extra.modelPublicationYear||null,floodType:knownFloodType,depthExtentClassification:extra.depthExtentClassification||classification||null,parameters:extra.scenarioParameters||{}},
+      screeningRule:{ruleId:extra.ruleId||ruleType,type:ruleType,description:ruleDescription,geometry:'Verified clubhouse point',predicate:extra.predicate||ruleType},
+      screeningResult:{state:evidenceState,displayLabel:presentation.label,evidence:result,classification,provenance:crossCheck,checkedAt:queryDate},
+      presentation:{state:evidenceState,label:presentation.label,caution:evidenceState==='no_point_hit_not_clearance'||evidenceState==='query_returned_nodata'?'Not a clearance.':null}
+    };
   }
 
   const MOUNT_POINT='-37.631147, 176.177011 (EPSG:4326)';
@@ -927,8 +995,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
           source('BOPRC derived from GNS Science 2024 modelling','Natural Hazards layer 106 tsunami inundation','Orange','Point intersects the 5 m wave-height tsunami inundation extent.','5 m wave height above mean high water springs',MOUNT_POINT,CHECKED_MOUNT,SERVICES.bopHazards+'/106','BOPRC outline map export and REST point intersection were checked together.','The polygon is a modelled extent for a 5 m wave above MHWS, not an annual probability or point depth. GNS reliance limitations apply.',{OBJECTID:7,Zone:'Orange'},{layerId:106,queryStatus:'hit',modelPublicationYear:'2024'}),
           source('BOPRC derived from GNS Science 2024 modelling','Natural Hazards layer 107 tsunami inundation','No intersecting feature returned','No 2 m wave-height inundation polygon intersected the point.','2 m wave height above mean high water springs',MOUNT_POINT,CHECKED_MOUNT,SERVICES.bopHazards+'/107','BOPRC rendered outline and REST point response were checked.','This is only the 2 m-above-MHWS model scenario at the exact point. It is not a safety finding and does not override the evacuation-zone or larger-scenario intersections.',{}, {layerId:107,queryStatus:'no-hit',modelPublicationYear:'2024'})
         ]},
-        coastalErosion:{state:'source',label:'Source not connected',blurb:'No reproducible scenario-specific point result is connected.',sources:[source('Bay of Plenty Regional Council','Coastal hazard catalogue','Unassessed','A site-point coastal erosion classification has not been extracted.','Scenario-specific coastal layer connection still required',MOUNT_POINT,CHECKED_MOUNT,SERVICES.bopCoastal,'Not completed.','The catalogue source is identified but no reproducible point result is connected. Do not infer exposure or safety.',{}, {queryStatus:'unassessed'})]},
-        coastalInundation:{state:'source',label:'Source not connected',blurb:'No reproducible scenario-specific point result is connected.',sources:[source('Bay of Plenty Regional Council','Coastal hazard catalogue','Unassessed','A site-point coastal inundation classification has not been extracted.','Scenario-specific coastal layer connection still required',MOUNT_POINT,CHECKED_MOUNT,SERVICES.bopCoastal,'Not completed.','The catalogue source is identified but no reproducible point result is connected. Do not infer exposure or safety.',{}, {queryStatus:'unassessed'})]},
+        coastalErosion:{state:'source',label:'Scenario not yet connected',blurb:'Authoritative coastal erosion mapping is identified; no reproducible site-point scenario result is connected.',sources:[source('Bay of Plenty Regional Council','Bay of Plenty coastal erosion mapping','Not queried','A site-point coastal erosion classification has not been extracted.','Published regional coastal erosion mapping; scenario fields must be read from the applicable source layer.',MOUNT_POINT,CHECKED_MOUNT,SERVICES.bopCoastalErosion,'BOPRC hazard page reviewed; scenario-specific point integration is not complete.','The authoritative source is identified, but no reproducible point result is connected. Do not infer exposure or safety.',{}, {queryStatus:'source-found',evidenceState:'source_found_scenario_not_connected'})]},
+        coastalInundation:{state:'source',label:'Scenario not yet connected',blurb:'Authoritative coastal inundation mapping is identified; no reproducible site-point scenario result is connected.',sources:[source('Bay of Plenty Regional Council','Bay of Plenty coastal inundation mapping','Not queried','A site-point coastal inundation classification has not been extracted.','Published regional coastal inundation mapping; scenario fields must be read from the applicable source layer.',MOUNT_POINT,CHECKED_MOUNT,SERVICES.bopCoastalInundation,'BOPRC hazard page reviewed; scenario-specific point integration is not complete.','The authoritative source is identified, but no reproducible point result is connected. Do not infer exposure or safety.',{}, {queryStatus:'source-found',evidenceState:'source_found_scenario_not_connected'})]},
         activeFaults:{state:'no-hit',label:'No point hit — not cleared',blurb:'No mapped fault line intersects the exact point.',sources:[source('BOPRC / GNS QMAP','Natural Hazards layer 1 active faults','No intersecting feature returned','No active-fault line intersected the exact point.','GNS QMAP 1:250,000 fault line; proximity is not a risk rating',MOUNT_POINT,CHECKED_MOUNT,SERVICES.bopHazards+'/1','BOPRC REST point response checked.','The 1:250,000 QMAP line layer is not a site-scale assessment. Distance to the nearest fault and engineering significance were not assessed.',{}, {layerId:1,queryStatus:'no-hit',modelPublicationYear:'QMAP source; check layer metadata'})]}
       }
     },
@@ -955,8 +1023,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
           source('BOPRC derived from GNS Science 2024 modelling','Natural Hazards layer 106 tsunami inundation','Orange','Point intersects the 5 m wave-height tsunami inundation extent.','5 m wave height above mean high water springs',OMANU_POINT,CHECKED_OMANU,SERVICES.bopHazards+'/106','BOPRC outline map export and REST point intersection were checked together.','The polygon is a modelled extent for a 5 m wave above MHWS, not an annual probability or point depth. GNS reliance limitations apply.',{'OBJECTID':7,'Zone':'Orange','GlobalID':'{D896E928-4DB1-4E28-9958-3F3A1CA36D44}','Shape.STArea()':1355088600.0000548,'Shape.STLength()':2081599.9999999877},{layerId:106,queryStatus:'hit',modelPublicationYear:'2024'}),
           source('BOPRC derived from GNS Science 2024 modelling','Natural Hazards layer 107 tsunami inundation','No intersecting feature returned','No 2 m wave-height inundation polygon intersected the point.','2 m wave height above mean high water springs',OMANU_POINT,CHECKED_OMANU,SERVICES.bopHazards+'/107','BOPRC rendered outline passed close to the point; the REST point query returned no intersecting feature.','This is only the 2 m-above-MHWS model scenario at the exact point. It is not a safety finding and does not override the evacuation-zone or larger-scenario intersections.',{}, {layerId:107,queryStatus:'no-hit',modelPublicationYear:'2024'})
         ]},
-        coastalErosion:{state:'source',label:'Source not connected',blurb:'No reproducible scenario-specific point result is connected.',sources:[source('Bay of Plenty Regional Council','Coastal hazard catalogue','Unassessed','A site-point coastal erosion classification has not been extracted.','Scenario-specific coastal layer connection still required',OMANU_POINT,CHECKED_OMANU,SERVICES.bopCoastal,'Not completed.','The catalogue source is identified but no reproducible point result is connected. Do not infer exposure or safety.',{}, {queryStatus:'unassessed'})]},
-        coastalInundation:{state:'source',label:'Source not connected',blurb:'No reproducible scenario-specific point result is connected.',sources:[source('Bay of Plenty Regional Council','Coastal hazard catalogue','Unassessed','A site-point coastal inundation classification has not been extracted.','Scenario-specific coastal layer connection still required',OMANU_POINT,CHECKED_OMANU,SERVICES.bopCoastal,'Not completed.','The catalogue source is identified but no reproducible point result is connected. Do not infer exposure or safety.',{}, {queryStatus:'unassessed'})]},
+        coastalErosion:{state:'source',label:'Scenario not yet connected',blurb:'Authoritative coastal erosion mapping is identified; no reproducible site-point scenario result is connected.',sources:[source('Bay of Plenty Regional Council','Bay of Plenty coastal erosion mapping','Not queried','A site-point coastal erosion classification has not been extracted.','Published regional coastal erosion mapping; scenario fields must be read from the applicable source layer.',OMANU_POINT,CHECKED_OMANU,SERVICES.bopCoastalErosion,'BOPRC hazard page reviewed; scenario-specific point integration is not complete.','The authoritative source is identified, but no reproducible point result is connected. Do not infer exposure or safety.',{}, {queryStatus:'source-found',evidenceState:'source_found_scenario_not_connected'})]},
+        coastalInundation:{state:'source',label:'Scenario not yet connected',blurb:'Authoritative coastal inundation mapping is identified; no reproducible site-point scenario result is connected.',sources:[source('Bay of Plenty Regional Council','Bay of Plenty coastal inundation mapping','Not queried','A site-point coastal inundation classification has not been extracted.','Published regional coastal inundation mapping; scenario fields must be read from the applicable source layer.',OMANU_POINT,CHECKED_OMANU,SERVICES.bopCoastalInundation,'BOPRC hazard page reviewed; scenario-specific point integration is not complete.','The authoritative source is identified, but no reproducible point result is connected. Do not infer exposure or safety.',{}, {queryStatus:'source-found',evidenceState:'source_found_scenario_not_connected'})]},
         activeFaults:{state:'no-hit',label:'No point hit — not cleared',blurb:'No mapped fault line intersects the exact point.',sources:[source('BOPRC / GNS QMAP','Natural Hazards layer 1 active faults','No intersecting feature returned','No active-fault line intersected the exact point.','GNS QMAP 1:250,000 fault line; proximity is not a risk rating',OMANU_POINT,CHECKED_OMANU,SERVICES.bopHazards+'/1','BOPRC rendered map export was blank at the point and the REST query returned no intersecting feature.','The 1:250,000 QMAP line layer is not a site-scale assessment. Distance to the nearest fault and engineering significance were not assessed.',{}, {layerId:1,queryStatus:'no-hit',modelPublicationYear:'QMAP source; check layer metadata'})]}
       }
     }
@@ -1010,6 +1078,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
     const floodSources=[];
     if(r.tccFlood)floodSources.push(source('Tauranga City Council','ePlan Natural Hazards layer 1',r.tccFlood.FloodRiskClassification,'Point intersects the published TCC rainfall-flood polygon.','1% AEP (100-year ARI), 2130 climate, RCP 8.5',point,PORTFOLIO_CHECKED,SERVICES.tccFlood+'/1','TCC REST point intersection returned the published flood-depth class.','This is one modelled scenario at one point. It does not provide a professional risk rating or rule out other flood mechanisms.',r.tccFlood,{layerId:1,queryStatus:'hit',aepReturnPeriod:'1% AEP / 100-year ARI',modelPublicationYear:'2130 climate scenario'}));
     floodSources.push(noHitSource('Bay of Plenty Regional Council','Natural Hazards layer 5 historic flood extents',5,site,'No BOPRC historic flood extent intersected the point.','Published historic flood extents; event-specific and incomplete','Historic mapped extents are event- and capture-dependent. District-specific model results are not connected outside the TCC source.'));
+    if(site.id==='maketu')floodSources.push(source('Western Bay of Plenty District Council','Rural Areas and Small Settlements flood mapping','Not queried','Council publishes flood mapping for Maketu, but a reproducible point result is not connected.','Published district mapping includes 1% and 2% AEP methods by location; the applicable Maketu scenario must be confirmed from the map/report.',point,PORTFOLIO_CHECKED,SERVICES.wbopFlood,'Authoritative council page identifies Maketu within the Rural Areas and Small Settlements mapping programme.','The source is identified, but the pilot has not connected the applicable polygon, model version or point classification. Do not infer no exposure from the regional historic-layer no-hit.',{}, {queryStatus:'source-found',evidenceState:'source_found_scenario_not_connected',ruleType:'not_connected'}));
+    if(site.id==='ohope')floodSources.push(source('Whakatāne District Council','District flood-level planning evidence','Not queried','Council uses predicted flood levels for building-platform decisions, but no Ōhope point result is connected.','District-specific model/scenario fields are not exposed in the connected pilot source.',point,PORTFOLIO_CHECKED,SERVICES.whakataneFlood,'Authoritative council Plan Change 4 material confirms predicted flood-level evidence is used in district planning.','The source confirms flood modelling exists; it does not expose a reproducible public point result for this site in the pilot. Do not infer no exposure from the regional historic-layer no-hit.',{}, {queryStatus:'source-found',evidenceState:'source_found_scenario_not_connected',ruleType:'not_connected'}));
 
     const landslideSources=r.landslide.map((attrs,index)=>{
       const layerId=index,dataset=index===0?'Landslide Susceptibility Rainfall raster':'Landslide Susceptibility Earthquake raster',org=index===0?'Bay of Plenty Regional Council':'Bay of Plenty Regional Council / WSP';
@@ -1037,10 +1107,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
       return source(def.org,def.dataset,classification,'Point intersects the published '+(def.layerId===6?'tsunami evacuation zone.':'tsunami inundation extent.'),def.scenario,point,PORTFOLIO_CHECKED,SERVICES.bopHazards+'/'+def.layerId,'BOPRC REST point query returned the published feature at the verified point.','Evacuation and modelled extent polygons are evidence layers, not site-specific depth, likelihood or professional risk ratings.',attrs,{layerId:def.layerId,queryStatus:'hit',aepReturnPeriod:def.period,modelPublicationYear:def.year});
     });
 
-    const coastalHazard=kind=>({state:'source',label:'Source not connected',blurb:'No reproducible scenario-specific point result is connected.',sources:[source('Bay of Plenty Regional Council','Coastal hazard catalogue','Unassessed','A site-point coastal '+kind+' classification has not been extracted.','Scenario-specific coastal layer connection still required',point,PORTFOLIO_CHECKED,SERVICES.bopCoastal,'Not completed.','The catalogue source is identified but no reproducible point result is connected. Do not infer exposure or safety.',{}, {queryStatus:'unassessed'})]});
+    const coastalHazard=kind=>({state:'source',label:'Scenario not yet connected',blurb:'Authoritative coastal '+kind+' mapping is identified; no reproducible site-point scenario result is connected.',evidenceState:'source_found_scenario_not_connected',sources:[source('Bay of Plenty Regional Council','Bay of Plenty coastal '+kind+' mapping','Not queried','A site-point coastal '+kind+' classification has not been extracted.','Published regional coastal '+kind+' mapping; scenario fields must be read from the applicable source layer.',point,PORTFOLIO_CHECKED,kind==='erosion'?SERVICES.bopCoastalErosion:SERVICES.bopCoastalInundation,'BOPRC hazard page and Natural Hazards Viewer were reviewed; scenario-specific point integration is not complete.','The authoritative source is identified, but no reproducible point result, planning horizon or scenario allowance is connected. Do not infer exposure or safety.',{}, {queryStatus:'source-found',evidenceState:'source_found_scenario_not_connected',ruleType:'not_connected'})]});
     const classifiedLandslide=r.landslide.some(Boolean),classifiedLiquefaction=Object.values(r.liquefaction).some(Boolean),hasTwoMetre=Boolean(r.tsunami[107]);
+    const districtFloodScenarioMissing=site.id==='maketu'||site.id==='ohope';
     return {
-      flooding:{state:r.tccFlood?'hit':'no-hit',label:r.tccFlood?'GIS point hit':'No point hit — not cleared',blurb:r.tccFlood?'The TCC rainfall-flood layer intersects the point; the regional historic layer does not.':'No regional historic-flood point hit; no district scenario result is connected.',sources:floodSources},
+      flooding:{state:r.tccFlood?'hit':districtFloodScenarioMissing?'source':'no-hit',label:r.tccFlood?'GIS point hit':districtFloodScenarioMissing?'Scenario not yet connected':'No point hit — not cleared',evidenceState:r.tccFlood?'scenario_result_available':districtFloodScenarioMissing?'source_found_scenario_not_connected':'no_point_hit_not_clearance',blurb:r.tccFlood?'The TCC rainfall-flood layer intersects the point; the regional historic layer does not.':districtFloodScenarioMissing?'District flood mapping is identified; its applicable site-point scenario is not connected.':'No regional historic-flood point hit; no district scenario result is connected.',sources:floodSources},
       landslide:{state:classifiedLandslide?'hit':'nodata',label:classifiedLandslide?'GIS point hit':'NoData',blurb:classifiedLandslide?'Both regional susceptibility rasters classify the point Very low.':'Both regional susceptibility rasters return NoData at the point.',sources:landslideSources},
       liquefaction:{state:classifiedLiquefaction?'hit':'no-hit',label:classifiedLiquefaction?'GIS point hit':'No point hit — not cleared',blurb:classifiedLiquefaction?'Level A intersects the point and is classified Undetermined; Level B has no point hit.':'Neither published liquefaction layer intersects the exact point; this is not a clearance.',sources:liquefactionSources},
       tsunami:{state:'hit',label:'GIS point hit',blurb:hasTwoMetre?'Evacuation, 2,500-year, 5 m and 2 m scenario layers intersect the point.':'Evacuation, 2,500-year and 5 m scenario layers intersect the point; the 2 m layer does not.',sources:tsunamiSources},
@@ -1055,6 +1126,32 @@ svg.leaflet-image-layer.leaflet-interactive path {
     delete SITES[config.id].results;
   }
 
+  function sitePoint(site){return site.lat+', '+site.lon+' (EPSG:4326)'}
+  function coastalGapForSite(site,kind){
+    const name=kind==='coastalErosion'?'erosion':'inundation',url=kind==='coastalErosion'?SERVICES.bopCoastalErosion:SERVICES.bopCoastalInundation;
+    return {state:'source',label:'Scenario not yet connected',evidenceState:'source_found_scenario_not_connected',blurb:'Authoritative coastal '+name+' mapping is identified; no reproducible site-point scenario result is connected.',sources:[source('Bay of Plenty Regional Council','Bay of Plenty coastal '+name+' mapping','Not queried','A site-point coastal '+name+' classification has not been extracted.','Published regional coastal '+name+' mapping; scenario fields must be read from the applicable source layer.',sitePoint(site),PORTFOLIO_CHECKED,url,'BOPRC hazard page and Natural Hazards Viewer were reviewed; scenario-specific point integration is not complete.','The authoritative source is identified, but no reproducible point result, planning horizon or scenario allowance is connected. Do not infer exposure or safety.',{}, {queryStatus:'source-found',evidenceState:'source_found_scenario_not_connected',ruleType:'not_connected'})]};
+  }
+  function deriveHazardEvidenceState(hazard){
+    if(hazard.evidenceState)return hazard.evidenceState;
+    const states=(hazard.sources||[]).map(item=>item.evidenceState);
+    if(states.includes('scenario_result_available'))return 'scenario_result_available';
+    if(states.includes('source_found_scenario_not_connected'))return 'source_found_scenario_not_connected';
+    if(states.includes('query_returned_nodata'))return 'query_returned_nodata';
+    if(states.includes('no_point_hit_not_clearance'))return 'no_point_hit_not_clearance';
+    if(states.includes('source_reviewed_no_suitable_public_dataset'))return 'source_reviewed_no_suitable_public_dataset';
+    if(states.includes('source_not_yet_found'))return 'source_not_yet_found';
+    return 'unassessed';
+  }
+  for(const site of Object.values(SITES)){
+    site.geometryEvidence=[
+      {evidenceNeed:'Property parcel boundary',evidenceState:'source_found_scenario_not_connected',displayLabel:EVIDENCE_STATES.source_found_scenario_not_connected.label,sourceOrganisation:'Toitū Te Whenua LINZ',dataset:'NZ Primary Parcels',sourceUrl:SERVICES.linzParcels,limitation:'A public cadastral parcel source is identified, but the pilot remains point-based and no parcel is connected to the clubhouse point.'},
+      {evidenceNeed:'Club lease boundary',evidenceState:'source_reviewed_no_suitable_public_dataset',displayLabel:EVIDENCE_STATES.source_reviewed_no_suitable_public_dataset.label,sourceOrganisation:'Council and LINZ public sources reviewed',dataset:'Portfolio-wide club lease geometry',sourceUrl:SERVICES.linzParcels,limitation:'No consistent authoritative public portfolio dataset for club lease boundaries was identified. This does not mean a council or club lacks a lease record.'}
+    ];
+    site.hazards.coastalErosion=coastalGapForSite(site,'coastalErosion');
+    site.hazards.coastalInundation=coastalGapForSite(site,'coastalInundation');
+    for(const hazard of Object.values(site.hazards))hazard.evidenceState=deriveHazardEvidenceState(hazard);
+  }
+
   const BASEMAPS={
     map:{url:'https://tile.openstreetmap.org/{z}/{x}/{y}.png',options:{maxZoom:19,attribution:'© OpenStreetMap contributors'}},
     aerial:{url:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',options:{maxZoom:20,maxNativeZoom:19,attribution:'Tiles © Esri — Source: Esri, Vantor, Earthstar Geographics, and the GIS User Community'}}
@@ -1063,6 +1160,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   let selectedSiteId='mount';
   let selectedHazardId='tsunami';
   let selectedBasemap='map';
+  let selectedView='portfolio';
   const visibleLayers=new Set(['tsunamiEvac','tsunami2500','tsunami5m']);
   const renderedOverlays={};
   const isLocalFile=window.location.protocol==='file:';
@@ -1072,6 +1170,16 @@ svg.leaflet-image-layer.leaflet-interactive path {
   const siteIcon=L.divIcon({className:'valence-site-marker',html:'<span class="site-pin" aria-hidden="true"></span>',iconSize:[44,44],iconAnchor:[22,44],popupAnchor:[0,-48]});
   let marker=L.marker([SITES.mount.lat,SITES.mount.lon],{icon:siteIcon,title:'Selected club location',alt:'Selected club location',zIndexOffset:2000}).addTo(map);
   let basemapLayer=null;
+  const portfolioMap=L.map('portfolioMap',{zoomControl:true,preferCanvas:true,scrollWheelZoom:false});
+  const portfolioBounds=L.latLngBounds(Object.values(SITES).map(site=>[site.lat,site.lon]));
+  const portfolioMarkers={};
+  let portfolioBasemapLayer=null;
+  for(const site of Object.values(SITES)){
+    const icon=L.divIcon({className:'portfolio-marker',html:'<span class="portfolio-dot '+(site.id===selectedSiteId?'selected':'')+'">'+escapeHtml(site.shortName.slice(0,2).toUpperCase())+'</span>',iconSize:[30,30],iconAnchor:[15,15]});
+    portfolioMarkers[site.id]=L.marker([site.lat,site.lon],{icon,title:site.name,alt:site.name,zIndexOffset:site.id===selectedSiteId?1000:0}).addTo(portfolioMap).bindTooltip(site.shortName,{direction:'top',offset:[0,-10]});
+    portfolioMarkers[site.id].on('click',()=>{switchSite(site.id);setDashboardView('site')});
+  }
+  portfolioMap.fitBounds(portfolioBounds.pad(.12));
 
   function escapeHtml(value){return String(value==null?'':value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))}
   function toast(message){const el=document.getElementById('toast');el.textContent=message;el.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('show'),2800)}
@@ -1081,9 +1189,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
     if(hazard.state==='hit'&&spec.id==='tsunami')return {key:'zone',label:'Within mapped zone'};
     if(hazard.state==='hit')return {key:'hit',label:'GIS point hit'};
     if(hazard.state==='no-hit')return {key:'caution',label:'No point hit — not cleared'};
-    if(hazard.state==='source')return {key:'neutral',label:'No scenario result linked'};
-    if(hazard.state==='nodata')return {key:'neutral',label:'No mapped result'};
-    return {key:'neutral',label:'Unassessed'};
+    if(hazard.evidenceState==='source_found_scenario_not_connected'||hazard.state==='source')return {key:'neutral',label:'Scenario not yet connected'};
+    if(hazard.evidenceState==='source_not_yet_found')return {key:'neutral',label:'Source not yet identified'};
+    if(hazard.evidenceState==='source_reviewed_no_suitable_public_dataset')return {key:'neutral',label:'No suitable public dataset'};
+    if(hazard.evidenceState==='query_returned_nodata'||hazard.state==='nodata')return {key:'neutral',label:'NoData returned'};
+    return {key:'neutral',label:(EVIDENCE_STATES[hazard.evidenceState]||EVIDENCE_STATES.unassessed).label};
   }
   function currentSite(){return SITES[selectedSiteId]}
   function currentHazard(){return currentSite().hazards[selectedHazardId]}
@@ -1097,6 +1207,34 @@ svg.leaflet-image-layer.leaflet-interactive path {
     document.getElementById('overviewDataStatus').textContent=sites.every(site=>site.verificationState!=='unverified')?'Published evidence':'Published evidence · verification gaps';
   }
 
+  function syncPortfolioMarkers(){
+    for(const site of Object.values(SITES)){
+      const selected=site.id===selectedSiteId,icon=L.divIcon({className:'portfolio-marker',html:'<span class="portfolio-dot '+(selected?'selected':'')+'">'+escapeHtml(site.shortName.slice(0,2).toUpperCase())+'</span>',iconSize:[30,30],iconAnchor:[15,15]});
+      portfolioMarkers[site.id].setIcon(icon).setZIndexOffset(selected?1000:0);
+    }
+  }
+
+  function renderPortfolio(){
+    const authorities=[...new Set(Object.values(SITES).flatMap(site=>site.sourceAuthorities||[]))];
+    document.getElementById('portfolioContext').innerHTML='<strong>Authority and source context</strong>'+escapeHtml(authorities.join(' · '))+'<br><span>Published council and technical evidence is compared at verified points. No overall score or site ranking is generated.</span>';
+    const header='<table class="portfolio-table"><thead><tr><th>Club / authority</th>'+HAZARDS.map(spec=>'<th>'+escapeHtml(spec.name)+'</th>').join('')+'</tr></thead><tbody>';
+    const rows=Object.values(SITES).map(site=>'<tr><td><button type="button" class="portfolio-site-button" data-portfolio-site="'+site.id+'"><strong>'+escapeHtml(site.shortName)+'</strong><span>'+escapeHtml(site.territorialAuthority)+'</span></button></td>'+HAZARDS.map(spec=>{const hazard=site.hazards[spec.id],display=presentationState(spec,hazard),evidence=(EVIDENCE_STATES[hazard.evidenceState]||EVIDENCE_STATES.unassessed).label;return '<td><button type="button" class="portfolio-state status-'+display.key+'" data-portfolio-site="'+site.id+'" data-portfolio-hazard="'+spec.id+'">'+escapeHtml(display.label)+'<small>'+escapeHtml(evidence)+'</small></button></td>'}).join('')+'</tr>').join('');
+    document.getElementById('portfolioMatrix').innerHTML=header+rows+'</tbody></table>';
+    syncPortfolioMarkers();
+  }
+
+  function setDashboardView(view){
+    selectedView=view==='site'?'site':'portfolio';
+    const dashboard=document.querySelector('.dashboard');dashboard.classList.toggle('portfolio-mode',selectedView==='portfolio');
+    document.querySelectorAll('[data-view]').forEach(button=>{const active=button.dataset.view===selectedView;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))});
+    document.getElementById('viewTitle').textContent=selectedView==='portfolio'?'Regional portfolio':currentSite().shortName+' site detail';
+    document.getElementById('viewDescription').textContent=selectedView==='portfolio'?'Compare published screening evidence across all five Bay of Plenty clubs.':'Map, hazard summary and source evidence for the selected clubhouse point.';
+    requestAnimationFrame(()=>{
+      if(selectedView==='portfolio'){portfolioMap.invalidateSize({pan:false,animate:false});ensureBasemap();syncPortfolioMarkers()}
+      else{map.invalidateSize({pan:false,animate:false});ensureBasemap();refreshOverlays()}
+    });
+  }
+
   function syncSelectionState(){
     document.querySelectorAll('[data-club]').forEach(button=>{const active=button.dataset.club===selectedSiteId;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));active?button.setAttribute('aria-current','true'):button.removeAttribute('aria-current')});
     document.querySelectorAll('[data-basemap]').forEach(button=>{const active=button.dataset.basemap===selectedBasemap;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))});
@@ -1105,12 +1243,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
   function ensureBasemap(){
     if(!BASEMAPS[selectedBasemap])selectedBasemap='map';
     syncSelectionState();
-    if(isLocalFile){if(basemapLayer&&map.hasLayer(basemapLayer))map.removeLayer(basemapLayer);basemapLayer=null;return}
-    if(basemapLayer&&basemapLayer.options.basemapId===selectedBasemap&&map.hasLayer(basemapLayer)){basemapLayer.bringToBack();return}
-    if(basemapLayer&&map.hasLayer(basemapLayer))map.removeLayer(basemapLayer);
+    if(isLocalFile){if(basemapLayer&&map.hasLayer(basemapLayer))map.removeLayer(basemapLayer);if(portfolioBasemapLayer&&portfolioMap.hasLayer(portfolioBasemapLayer))portfolioMap.removeLayer(portfolioBasemapLayer);basemapLayer=null;portfolioBasemapLayer=null;return}
     const provider=BASEMAPS[selectedBasemap];
-    basemapLayer=L.tileLayer(provider.url,{...provider.options,basemapId:selectedBasemap}).addTo(map);
+    if(!(basemapLayer&&basemapLayer.options.basemapId===selectedBasemap&&map.hasLayer(basemapLayer))){if(basemapLayer&&map.hasLayer(basemapLayer))map.removeLayer(basemapLayer);basemapLayer=L.tileLayer(provider.url,{...provider.options,basemapId:selectedBasemap}).addTo(map)}
     basemapLayer.bringToBack();
+    if(!(portfolioBasemapLayer&&portfolioBasemapLayer.options.basemapId===selectedBasemap&&portfolioMap.hasLayer(portfolioBasemapLayer))){if(portfolioBasemapLayer&&portfolioMap.hasLayer(portfolioBasemapLayer))portfolioMap.removeLayer(portfolioBasemapLayer);portfolioBasemapLayer=L.tileLayer(provider.url,{...provider.options,basemapId:selectedBasemap}).addTo(portfolioMap)}
+    portfolioBasemapLayer.bringToBack();
   }
 
   function setBasemap(id){
@@ -1145,7 +1283,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     document.getElementById('siteAddress').textContent=site.address;
     document.getElementById('siteGrid').innerHTML='<dt>Region</dt><dd>'+escapeHtml(site.region)+'</dd><dt>Territorial authority</dt><dd>'+escapeHtml(site.territorialAuthority)+'</dd><dt>Regional council</dt><dd>'+escapeHtml(site.regionalCouncil)+'</dd><dt>Source authorities</dt><dd>'+escapeHtml((site.sourceAuthorities||[]).join(' · '))+'</dd><dt>Coordinates</dt><dd>'+escapeHtml(site.lat+', '+site.lon)+'</dd><dt>Evidence checked</dt><dd>'+escapeHtml(site.checkedDate)+'</dd>';
     const verification=document.getElementById('verificationStatus');verification.title=site.locationStatus;
-    verification.innerHTML='<span class="verification-icon" aria-hidden="true">i</span><span><strong class="verification-title">Clubhouse point used</strong><span class="verification-copy">Approximate location shown · Property and lease boundaries not verified.</span><span class="verification-links">'+site.locationSources.map((url,index)=>'<a href="'+escapeHtml(url)+'" target="_blank" rel="noreferrer">Source '+(index+1)+' ↗</a>').join(' · ')+'</span></span>';
+    verification.innerHTML='<span class="verification-icon" aria-hidden="true">i</span><span><strong class="verification-title">Clubhouse point used</strong><span class="verification-copy">Approximate location shown · Property parcel: scenario not yet connected · Lease boundary: no suitable public dataset identified.</span><span class="verification-links">'+site.locationSources.map((url,index)=>'<a href="'+escapeHtml(url)+'" target="_blank" rel="noreferrer">Source '+(index+1)+' ↗</a>').join(' · ')+'</span></span>';
   }
 
   function renderHazardCards(){
@@ -1154,13 +1292,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
 
   function evidenceRow(label,value){return '<b>'+escapeHtml(label)+'</b><span>'+escapeHtml(value)+'</span>'}
+  function evidenceValue(value){return value==null||value===''?'Unavailable in connected source':value}
   function renderEvidence(){
     const spec=HAZARDS.find(item=>item.id===selectedHazardId),hazard=currentHazard();
     document.getElementById('hazardDetailTitle').textContent=spec.name+' · '+currentSite().shortName;
     document.getElementById('hazardDetailSummary').textContent=hazard.blurb+' Evidence states are retained exactly; no professional rating is inferred.';
     const display=presentationState(spec,hazard),state=document.getElementById('hazardDetailState');state.className='state '+stateClass(hazard.state);state.textContent=display.label;
-    document.getElementById('hazardEvidence').innerHTML=hazard.sources.map((item,index)=>'<details class="evidence-source" '+(index===0?'open':'')+'><summary><span><span class="source-title">'+escapeHtml(item.sourceOrganisation)+'</span><span class="source-subtitle">'+escapeHtml(item.dataset)+' · '+escapeHtml(item.originalClassification)+'</span></span><span class="expand-label">Evidence details</span></summary><div class="evidence-content"><div class="evidence-grid">'+
-      evidenceRow('Source organisation',item.sourceOrganisation)+evidenceRow('Dataset or layer',item.dataset)+evidenceRow('Layer ID',item.layerId)+evidenceRow('Original classification',item.originalClassification)+evidenceRow('Finding',item.result)+evidenceRow('Scenario',item.scenario)+evidenceRow('AEP or return period',item.aepReturnPeriod)+evidenceRow('Model or publication year',item.modelPublicationYear)+evidenceRow('Query point',item.queryPoint)+evidenceRow('Query date',item.queryDate)+evidenceRow('Cross-check status',item.crossCheck)+evidenceRow('Limitations',item.limitations)+'<b>Source URL</b><span><a href="'+escapeHtml(item.sourceUrl)+'" target="_blank" rel="noreferrer">Open original source ↗</a></span></div><pre class="attributes">Original returned attributes\n'+escapeHtml(JSON.stringify(item.originalReturnedAttributes,null,2))+'</pre></div></details>').join('');
+    document.getElementById('hazardEvidence').innerHTML=hazard.sources.map((item,index)=>'<details class="evidence-source" '+(index===0?'open':'')+'><summary><span><span class="source-title">'+escapeHtml(item.source.organisation)+'</span><span class="source-subtitle">'+escapeHtml(item.source.dataset)+' · '+escapeHtml(item.screeningResult.displayLabel)+'</span></span><span class="expand-label">Source → scenario → rule → result</span></summary><div class="evidence-content"><div class="evidence-grid">'+
+      evidenceRow('Evidence state',item.screeningResult.displayLabel)+evidenceRow('Source organisation',item.source.organisation)+evidenceRow('Dataset or layer',item.source.dataset)+evidenceRow('Layer ID',item.source.layerId)+evidenceRow('Source date / version',evidenceValue(item.source.dateOrVersion))+evidenceRow('Scenario / model',evidenceValue(item.scenarioModel.name))+evidenceRow('Scenario identifier',evidenceValue(item.scenarioModel.scenarioId))+evidenceRow('Flood type',evidenceValue(item.scenarioModel.floodType))+evidenceRow('AEP or return period',evidenceValue(item.scenarioModel.returnPeriodAep))+evidenceRow('Planning horizon',evidenceValue(item.scenarioModel.planningHorizon))+evidenceRow('Climate allowance',evidenceValue(item.scenarioModel.climateChangeAllowance))+evidenceRow('Model / publication year',evidenceValue(item.scenarioModel.modelVersion))+evidenceRow('Depth / extent / class',evidenceValue(item.scenarioModel.depthExtentClassification))+evidenceRow('Screening rule',item.screeningRule.description)+evidenceRow('Rule type',item.screeningRule.type)+evidenceRow('Query geometry',item.screeningRule.geometry)+evidenceRow('Screening result',item.screeningResult.evidence)+evidenceRow('Original classification',item.screeningResult.classification)+evidenceRow('Query point',item.queryPoint)+evidenceRow('Date checked',item.screeningResult.checkedAt)+evidenceRow('Provenance / cross-check',item.screeningResult.provenance)+evidenceRow('Limitations',item.limitations)+'<b>Source URL</b><span><a href="'+escapeHtml(item.source.url)+'" target="_blank" rel="noreferrer">Open original source ↗</a></span></div><pre class="attributes">Original returned attributes\n'+escapeHtml(JSON.stringify(item.originalReturnedAttributes,null,2))+'</pre></div></details>').join('');
   }
 
   function hazardLayerIds(hazardId){return Object.entries(LAYERS).filter(([,layer])=>layer.hazard===hazardId).map(([id])=>id)}
@@ -1179,7 +1318,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
     if(!SITES[id])return;
     selectedSiteId=id;const site=currentSite();
     marker.setLatLng([site.lat,site.lon]).bindPopup('<b>'+escapeHtml(site.name)+'</b><br>'+escapeHtml(site.address)+'<br>'+site.lat+', '+site.lon+'<br><small>Verified clubhouse point; footprint and lease boundary not verified.</small>');
-    map.setView([site.lat,site.lon],17,{animate:false});renderClubList();renderSite();renderHazardCards();renderEvidence();ensureBasemap();
+    map.setView([site.lat,site.lon],17,{animate:false});renderClubList();renderSite();renderHazardCards();renderEvidence();syncPortfolioMarkers();ensureBasemap();
+    if(selectedView==='site')document.getElementById('viewTitle').textContent=site.shortName+' site detail';
     requestAnimationFrame(()=>{map.invalidateSize({pan:false,animate:false});ensureBasemap();refreshOverlays()});
   }
 
@@ -1187,13 +1327,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
   document.getElementById('clubList').addEventListener('click',event=>{const button=event.target.closest('[data-club]');if(button)switchSite(button.dataset.club)});
   document.getElementById('hazardCards').addEventListener('click',event=>{const button=event.target.closest('[data-hazard]');if(button)switchHazard(button.dataset.hazard)});
+  document.querySelector('.view-switch').addEventListener('click',event=>{const button=event.target.closest('[data-view]');if(button)setDashboardView(button.dataset.view)});
+  document.getElementById('portfolioMatrix').addEventListener('click',event=>{const button=event.target.closest('[data-portfolio-site]');if(!button)return;switchSite(button.dataset.portfolioSite);if(button.dataset.portfolioHazard)switchHazard(button.dataset.portfolioHazard);setDashboardView('site')});
   document.getElementById('layerToggles').addEventListener('change',event=>{const hazardId=event.target.dataset.hazardLayer;if(!hazardId)return;for(const id of hazardLayerIds(hazardId)){event.target.checked?visibleLayers.add(id):visibleLayers.delete(id)}refreshOverlays()});
   document.querySelectorAll('[data-basemap]').forEach(button=>button.addEventListener('click',()=>setBasemap(button.dataset.basemap)));
   document.getElementById('showSelected').addEventListener('click',showSelectedHazard);
-    document.getElementById('exportEvidence').addEventListener('click',()=>{const site=currentSite();saveJson({project:'Surf Life Saving Natural Hazards Pilot',dashboardVersion:'0.4',exportedAt:new Date().toISOString(),site,limitation:'Evidence screening only. No-hit and NoData are unassessed and never green. No professional rating is provided.'},'sls-'+site.id+'-hazard-evidence-v0.4.json');toast('Evidence export prepared for '+site.shortName+'.')});
+  document.getElementById('exportEvidence').addEventListener('click',()=>{const site=currentSite();saveJson({project:'Surf Life Saving Natural Hazards Pilot',dashboardVersion:'0.5',exportedAt:new Date().toISOString(),site,evidenceStates:EVIDENCE_STATES,limitation:'Evidence screening only. No-hit and NoData are non-clearance states and never green. No professional rating is provided.'},'sls-'+site.id+'-hazard-evidence-v0.5.json');toast('Evidence export prepared for '+site.shortName+'.')});
 
   map.on('moveend zoomend resize',refreshOverlays);
-  const resizeMap=()=>requestAnimationFrame(()=>map.invalidateSize({pan:false,animate:false}));
+  const resizeMap=()=>requestAnimationFrame(()=>{map.invalidateSize({pan:false,animate:false});portfolioMap.invalidateSize({pan:false,animate:false})});
   window.addEventListener('load',resizeMap,{once:true});window.addEventListener('resize',resizeMap,{passive:true});
   if('ResizeObserver' in window)new ResizeObserver(resizeMap).observe(mapElement);
 
@@ -1202,10 +1344,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
     new LocalNotice({position:'topleft'}).addTo(map);
   }
 
-  renderRegionalOverview();renderClubList();setBasemap(selectedBasemap);renderSite();renderHazardCards();renderEvidence();renderLayerToggles();
+  renderRegionalOverview();renderClubList();renderPortfolio();setBasemap(selectedBasemap);renderSite();renderHazardCards();renderEvidence();renderLayerToggles();setDashboardView(selectedView);
   marker.bindPopup('<b>'+SITES.mount.name+'</b><br>'+SITES.mount.address+'<br>'+SITES.mount.lat+', '+SITES.mount.lon+'<br><small>Verified clubhouse point; footprint and lease boundary not verified.</small>');
   resizeMap();refreshOverlays();
-  window.SLSPilot={version:'0.4',sites:SITES,layers:LAYERS,switchSite,switchHazard,setBasemap,getState:()=>{const position=marker.getLatLng();return {selectedSiteId,selectedHazardId,selectedBasemap,basemapActive:Boolean(basemapLayer&&map.hasLayer(basemapLayer)),markerLat:position.lat,markerLon:position.lng,visibleLayerIds:[...visibleLayers]}}};
+  window.SLSPilot={version:'0.5',sites:SITES,hazards:HAZARDS,layers:LAYERS,evidenceStates:EVIDENCE_STATES,switchSite,switchHazard,setBasemap,setDashboardView,getState:()=>{const position=marker.getLatLng();return {selectedView,selectedSiteId,selectedHazardId,selectedBasemap,basemapActive:Boolean(basemapLayer&&map.hasLayer(basemapLayer)),portfolioBasemapActive:Boolean(portfolioBasemapLayer&&portfolioMap.hasLayer(portfolioBasemapLayer)),markerLat:position.lat,markerLon:position.lng,visibleLayerIds:[...visibleLayers]}}};
   </script>
 </body>
 </html>

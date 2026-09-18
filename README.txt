@@ -1,8 +1,8 @@
 VALENCE | SURF LIFE SAVING NATURAL HAZARDS PILOT
-Dashboard v0.2 | two-site Bay of Plenty pilot | checked 18 September 2026 NZST
+Dashboard v0.5 | five-site Bay of Plenty regional portfolio | checked 18 September 2026 NZST
 
 HOSTED TEST INSTANCE
-The stabilised Dashboard v0.2 source is ready for the dedicated Valence Vercel test project valence-natural-hazards-pilot. The live HTTPS URL is pending connection of the Valence Vercel account. Once deployed, the HTTPS dashboard is the review environment and Open_Map.cmd is not required. The launcher remains a local fallback only.
+The live review environment is https://valence-natural-hazards-pilot.vercel.app/ and deploys from Bobdeck/valence-natural-hazards-pilot main through the existing GitHub → Vercel connection. Open_Map.cmd remains a local fallback only.
 
 OPEN THE DASHBOARD
 1. Run Open_Map.cmd.
@@ -15,16 +15,19 @@ Opening index.html directly as a file pauses online basemap tiles and shows a co
 PILOT SITES
 - Mount Maunganui Lifeguard Service — 21 Adams Avenue — verified point -37.631147, 176.177011.
 - Omanu SLSC — 15 Surf Road, Omanu, Mt Maunganui 3116 — verified point -37.6588411, 176.2153694.
+- Pāpāmoa Surf Life Saving Club — 561 Pāpāmoa Beach Road — verified point -37.69605, 176.28609.
+- Maketu Surf Life Saving Club — 1 Town Point Road — verified point -37.75427, 176.45614.
+- Whakatāne SLSC at Ōhope — 6 Mair Street — verified point -37.96321, 177.03593.
 
-Use the left sidebar to switch clubs. The selected marker, site summary, hazard cards, evidence detail and map view update together. Each club retains a separate evidence record.
+Use Regional portfolio to compare the five clubs across seven hazards. Select a site or matrix cell to drill into Site detail. The selected marker, site summary, hazard cards, evidence detail and map view update together.
 
 FILES
-index.html — Dashboard v0.2 interactive map and evidence interface
+index.html — Dashboard v0.5 regional portfolio, site dashboard and structured evidence interface
 Open_Map.cmd — Windows launcher
 serve-map.ps1 — loopback-only local server using an available port
 robots.txt — prevents search-engine crawling of the test instance
 vercel.json — test-host headers, no-index control and repeatable deployment configuration
-Valence_SLS_Natural_Hazards_Pilot_Review_Brief_v0.2.docx — two-site review brief
+Valence_SLS_Natural_Hazards_Pilot_Review_Brief_v0.2.docx — historical two-site review brief
 README.txt — these instructions
 
 BASEMAPS AND OVERLAYS
@@ -35,9 +38,10 @@ BASEMAPS AND OVERLAYS
 
 EVIDENCE RULES
 - Results are original source observations, not professional risk ratings.
-- No point hit, NoData and missing sources remain unassessed and never become green.
-- Lee's company will define configurable thresholds, consequences, rating methods and approvals.
-- Property and lease boundaries remain outside this iteration.
+- No point hit and NoData remain non-clearance states and never become green.
+- Evidence is structured as site → hazard → source → scenario/model → screening rule → screening result → presentation state.
+- Lee's company will define configurable thresholds, consequences, rating methods and approvals; v0.5 does not provide a rule editor or risk score.
+- Public property parcel sources are identified but not connected. No suitable public portfolio dataset for club lease boundaries was identified in this review.
 - Public GIS access does not itself confirm commercial redistribution rights. Retain attribution and confirm council/GNS rights before reproducing source geometry in a client-facing product.
 
 OMANU POINT RESULTS
@@ -51,6 +55,6 @@ OMANU POINT RESULTS
 - BOPRC liquefaction Level A: no point hit — not cleared.
 - BOPRC landslide rainfall and earthquake rasters: NoData.
 - BOPRC/GNS active faults: no exact point hit at 1:250,000 scale.
-- Coastal erosion and coastal inundation: source not connected; unassessed.
+- Coastal erosion and coastal inundation: authoritative source found; scenario result not yet connected.
 
 The Mount Maunganui findings already verified for this pilot are preserved in the dashboard without re-querying or reclassification.

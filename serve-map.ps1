@@ -7,7 +7,7 @@ try {
     $port = ([Net.IPEndPoint]$listener.LocalEndpoint).Port
     $prefix = "http://127.0.0.1:$port/"
     Start-Process ($prefix + 'index.html')
-    Write-Host 'Surf Life Saving Natural Hazards Dashboard v0.2 is open in your browser.'
+    Write-Host 'Surf Life Saving Natural Hazards Dashboard v0.5 is open in your browser.'
     Write-Host "Local address: $prefix"
     Write-Host 'Keep this window open while using the map. Press Ctrl+C to close it.'
 
