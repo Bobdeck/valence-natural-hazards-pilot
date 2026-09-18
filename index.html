@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="noindex,nofollow">
-  <title>SLS Natural Hazard Pilot v0.6</title>
+  <title>SLS Natural Hazard Pilot v0.7</title>
   <style data-bundled-library="leaflet-1.9.4">/* required styles */
 
 .leaflet-pane,
@@ -756,12 +756,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .state{display:inline-flex;align-items:center;max-width:175px;padding:4px 7px;border-radius:10px;font-size:10px;font-weight:750;line-height:1.2;text-align:right}
     .state.hit{background:var(--info-bg);color:var(--info)}.state.published{background:#e9e7f6;color:#51457c}
     .state.no-hit{background:var(--warn-bg);color:var(--warn)}.state.nodata,.state.unassessed,.state.source{background:#eef1f3;color:#596876}
-    .portfolio-panel{grid-column:1/-1;display:none;min-width:0}.dashboard.portfolio-mode>.sidebar,.dashboard.portfolio-mode>.map-panel,.dashboard.portfolio-mode>.right-column,.dashboard.portfolio-mode>.evidence-panel{display:none}.dashboard.portfolio-mode>.portfolio-panel{display:block}
+    .portfolio-panel,.config-panel{grid-column:1/-1;display:none;min-width:0}.dashboard.portfolio-mode>.sidebar,.dashboard.portfolio-mode>.map-panel,.dashboard.portfolio-mode>.right-column,.dashboard.portfolio-mode>.evidence-panel,.dashboard.portfolio-mode>.config-panel,.dashboard.config-mode>.sidebar,.dashboard.config-mode>.map-panel,.dashboard.config-mode>.right-column,.dashboard.config-mode>.evidence-panel,.dashboard.config-mode>.portfolio-panel{display:none}.dashboard.portfolio-mode>.portfolio-panel,.dashboard.config-mode>.config-panel{display:block}
     .portfolio-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#fff,#f2f8f8)}.portfolio-head h1{font-size:20px;color:var(--navy);margin:0}.portfolio-head p{max-width:760px;font-size:12px;line-height:1.5;color:var(--muted);margin:5px 0 0}.portfolio-badge{flex:0 0 auto;padding:7px 10px;border-radius:16px;background:var(--warn-bg);color:var(--warn);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.035em}
     .portfolio-grid{display:grid;grid-template-columns:minmax(360px,.9fr) minmax(660px,1.65fr);gap:16px;padding:16px;background:var(--paper)}.portfolio-map-card,.portfolio-matrix-card{min-width:0;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}.portfolio-card-head{padding:12px 14px;border-bottom:1px solid var(--line)}.portfolio-card-head strong{display:block;color:var(--navy);font-size:13px}.portfolio-card-head span{display:block;margin-top:3px;color:var(--muted);font-size:10px;line-height:1.4}
     #portfolioMap{height:500px;background:#e8eef1}.portfolio-context{padding:12px 14px;border-top:1px solid var(--line);font-size:10px;line-height:1.5;color:var(--muted)}.portfolio-context strong{display:block;color:var(--navy);font-size:11px;margin-bottom:3px}.portfolio-marker{background:transparent!important;border:0!important}.portfolio-dot{display:grid;place-items:center;width:30px;height:30px;border:3px solid #fff;border-radius:50%;background:var(--teal);color:#fff;box-shadow:0 3px 10px rgba(16,44,69,.4);font-size:10px;font-weight:900}.portfolio-dot.selected{background:#d12e52;transform:scale(1.18)}
     .portfolio-table-wrap{overflow:auto;max-width:100%}.portfolio-table{width:100%;min-width:1030px;border-collapse:separate;border-spacing:0;font-size:10px}.portfolio-table th,.portfolio-table td{padding:8px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);vertical-align:middle}.portfolio-table th:last-child,.portfolio-table td:last-child{border-right:0}.portfolio-table tr:last-child td{border-bottom:0}.portfolio-table thead th{position:sticky;top:0;z-index:2;background:#f3f7f9;color:var(--navy);font-size:9px;line-height:1.25;text-align:left}.portfolio-table thead th:first-child{left:0;z-index:3;min-width:155px}.portfolio-table tbody td:first-child{position:sticky;left:0;z-index:1;background:#fff;min-width:155px}.portfolio-site-button{width:100%;border:0;background:transparent;text-align:left;color:var(--navy);padding:2px}.portfolio-site-button strong{display:block;font-size:11px}.portfolio-site-button span{display:block;color:var(--muted);font-size:9px;line-height:1.3;margin-top:2px}.portfolio-state{display:block;width:100%;min-height:42px;border:1px solid var(--line);border-left-width:4px;border-radius:7px;padding:6px;background:#f8fafb;color:#596875;text-align:left;font-size:9px;font-weight:800;line-height:1.25}.portfolio-state small{display:block;margin-top:3px;font-size:8px;font-weight:600;color:inherit;opacity:.82}.portfolio-state.status-zone{border-color:#efc3cd;border-left-color:#bd3451;background:#fff5f7;color:#9b203c}.portfolio-state.status-reported{border-color:#efcfb4;border-left-color:#cf5d25;background:#fff7f0;color:#9b421a}.portfolio-state.status-hit{border-color:#bfd9e7;border-left-color:#2878a0;background:#f3f9fc;color:#1f6688}.portfolio-state.status-caution{border-color:#ecdba7;border-left-color:#c28a18;background:#fffaf0;color:#805b0f}.portfolio-state.status-neutral{border-color:#dce3e7;border-left-color:#8796a1;background:#f8fafb;color:#596875}.portfolio-foot{padding:11px 14px;border-top:1px solid var(--line);color:var(--muted);font-size:10px;line-height:1.45}.portfolio-legend{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.portfolio-legend span{padding:4px 7px;border-radius:10px;background:#eef2f4;color:#526574;font-size:9px;font-weight:700}
     .portfolio-controls{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(260px,1.4fr) minmax(360px,2fr);gap:12px;padding:13px 16px;border-bottom:1px solid var(--line);background:#f7fafb}.control-group{min-width:0}.control-group label,.control-label{display:block;margin-bottom:5px;color:#526574;font-size:9px;font-weight:850;letter-spacing:.045em;text-transform:uppercase}.portfolio-select{width:100%;height:35px;border:1px solid #cbd6dc;border-radius:7px;background:#fff;color:var(--navy);padding:0 30px 0 9px;font:700 11px/1.2 inherit}.portfolio-select:disabled{background:#eef2f4;color:#7c8992}.filter-row{display:flex;gap:5px;flex-wrap:wrap}.filter-chip{border:1px solid #cbd6dc;border-radius:16px;background:#fff;color:#526574;padding:7px 9px;font-size:9px;font-weight:800}.filter-chip.active{border-color:var(--teal);background:#dceef0;color:var(--teal-dark)}.completeness-strip{display:flex;gap:6px;flex-wrap:wrap;padding:10px 16px;border-bottom:1px solid var(--line);background:#fff}.completeness-item{min-width:105px;flex:1;padding:7px 9px;border-radius:7px;background:#eef2f4;color:#526574;font-size:9px;line-height:1.3}.completeness-item strong{display:block;color:var(--navy);font-size:15px}.portfolio-table .selected-hazard-column{background:#e8f4f4}.portfolio-table thead .selected-hazard-column{box-shadow:inset 0 -3px 0 var(--teal)}.portfolio-empty{padding:28px;text-align:center;color:var(--muted);font-size:11px}.portfolio-dot.status-zone{background:#bd3451}.portfolio-dot.status-reported{background:#cf5d25}.portfolio-dot.status-hit{background:#2878a0}.portfolio-dot.status-caution{background:#c28a18}.portfolio-dot.status-neutral{background:#8796a1}.portfolio-dot.filtered-out{opacity:.25;filter:grayscale(1)}
+    .config-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#fff,#f2f8f8)}.config-head h1{font-size:20px;color:var(--navy);margin:0}.config-head p{max-width:780px;margin:5px 0 0;color:var(--muted);font-size:11px;line-height:1.5}.config-status{padding:7px 10px;border-radius:15px;background:#e8f4f4;color:var(--teal-dark);font-size:10px;font-weight:850}.config-summary{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;padding:14px 16px;border-bottom:1px solid var(--line);background:var(--paper)}.config-count{padding:10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--muted);font-size:9px;text-transform:uppercase}.config-count strong{display:block;color:var(--navy);font-size:18px;margin-bottom:2px}.config-body{display:grid;grid-template-columns:minmax(320px,.8fr) minmax(520px,1.4fr);gap:16px;padding:16px;background:var(--paper)}.config-card{border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}.config-card-head{padding:12px 14px;border-bottom:1px solid var(--line)}.config-card-head strong{display:block;color:var(--navy);font-size:13px}.config-card-head span{display:block;margin-top:3px;color:var(--muted);font-size:10px;line-height:1.4}.config-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px}.config-field{min-width:0}.config-field.full{grid-column:1/-1}.config-field label{display:block;margin-bottom:4px;color:#526574;font-size:9px;font-weight:850;text-transform:uppercase;letter-spacing:.04em}.config-field input,.config-field select,.config-field textarea{box-sizing:border-box;width:100%;border:1px solid #cbd6dc;border-radius:7px;background:#fff;color:var(--navy);padding:8px;font:600 10px/1.35 inherit}.config-field textarea{min-height:58px;resize:vertical}.config-field input[readonly]{background:#eef2f4;color:#596875}.config-actions{display:flex;gap:7px;flex-wrap:wrap;padding:0 14px 14px}.config-actions button{border:1px solid var(--teal);border-radius:7px;background:var(--teal);color:#fff;padding:8px 11px;font-size:10px;font-weight:850}.config-actions button.secondary{background:#fff;color:var(--teal-dark)}.config-actions button:disabled{opacity:.45;cursor:not-allowed}.validation-box,.preview-box{margin:0 14px 14px;padding:10px;border-radius:7px;background:#eef2f4;color:#526574;font-size:10px;line-height:1.5}.validation-box.valid{background:#e8f4f4;color:#17666b}.validation-box.invalid{background:#fff2f3;color:#9b203c}.preview-table{width:100%;border-collapse:collapse;font-size:10px}.preview-table th,.preview-table td{padding:7px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.preview-table th{color:#526574;background:#f7fafb}.entity-list{padding:0 14px 14px;max-height:510px;overflow:auto}.entity-row{padding:8px 0;border-bottom:1px solid var(--line);font-size:10px;line-height:1.4}.entity-row strong{display:block;color:var(--navy)}.entity-row span{color:var(--muted)}
     .valence-site-marker{background:transparent!important;border:0!important}
     .site-pin{display:block;position:relative;width:44px;height:44px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#d12e52;border:4px solid #fff;box-shadow:0 4px 13px rgba(16,44,69,.48)}
     .site-pin:before{content:'';position:absolute;inset:7px;border-radius:50%;background:var(--navy);box-shadow:inset 0 0 0 4px #fff}
@@ -783,15 +784,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .toast{position:fixed;right:18px;bottom:18px;z-index:9999;max-width:360px;background:var(--navy);color:#fff;padding:11px 14px;border-radius:8px;box-shadow:0 10px 30px #0004;font-size:12px;line-height:1.4;opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s}
     .toast.show{opacity:1;transform:translateY(0)}
     @media(max-width:1280px){.dashboard{grid-template-columns:210px minmax(520px,1fr) 330px;gap:12px;padding:12px}.overview-strip{grid-template-columns:1fr .55fr .55fr 1.7fr 1fr}.overview-cell{padding:10px 11px}.state{max-width:140px}#map{height:620px}.hazard-status{white-space:normal}}
-    @media(max-width:1100px){.portfolio-controls{grid-template-columns:1fr 1fr}.portfolio-controls .control-group:last-child{grid-column:1/-1}.portfolio-grid{grid-template-columns:1fr}.portfolio-map-card{display:grid;grid-template-columns:minmax(0,1fr) 260px}.portfolio-map-card>.portfolio-card-head{grid-column:1/-1}.portfolio-context{border-top:0;border-left:1px solid var(--line)}#portfolioMap{height:390px}}
+    @media(max-width:1100px){.config-summary{grid-template-columns:repeat(3,1fr)}.config-body{grid-template-columns:1fr}.portfolio-controls{grid-template-columns:1fr 1fr}.portfolio-controls .control-group:last-child{grid-column:1/-1}.portfolio-grid{grid-template-columns:1fr}.portfolio-map-card{display:grid;grid-template-columns:minmax(0,1fr) 260px}.portfolio-map-card>.portfolio-card-head{grid-column:1/-1}.portfolio-context{border-top:0;border-left:1px solid var(--line)}#portfolioMap{height:390px}}
     @media(max-width:1000px){.dashboard{display:block;padding:9px}.overview-strip{display:grid;grid-template-columns:1fr 1fr;margin-bottom:10px}.overview-cell{border-left:0;border-top:1px solid var(--line)}.overview-cell:first-child{grid-column:1/-1;border-top:0}.view-toolbar{margin-bottom:10px}.sidebar{position:static;min-height:0;margin-bottom:10px}.map-panel,.right-column,.evidence-panel,.portfolio-panel{margin-bottom:10px}.right-column{display:block}.right-column>.panel{margin-bottom:10px}.evidence-panel{grid-column:auto}#map{height:500px}.method-note{grid-column:auto}.topbar{display:block}.top-status{text-align:left;margin-top:8px}.club-list{grid-template-columns:1fr 1fr}.region-note{margin-bottom:14px}}
     @media(max-width:700px){.portfolio-controls{grid-template-columns:1fr}.portfolio-controls .control-group:last-child{grid-column:auto}.portfolio-grid{padding:9px}.portfolio-map-card{display:block}.portfolio-context{border-left:0;border-top:1px solid var(--line)}#portfolioMap{height:340px}.portfolio-head{display:block}.portfolio-badge{display:inline-flex;margin-top:10px}}
-    @media(max-width:560px){.club-list{grid-template-columns:1fr}.map-toolbar,.map-foot,.evidence-head,.view-toolbar{display:block}.segmented,.map-actions,.view-switch{margin-top:10px}.view-switch{display:flex}.view-switch button{flex:1}.evidence-grid{grid-template-columns:1fr}.evidence-grid b{margin-top:5px}#map{height:390px}}
+    @media(max-width:560px){.config-summary,.config-fields{grid-template-columns:1fr}.config-field.full{grid-column:auto}.club-list{grid-template-columns:1fr}.map-toolbar,.map-foot,.evidence-head,.view-toolbar{display:block}.segmented,.map-actions,.view-switch{margin-top:10px}.view-switch{display:flex;flex-wrap:wrap}.view-switch button{flex:1}.evidence-grid{grid-template-columns:1fr}.evidence-grid b{margin-top:5px}#map{height:390px}}
   </style>
 </head>
 <body>
   <header class="topbar">
-    <div><div class="brand">VALENCE TEST INSTANCE</div><div class="subtitle">SLS Natural Hazard Pilot v0.6 · Portfolio Screening Controls + Scenario Comparison</div></div>
+    <div><div class="brand">VALENCE TEST INSTANCE</div><div class="subtitle">SLS Natural Hazard Pilot v0.7 · Configurable Screening Administration</div></div>
     <div class="top-status">Working pilot<br>Not a safety clearance</div>
   </header>
 
@@ -809,6 +810,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <div class="view-switch">
         <button type="button" id="viewPortfolio" data-view="portfolio" aria-pressed="true">Regional portfolio</button>
         <button type="button" id="viewSite" data-view="site" aria-pressed="false">Site detail</button>
+        <button type="button" id="viewConfig" data-view="config" aria-pressed="false">Configuration</button>
       </div>
     </nav>
 
@@ -833,6 +835,28 @@ svg.leaflet-image-layer.leaflet-interactive path {
           <div class="portfolio-card-head"><strong id="portfolioMatrixTitle">Site × hazard evidence matrix</strong><span>Cells show screening states, not professional risk ratings. Select a cell for source, scenario, rule and result details.</span></div>
           <div class="portfolio-table-wrap" id="portfolioMatrix"></div>
           <div class="portfolio-foot">No-hit and NoData remain non-clearance states. A missing scenario means the source or model has not yet been connected—not that the hazard is absent.<div class="portfolio-legend"><span>Pink · mapped zone</span><span>Orange · reported evidence</span><span>Blue · point result</span><span>Yellow · no hit, not cleared</span><span>Grey · evidence gap / NoData</span></div></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="panel config-panel" id="configPanel" aria-labelledby="configTitle">
+      <div class="config-head"><div><p class="eyebrow">Controlled prototype configuration</p><h1 id="configTitle">Screening configuration</h1><p>Manage source-backed scenario presentation through draft, validation, five-site preview and explicit publish. Published evidence is never changed silently.</p></div><span class="config-status" id="configStatus">Published · v0.7.0</span></div>
+      <div class="config-summary" id="configSummary"></div>
+      <div class="config-body">
+        <section class="config-card"><div class="config-card-head"><strong>Configuration entities</strong><span>Reusable entities derived from the five-site structured model.</span></div><div class="entity-list" id="configEntities"></div></section>
+        <section class="config-card"><div class="config-card-head"><strong>Draft scenario presentation change</strong><span>Core source/scenario metadata is locked to connected authoritative evidence. Reviewed presentation wording can be drafted here.</span></div>
+          <div class="config-fields">
+            <div class="config-field"><label for="configHazard">Hazard</label><select id="configHazard"></select></div>
+            <div class="config-field"><label for="configScenario">Source-backed scenario</label><select id="configScenario"></select></div>
+            <div class="config-field"><label for="configSourceOrg">Source organisation</label><input id="configSourceOrg" readonly></div>
+            <div class="config-field"><label for="configSourceUrl">Source URL</label><input id="configSourceUrl" readonly></div>
+            <div class="config-field"><label for="configRuleType">Rule type</label><input id="configRuleType" readonly></div>
+            <div class="config-field"><label for="configResultState">Result state</label><input id="configResultState" readonly></div>
+            <div class="config-field full"><label for="configDisplayLabel">Concise scenario label</label><input id="configDisplayLabel" placeholder="Required; must not imply clearance"></div>
+            <div class="config-field full"><label for="configCaution">Caution wording</label><textarea id="configCaution">Screening evidence only. NoData and no-point-hit are not clearance.</textarea></div>
+          </div>
+          <div class="config-actions"><button type="button" id="createDraft">Create / update draft</button><button type="button" class="secondary" id="previewDraft" disabled>Preview across five sites</button><button type="button" id="publishDraft" disabled>Publish reviewed draft</button><button type="button" class="secondary" id="runValidation">Run validation tests</button></div>
+          <div class="validation-box" id="configValidation">No draft. Published configuration remains active.</div><div class="preview-box" id="configPreview">Preview will show which sites use the selected source-backed scenario before publication.</div>
         </section>
       </div>
     </section>
@@ -1171,6 +1195,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
   let portfolioHazardId='tsunami';
   let portfolioScenario='all';
   let portfolioFilter='all';
+  let draftConfiguration=null;
+  let draftPreviewed=false;
+  const publishedConfiguration={version:'0.7.0',lastChanged:'2026-09-18',scenarioLabels:{}};
   const visibleLayers=new Set(['tsunamiEvac','tsunami2500','tsunami5m']);
   const renderedOverlays={};
   const isLocalFile=window.location.protocol==='file:';
@@ -1214,7 +1241,64 @@ svg.leaflet-image-layer.leaflet-interactive path {
       const name=item.scenarioModel&&item.scenarioModel.name;
       if(name&&!options.has(name))options.set(name,{id:name,label:name,metadata:item.scenarioModel});
     }
-    return [{id:'all',label:'All published / connected scenarios',metadata:null},...options.values()];
+    return [{id:'all',label:'All published / connected scenarios',metadata:null},...[...options.values()].map(item=>({...item,label:(publishedConfiguration.scenarioLabels[hazardId]||{})[item.id]||item.label}))];
+  }
+
+  function configScenarioEntries(hazardId){
+    const entries=new Map();
+    for(const site of Object.values(SITES))for(const item of site.hazards[hazardId].sources||[]){
+      const name=item.scenarioModel&&item.scenarioModel.name;
+      if(name&&!entries.has(name))entries.set(name,{name,item});
+    }
+    return [...entries.values()];
+  }
+
+  function configurationEntities(){
+    const sources=new Map(),scenarios=new Map(),rules=new Set();
+    for(const site of Object.values(SITES))for(const hazard of Object.values(site.hazards))for(const item of hazard.sources||[]){
+      sources.set(item.source.sourceId,item.source);if(item.scenarioModel.name)scenarios.set(item.source.sourceId+'|'+item.scenarioModel.name,item.scenarioModel);rules.add(item.screeningRule.type);
+    }
+    return {sites:Object.values(SITES),hazards:HAZARDS,sources:[...sources.values()],scenarios:[...scenarios.values()],rules:[...rules],presentationStates:Object.entries(EVIDENCE_STATES)};
+  }
+
+  function suggestedScenarioLabel(name){
+    return name.replace('1% AEP (100-year ARI), 2130 climate, RCP 8.5','1% AEP / 100-year · 2130 climate · RCP 8.5').replace('average recurrence interval','ARI');
+  }
+
+  function validateConfiguration(candidate){
+    const errors=[],required=['configId','hazardId','scenarioName','sourceOrganisation','sourceUrl','ruleType','resultState','displayLabel','caution'];
+    for(const key of required)if(!String(candidate[key]||'').trim())errors.push(key+' is required');
+    if(candidate.sourceUrl&&!/^https:\/\//i.test(candidate.sourceUrl))errors.push('Source URL must use HTTPS');
+    if(candidate.hazardId&&!configScenarioEntries(candidate.hazardId).some(entry=>entry.name===candidate.scenarioName))errors.push('Scenario is not backed by connected authoritative metadata');
+    if(candidate.ruleType&&!['point_intersection','raster_identify','published_evidence_review','not_connected'].includes(candidate.ruleType))errors.push('Unsupported screening rule type');
+    if(candidate.resultState&&!EVIDENCE_STATES[candidate.resultState])errors.push('Unsupported result state');
+    if(/\b(safe|cleared|no hazard|professional sign[- ]?off)\b/i.test((candidate.displayLabel||'')+' '+(candidate.caution||'')))errors.push('Wording must not imply safety, clearance or professional sign-off');
+    if(candidate.caution&&!/(screening|not clearance|not a clearance)/i.test(candidate.caution))errors.push('Caution must retain screening/non-clearance wording');
+    return {valid:errors.length===0,errors};
+  }
+
+  function selectedConfigEntry(){
+    const hazardId=document.getElementById('configHazard').value,scenarioName=document.getElementById('configScenario').value;
+    return {hazardId,entry:configScenarioEntries(hazardId).find(item=>item.name===scenarioName)};
+  }
+
+  function renderConfigForm(resetLabel=true){
+    const hazardSelect=document.getElementById('configHazard');
+    if(!hazardSelect.options.length)hazardSelect.innerHTML=HAZARDS.map(item=>'<option value="'+item.id+'">'+escapeHtml(item.name)+'</option>').join('');
+    const hazardId=hazardSelect.value||HAZARDS[0].id,entries=configScenarioEntries(hazardId),scenarioSelect=document.getElementById('configScenario');
+    const prior=scenarioSelect.value;scenarioSelect.innerHTML=entries.map(item=>'<option value="'+escapeHtml(item.name)+'">'+escapeHtml(item.name)+'</option>').join('');
+    if(entries.some(item=>item.name===prior))scenarioSelect.value=prior;
+    const selected=entries.find(item=>item.name===scenarioSelect.value)||entries[0],item=selected&&selected.item;
+    document.getElementById('configSourceOrg').value=item?item.source.organisation:'';document.getElementById('configSourceUrl').value=item?item.source.url:'';document.getElementById('configRuleType').value=item?item.screeningRule.type:'';document.getElementById('configResultState').value=item?item.screeningResult.state:'';
+    if(resetLabel)document.getElementById('configDisplayLabel').value=selected?suggestedScenarioLabel(selected.name):'';
+  }
+
+  function renderConfiguration(){
+    const entities=configurationEntities(),counts=[['Sites',entities.sites.length],['Hazards',entities.hazards.length],['Sources',entities.sources.length],['Scenarios',entities.scenarios.length],['Rule types',entities.rules.length],['Presentation states',entities.presentationStates.length]];
+    document.getElementById('configSummary').innerHTML=counts.map(([label,count])=>'<span class="config-count"><strong>'+count+'</strong>'+label+'</span>').join('');
+    document.getElementById('configStatus').textContent='Published · v'+publishedConfiguration.version+' · '+publishedConfiguration.lastChanged;
+    document.getElementById('configEntities').innerHTML='<div class="entity-row"><strong>Sites</strong><span>'+entities.sites.map(site=>escapeHtml(site.siteId||site.id)).join(' · ')+'</span></div><div class="entity-row"><strong>Hazards</strong><span>'+entities.hazards.map(item=>escapeHtml(item.id)).join(' · ')+'</span></div><div class="entity-row"><strong>Screening rules</strong><span>'+entities.rules.map(escapeHtml).join(' · ')+'</span></div><div class="entity-row"><strong>Presentation states</strong><span>'+entities.presentationStates.map(([id])=>escapeHtml(id)).join(' · ')+'</span></div><div class="entity-row"><strong>Source provenance</strong><span>'+entities.sources.slice(0,10).map(item=>escapeHtml(item.organisation+' · '+item.dataset)).join('<br>')+'</span></div>';
+    renderConfigForm(!document.getElementById('configDisplayLabel').value);
   }
 
   function aggregateScenarioHazard(base,sources,hazardId){
@@ -1300,14 +1384,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
 
   function setDashboardView(view){
-    selectedView=view==='site'?'site':'portfolio';
-    const dashboard=document.querySelector('.dashboard');dashboard.classList.toggle('portfolio-mode',selectedView==='portfolio');
+    selectedView=['site','config'].includes(view)?view:'portfolio';
+    const dashboard=document.querySelector('.dashboard');dashboard.classList.toggle('portfolio-mode',selectedView==='portfolio');dashboard.classList.toggle('config-mode',selectedView==='config');
     document.querySelectorAll('[data-view]').forEach(button=>{const active=button.dataset.view===selectedView;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))});
-    document.getElementById('viewTitle').textContent=selectedView==='portfolio'?'Regional portfolio':currentSite().shortName+' site detail';
-    document.getElementById('viewDescription').textContent=selectedView==='portfolio'?'Compare published screening evidence across all five Bay of Plenty clubs.':'Map, hazard summary and source evidence for the selected clubhouse point.';
+    document.getElementById('viewTitle').textContent=selectedView==='portfolio'?'Regional portfolio':selectedView==='config'?'Screening configuration':currentSite().shortName+' site detail';
+    document.getElementById('viewDescription').textContent=selectedView==='portfolio'?'Compare published screening evidence across all five Bay of Plenty clubs.':selectedView==='config'?'Draft, validate, preview and explicitly publish source-backed configuration changes.':'Map, hazard summary and source evidence for the selected clubhouse point.';
     requestAnimationFrame(()=>{
       if(selectedView==='portfolio'){portfolioMap.invalidateSize({pan:false,animate:false});ensureBasemap();syncPortfolioMarkers()}
-      else{map.invalidateSize({pan:false,animate:false});ensureBasemap();refreshOverlays()}
+      else if(selectedView==='site'){map.invalidateSize({pan:false,animate:false});ensureBasemap();refreshOverlays()}
+      else renderConfiguration();
     });
   }
 
@@ -1409,10 +1494,16 @@ svg.leaflet-image-layer.leaflet-interactive path {
   document.getElementById('portfolioHazard').addEventListener('change',event=>{portfolioHazardId=event.target.value;portfolioScenario='all';portfolioFilter='all';renderPortfolio()});
   document.getElementById('portfolioScenario').addEventListener('change',event=>{portfolioScenario=event.target.value;portfolioFilter='all';renderPortfolio()});
   document.getElementById('portfolioFilters').addEventListener('click',event=>{const button=event.target.closest('[data-portfolio-filter]');if(!button)return;portfolioFilter=button.dataset.portfolioFilter;renderPortfolio()});
+  document.getElementById('configHazard').addEventListener('change',()=>{draftConfiguration=null;draftPreviewed=false;renderConfigForm(true);document.getElementById('configValidation').className='validation-box';document.getElementById('configValidation').textContent='No draft. Published configuration remains active.';document.getElementById('previewDraft').disabled=true;document.getElementById('publishDraft').disabled=true});
+  document.getElementById('configScenario').addEventListener('change',()=>{draftConfiguration=null;draftPreviewed=false;renderConfigForm(true);document.getElementById('previewDraft').disabled=true;document.getElementById('publishDraft').disabled=true});
+  document.getElementById('createDraft').addEventListener('click',()=>{const selected=selectedConfigEntry(),item=selected.entry&&selected.entry.item;const candidate={configId:'scenario-presentation|'+selected.hazardId+'|'+(selected.entry?selected.entry.name:''),hazardId:selected.hazardId,scenarioName:selected.entry?selected.entry.name:'',sourceOrganisation:item?item.source.organisation:'',sourceUrl:item?item.source.url:'',ruleType:item?item.screeningRule.type:'',resultState:item?item.screeningResult.state:'',displayLabel:document.getElementById('configDisplayLabel').value.trim(),caution:document.getElementById('configCaution').value.trim(),configurationVersion:publishedConfiguration.version,changedAt:new Date().toISOString()};const validation=validateConfiguration(candidate),box=document.getElementById('configValidation');box.className='validation-box '+(validation.valid?'valid':'invalid');box.textContent=validation.valid?'Valid draft created. Published configuration remains unchanged until explicit publish.':'Draft rejected: '+validation.errors.join('; ');draftConfiguration=validation.valid?candidate:null;draftPreviewed=false;document.getElementById('previewDraft').disabled=!validation.valid;document.getElementById('publishDraft').disabled=true});
+  document.getElementById('previewDraft').addEventListener('click',()=>{if(!draftConfiguration)return;const rows=Object.values(SITES).map(site=>{const matches=(site.hazards[draftConfiguration.hazardId].sources||[]).filter(item=>item.scenarioModel.name===draftConfiguration.scenarioName),result=matches.length?matches.map(item=>item.screeningResult.displayLabel).join(' · '):'Scenario not connected / unavailable';return '<tr><td>'+escapeHtml(site.shortName)+'</td><td>'+escapeHtml(result)+'</td><td>'+escapeHtml(matches.length?draftConfiguration.displayLabel:'No presentation change')+'</td></tr>'}).join('');document.getElementById('configPreview').innerHTML='<strong>Draft preview · published results unchanged</strong><table class="preview-table"><thead><tr><th>Site</th><th>Current source result</th><th>Draft display</th></tr></thead><tbody>'+rows+'</tbody></table>';draftPreviewed=true;document.getElementById('publishDraft').disabled=false});
+  document.getElementById('publishDraft').addEventListener('click',()=>{if(!draftConfiguration||!draftPreviewed)return;const validation=validateConfiguration(draftConfiguration);if(!validation.valid)return;publishedConfiguration.scenarioLabels[draftConfiguration.hazardId]=publishedConfiguration.scenarioLabels[draftConfiguration.hazardId]||{};publishedConfiguration.scenarioLabels[draftConfiguration.hazardId][draftConfiguration.scenarioName]=draftConfiguration.displayLabel;publishedConfiguration.version='0.7.1';publishedConfiguration.lastChanged=new Date().toISOString().slice(0,10);document.getElementById('configValidation').className='validation-box valid';document.getElementById('configValidation').textContent='Published v0.7.1. Source, scenario, rule, result and evidence provenance are unchanged; only reviewed scenario presentation wording changed.';draftConfiguration=null;draftPreviewed=false;document.getElementById('previewDraft').disabled=true;document.getElementById('publishDraft').disabled=true;renderConfiguration();renderPortfolio()});
+  document.getElementById('runValidation').addEventListener('click',()=>{const selected=selectedConfigEntry(),item=selected.entry&&selected.entry.item,validFixture={configId:'validation-valid',hazardId:selected.hazardId,scenarioName:selected.entry?selected.entry.name:'',sourceOrganisation:item?item.source.organisation:'',sourceUrl:item?item.source.url:'',ruleType:item?item.screeningRule.type:'',resultState:item?item.screeningResult.state:'',displayLabel:'Published scenario evidence',caution:'Screening evidence only; not a clearance.'},invalidFixture={...validFixture,configId:'',sourceUrl:'',displayLabel:'Safe and cleared',caution:''},valid=validateConfiguration(validFixture),invalid=validateConfiguration(invalidFixture),box=document.getElementById('configValidation');box.className='validation-box '+(valid.valid&&!invalid.valid?'valid':'invalid');box.textContent=valid.valid&&!invalid.valid?'Validation tests passed: complete source-backed configuration accepted; missing source/ID and unsafe wording rejected safely.':'Validation test failed; configuration was not published.'});
   document.getElementById('layerToggles').addEventListener('change',event=>{const hazardId=event.target.dataset.hazardLayer;if(!hazardId)return;for(const id of hazardLayerIds(hazardId)){event.target.checked?visibleLayers.add(id):visibleLayers.delete(id)}refreshOverlays()});
   document.querySelectorAll('[data-basemap]').forEach(button=>button.addEventListener('click',()=>setBasemap(button.dataset.basemap)));
   document.getElementById('showSelected').addEventListener('click',showSelectedHazard);
-  document.getElementById('exportEvidence').addEventListener('click',()=>{const site=currentSite();saveJson({project:'Surf Life Saving Natural Hazards Pilot',dashboardVersion:'0.6',exportedAt:new Date().toISOString(),portfolioContext:{hazardId:portfolioHazardId,scenario:portfolioScenario,filter:portfolioFilter},site,evidenceStates:EVIDENCE_STATES,limitation:'Evidence screening only. No-hit and NoData are non-clearance states and never green. No professional rating is provided.'},'sls-'+site.id+'-hazard-evidence-v0.6.json');toast('Evidence export prepared for '+site.shortName+'.')});
+  document.getElementById('exportEvidence').addEventListener('click',()=>{const site=currentSite();saveJson({project:'Surf Life Saving Natural Hazards Pilot',dashboardVersion:'0.7',configurationVersion:publishedConfiguration.version,exportedAt:new Date().toISOString(),portfolioContext:{hazardId:portfolioHazardId,scenario:portfolioScenario,filter:portfolioFilter},site,evidenceStates:EVIDENCE_STATES,limitation:'Evidence screening only. No-hit and NoData are non-clearance states and never green. No professional rating is provided.'},'sls-'+site.id+'-hazard-evidence-v0.7.json');toast('Evidence export prepared for '+site.shortName+'.')});
 
   map.on('moveend zoomend resize',refreshOverlays);
   const resizeMap=()=>requestAnimationFrame(()=>{map.invalidateSize({pan:false,animate:false});portfolioMap.invalidateSize({pan:false,animate:false})});
@@ -1424,10 +1515,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
     new LocalNotice({position:'topleft'}).addTo(map);
   }
 
-  renderRegionalOverview();renderClubList();renderPortfolio();setBasemap(selectedBasemap);renderSite();renderHazardCards();renderEvidence();renderLayerToggles();setDashboardView(selectedView);
+  renderRegionalOverview();renderClubList();renderPortfolio();renderConfiguration();setBasemap(selectedBasemap);renderSite();renderHazardCards();renderEvidence();renderLayerToggles();setDashboardView(selectedView);
   marker.bindPopup('<b>'+SITES.mount.name+'</b><br>'+SITES.mount.address+'<br>'+SITES.mount.lat+', '+SITES.mount.lon+'<br><small>Verified clubhouse point; footprint and lease boundary not verified.</small>');
   resizeMap();refreshOverlays();
-  window.SLSPilot={version:'0.6',sites:SITES,hazards:HAZARDS,layers:LAYERS,evidenceStates:EVIDENCE_STATES,switchSite,switchHazard,setBasemap,setDashboardView,getState:()=>{const position=marker.getLatLng();return {selectedView,selectedSiteId,selectedHazardId,selectedBasemap,portfolioHazardId,portfolioScenario,portfolioFilter,basemapActive:Boolean(basemapLayer&&map.hasLayer(basemapLayer)),portfolioBasemapActive:Boolean(portfolioBasemapLayer&&portfolioMap.hasLayer(portfolioBasemapLayer)),markerLat:position.lat,markerLon:position.lng,visibleLayerIds:[...visibleLayers]}}};
+  window.SLSPilot={version:'0.7',sites:SITES,hazards:HAZARDS,layers:LAYERS,evidenceStates:EVIDENCE_STATES,publishedConfiguration,switchSite,switchHazard,setBasemap,setDashboardView,getState:()=>{const position=marker.getLatLng();return {selectedView,selectedSiteId,selectedHazardId,selectedBasemap,portfolioHazardId,portfolioScenario,portfolioFilter,configurationVersion:publishedConfiguration.version,draftActive:Boolean(draftConfiguration),basemapActive:Boolean(basemapLayer&&map.hasLayer(basemapLayer)),portfolioBasemapActive:Boolean(portfolioBasemapLayer&&portfolioMap.hasLayer(portfolioBasemapLayer)),markerLat:position.lat,markerLon:position.lng,visibleLayerIds:[...visibleLayers]}}};
   </script>
 </body>
 </html>
