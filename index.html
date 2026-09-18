@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="noindex,nofollow">
-  <title>SLS Natural Hazard Pilot v0.5</title>
+  <title>SLS Natural Hazard Pilot v0.6</title>
   <style data-bundled-library="leaflet-1.9.4">/* required styles */
 
 .leaflet-pane,
@@ -761,6 +761,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .portfolio-grid{display:grid;grid-template-columns:minmax(360px,.9fr) minmax(660px,1.65fr);gap:16px;padding:16px;background:var(--paper)}.portfolio-map-card,.portfolio-matrix-card{min-width:0;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}.portfolio-card-head{padding:12px 14px;border-bottom:1px solid var(--line)}.portfolio-card-head strong{display:block;color:var(--navy);font-size:13px}.portfolio-card-head span{display:block;margin-top:3px;color:var(--muted);font-size:10px;line-height:1.4}
     #portfolioMap{height:500px;background:#e8eef1}.portfolio-context{padding:12px 14px;border-top:1px solid var(--line);font-size:10px;line-height:1.5;color:var(--muted)}.portfolio-context strong{display:block;color:var(--navy);font-size:11px;margin-bottom:3px}.portfolio-marker{background:transparent!important;border:0!important}.portfolio-dot{display:grid;place-items:center;width:30px;height:30px;border:3px solid #fff;border-radius:50%;background:var(--teal);color:#fff;box-shadow:0 3px 10px rgba(16,44,69,.4);font-size:10px;font-weight:900}.portfolio-dot.selected{background:#d12e52;transform:scale(1.18)}
     .portfolio-table-wrap{overflow:auto;max-width:100%}.portfolio-table{width:100%;min-width:1030px;border-collapse:separate;border-spacing:0;font-size:10px}.portfolio-table th,.portfolio-table td{padding:8px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);vertical-align:middle}.portfolio-table th:last-child,.portfolio-table td:last-child{border-right:0}.portfolio-table tr:last-child td{border-bottom:0}.portfolio-table thead th{position:sticky;top:0;z-index:2;background:#f3f7f9;color:var(--navy);font-size:9px;line-height:1.25;text-align:left}.portfolio-table thead th:first-child{left:0;z-index:3;min-width:155px}.portfolio-table tbody td:first-child{position:sticky;left:0;z-index:1;background:#fff;min-width:155px}.portfolio-site-button{width:100%;border:0;background:transparent;text-align:left;color:var(--navy);padding:2px}.portfolio-site-button strong{display:block;font-size:11px}.portfolio-site-button span{display:block;color:var(--muted);font-size:9px;line-height:1.3;margin-top:2px}.portfolio-state{display:block;width:100%;min-height:42px;border:1px solid var(--line);border-left-width:4px;border-radius:7px;padding:6px;background:#f8fafb;color:#596875;text-align:left;font-size:9px;font-weight:800;line-height:1.25}.portfolio-state small{display:block;margin-top:3px;font-size:8px;font-weight:600;color:inherit;opacity:.82}.portfolio-state.status-zone{border-color:#efc3cd;border-left-color:#bd3451;background:#fff5f7;color:#9b203c}.portfolio-state.status-reported{border-color:#efcfb4;border-left-color:#cf5d25;background:#fff7f0;color:#9b421a}.portfolio-state.status-hit{border-color:#bfd9e7;border-left-color:#2878a0;background:#f3f9fc;color:#1f6688}.portfolio-state.status-caution{border-color:#ecdba7;border-left-color:#c28a18;background:#fffaf0;color:#805b0f}.portfolio-state.status-neutral{border-color:#dce3e7;border-left-color:#8796a1;background:#f8fafb;color:#596875}.portfolio-foot{padding:11px 14px;border-top:1px solid var(--line);color:var(--muted);font-size:10px;line-height:1.45}.portfolio-legend{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.portfolio-legend span{padding:4px 7px;border-radius:10px;background:#eef2f4;color:#526574;font-size:9px;font-weight:700}
+    .portfolio-controls{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(260px,1.4fr) minmax(360px,2fr);gap:12px;padding:13px 16px;border-bottom:1px solid var(--line);background:#f7fafb}.control-group{min-width:0}.control-group label,.control-label{display:block;margin-bottom:5px;color:#526574;font-size:9px;font-weight:850;letter-spacing:.045em;text-transform:uppercase}.portfolio-select{width:100%;height:35px;border:1px solid #cbd6dc;border-radius:7px;background:#fff;color:var(--navy);padding:0 30px 0 9px;font:700 11px/1.2 inherit}.portfolio-select:disabled{background:#eef2f4;color:#7c8992}.filter-row{display:flex;gap:5px;flex-wrap:wrap}.filter-chip{border:1px solid #cbd6dc;border-radius:16px;background:#fff;color:#526574;padding:7px 9px;font-size:9px;font-weight:800}.filter-chip.active{border-color:var(--teal);background:#dceef0;color:var(--teal-dark)}.completeness-strip{display:flex;gap:6px;flex-wrap:wrap;padding:10px 16px;border-bottom:1px solid var(--line);background:#fff}.completeness-item{min-width:105px;flex:1;padding:7px 9px;border-radius:7px;background:#eef2f4;color:#526574;font-size:9px;line-height:1.3}.completeness-item strong{display:block;color:var(--navy);font-size:15px}.portfolio-table .selected-hazard-column{background:#e8f4f4}.portfolio-table thead .selected-hazard-column{box-shadow:inset 0 -3px 0 var(--teal)}.portfolio-empty{padding:28px;text-align:center;color:var(--muted);font-size:11px}.portfolio-dot.status-zone{background:#bd3451}.portfolio-dot.status-reported{background:#cf5d25}.portfolio-dot.status-hit{background:#2878a0}.portfolio-dot.status-caution{background:#c28a18}.portfolio-dot.status-neutral{background:#8796a1}.portfolio-dot.filtered-out{opacity:.25;filter:grayscale(1)}
     .valence-site-marker{background:transparent!important;border:0!important}
     .site-pin{display:block;position:relative;width:44px;height:44px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#d12e52;border:4px solid #fff;box-shadow:0 4px 13px rgba(16,44,69,.48)}
     .site-pin:before{content:'';position:absolute;inset:7px;border-radius:50%;background:var(--navy);box-shadow:inset 0 0 0 4px #fff}
@@ -782,15 +783,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .toast{position:fixed;right:18px;bottom:18px;z-index:9999;max-width:360px;background:var(--navy);color:#fff;padding:11px 14px;border-radius:8px;box-shadow:0 10px 30px #0004;font-size:12px;line-height:1.4;opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s}
     .toast.show{opacity:1;transform:translateY(0)}
     @media(max-width:1280px){.dashboard{grid-template-columns:210px minmax(520px,1fr) 330px;gap:12px;padding:12px}.overview-strip{grid-template-columns:1fr .55fr .55fr 1.7fr 1fr}.overview-cell{padding:10px 11px}.state{max-width:140px}#map{height:620px}.hazard-status{white-space:normal}}
-    @media(max-width:1100px){.portfolio-grid{grid-template-columns:1fr}.portfolio-map-card{display:grid;grid-template-columns:minmax(0,1fr) 260px}.portfolio-map-card>.portfolio-card-head{grid-column:1/-1}.portfolio-context{border-top:0;border-left:1px solid var(--line)}#portfolioMap{height:390px}}
+    @media(max-width:1100px){.portfolio-controls{grid-template-columns:1fr 1fr}.portfolio-controls .control-group:last-child{grid-column:1/-1}.portfolio-grid{grid-template-columns:1fr}.portfolio-map-card{display:grid;grid-template-columns:minmax(0,1fr) 260px}.portfolio-map-card>.portfolio-card-head{grid-column:1/-1}.portfolio-context{border-top:0;border-left:1px solid var(--line)}#portfolioMap{height:390px}}
     @media(max-width:1000px){.dashboard{display:block;padding:9px}.overview-strip{display:grid;grid-template-columns:1fr 1fr;margin-bottom:10px}.overview-cell{border-left:0;border-top:1px solid var(--line)}.overview-cell:first-child{grid-column:1/-1;border-top:0}.view-toolbar{margin-bottom:10px}.sidebar{position:static;min-height:0;margin-bottom:10px}.map-panel,.right-column,.evidence-panel,.portfolio-panel{margin-bottom:10px}.right-column{display:block}.right-column>.panel{margin-bottom:10px}.evidence-panel{grid-column:auto}#map{height:500px}.method-note{grid-column:auto}.topbar{display:block}.top-status{text-align:left;margin-top:8px}.club-list{grid-template-columns:1fr 1fr}.region-note{margin-bottom:14px}}
-    @media(max-width:700px){.portfolio-grid{padding:9px}.portfolio-map-card{display:block}.portfolio-context{border-left:0;border-top:1px solid var(--line)}#portfolioMap{height:340px}.portfolio-head{display:block}.portfolio-badge{display:inline-flex;margin-top:10px}}
+    @media(max-width:700px){.portfolio-controls{grid-template-columns:1fr}.portfolio-controls .control-group:last-child{grid-column:auto}.portfolio-grid{padding:9px}.portfolio-map-card{display:block}.portfolio-context{border-left:0;border-top:1px solid var(--line)}#portfolioMap{height:340px}.portfolio-head{display:block}.portfolio-badge{display:inline-flex;margin-top:10px}}
     @media(max-width:560px){.club-list{grid-template-columns:1fr}.map-toolbar,.map-foot,.evidence-head,.view-toolbar{display:block}.segmented,.map-actions,.view-switch{margin-top:10px}.view-switch{display:flex}.view-switch button{flex:1}.evidence-grid{grid-template-columns:1fr}.evidence-grid b{margin-top:5px}#map{height:390px}}
   </style>
 </head>
 <body>
   <header class="topbar">
-    <div><div class="brand">VALENCE TEST INSTANCE</div><div class="subtitle">SLS Natural Hazard Pilot v0.5 · Regional Portfolio + Configurable Screening Model</div></div>
+    <div><div class="brand">VALENCE TEST INSTANCE</div><div class="subtitle">SLS Natural Hazard Pilot v0.6 · Portfolio Screening Controls + Scenario Comparison</div></div>
     <div class="top-status">Working pilot<br>Not a safety clearance</div>
   </header>
 
@@ -816,6 +817,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <div><p class="eyebrow">Bay of Plenty pilot</p><h1 id="portfolioTitle">Regional portfolio screening</h1><p>Compare the current published evidence state for five verified clubhouse points. Select any site or hazard cell to drill into the existing site dashboard and its full evidence trail.</p></div>
         <span class="portfolio-badge">Evidence triage · no risk score</span>
       </div>
+      <div class="portfolio-controls" aria-label="Portfolio screening controls">
+        <div class="control-group"><label for="portfolioHazard">Hazard focus</label><select id="portfolioHazard" class="portfolio-select"></select></div>
+        <div class="control-group"><label for="portfolioScenario">Published model / scenario</label><select id="portfolioScenario" class="portfolio-select"></select></div>
+        <div class="control-group"><span class="control-label">Evidence filter</span><div class="filter-row" id="portfolioFilters"></div></div>
+      </div>
+      <div class="completeness-strip" id="completenessStrip" aria-label="Data completeness summary"></div>
       <div class="portfolio-grid">
         <section class="portfolio-map-card" aria-labelledby="portfolioMapTitle">
           <div class="portfolio-card-head"><strong id="portfolioMapTitle">Five-site regional map</strong><span>All markers are verified clubhouse points. Property and lease boundaries are not shown.</span></div>
@@ -1161,6 +1168,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
   let selectedHazardId='tsunami';
   let selectedBasemap='map';
   let selectedView='portfolio';
+  let portfolioHazardId='tsunami';
+  let portfolioScenario='all';
+  let portfolioFilter='all';
   const visibleLayers=new Set(['tsunamiEvac','tsunami2500','tsunami5m']);
   const renderedOverlays={};
   const isLocalFile=window.location.protocol==='file:';
@@ -1198,6 +1208,67 @@ svg.leaflet-image-layer.leaflet-interactive path {
   function currentSite(){return SITES[selectedSiteId]}
   function currentHazard(){return currentSite().hazards[selectedHazardId]}
 
+  function portfolioScenarioOptions(hazardId){
+    const options=new Map();
+    for(const site of Object.values(SITES))for(const item of site.hazards[hazardId].sources||[]){
+      const name=item.scenarioModel&&item.scenarioModel.name;
+      if(name&&!options.has(name))options.set(name,{id:name,label:name,metadata:item.scenarioModel});
+    }
+    return [{id:'all',label:'All published / connected scenarios',metadata:null},...options.values()];
+  }
+
+  function aggregateScenarioHazard(base,sources,hazardId){
+    if(!sources.length)return {state:'unassessed',evidenceState:'unassessed',label:'Unavailable for selected scenario',blurb:'The selected published scenario is not available or connected for this site.',sources:[]};
+    const states=sources.map(item=>item.screeningResult.state),statuses=sources.map(item=>item.queryStatus);
+    let state='unassessed',evidenceState='unassessed';
+    if(states.includes('scenario_result_available')){evidenceState='scenario_result_available';state=statuses.includes('document-evidence')?'published':'hit'}
+    else if(states.includes('no_point_hit_not_clearance')){evidenceState='no_point_hit_not_clearance';state='no-hit'}
+    else if(states.includes('query_returned_nodata')){evidenceState='query_returned_nodata';state='nodata'}
+    else if(states.includes('source_connected')){evidenceState='source_connected';state='source'}
+    else if(states.includes('source_found_scenario_not_connected')){evidenceState='source_found_scenario_not_connected';state='source'}
+    else if(states.includes('source_not_yet_found'))evidenceState='source_not_yet_found';
+    else if(states.includes('source_reviewed_no_suitable_public_dataset'))evidenceState='source_reviewed_no_suitable_public_dataset';
+    const presentation=presentationState(HAZARDS.find(item=>item.id===hazardId),{state,evidenceState});
+    return {state,evidenceState,label:presentation.label,blurb:sources.length+' source result'+(sources.length===1?'':'s')+' matches the selected scenario.',sources};
+  }
+
+  function portfolioHazardForSite(site,hazardId=portfolioHazardId){
+    const base=site.hazards[hazardId];
+    if(hazardId!==portfolioHazardId||portfolioScenario==='all')return base;
+    const matching=(base.sources||[]).filter(item=>item.scenarioModel&&item.scenarioModel.name===portfolioScenario);
+    return aggregateScenarioHazard(base,matching,hazardId);
+  }
+
+  function siteMatchesPortfolioFilter(site){
+    if(portfolioFilter==='all')return true;
+    const state=portfolioHazardForSite(site).evidenceState;
+    if(portfolioFilter==='available')return ['scenario_result_available','no_point_hit_not_clearance','source_connected'].includes(state);
+    if(portfolioFilter==='gaps')return ['source_found_scenario_not_connected','source_not_yet_found','source_reviewed_no_suitable_public_dataset','unassessed'].includes(state);
+    if(portfolioFilter==='nodata')return state==='query_returned_nodata';
+    if(portfolioFilter==='not-connected')return ['source_found_scenario_not_connected','source_not_yet_found'].includes(state);
+    return true;
+  }
+
+  function renderPortfolioControls(){
+    const hazardSelect=document.getElementById('portfolioHazard');
+    hazardSelect.innerHTML=HAZARDS.map(item=>'<option value="'+item.id+'" '+(item.id===portfolioHazardId?'selected':'')+'>'+escapeHtml(item.name)+'</option>').join('');
+    const scenarios=portfolioScenarioOptions(portfolioHazardId);
+    if(!scenarios.some(item=>item.id===portfolioScenario))portfolioScenario='all';
+    const scenarioSelect=document.getElementById('portfolioScenario');
+    scenarioSelect.innerHTML=scenarios.map(item=>'<option value="'+escapeHtml(item.id)+'" '+(item.id===portfolioScenario?'selected':'')+'>'+escapeHtml(item.label)+'</option>').join('');
+    scenarioSelect.disabled=scenarios.length<2;
+    scenarioSelect.title=scenarios.length<2?'No published scenario metadata is connected for this hazard.':'Only scenario metadata retained from authoritative sources is shown.';
+    const filters=[['all','All sites'],['available','Result available'],['gaps','Evidence gaps'],['nodata','NoData'],['not-connected','Scenario/source not connected']];
+    document.getElementById('portfolioFilters').innerHTML=filters.map(([id,label])=>'<button type="button" class="filter-chip '+(id===portfolioFilter?'active':'')+'" data-portfolio-filter="'+id+'" aria-pressed="'+String(id===portfolioFilter)+'">'+label+'</button>').join('');
+  }
+
+  function renderCompleteness(){
+    const counts={scenario_result_available:0,no_point_hit_not_clearance:0,query_returned_nodata:0,source_found_scenario_not_connected:0,other:0};
+    for(const site of Object.values(SITES)){const state=portfolioHazardForSite(site).evidenceState;(state in counts?counts[state]++:counts.other++)}
+    const items=[['Result available',counts.scenario_result_available],['No point hit · not clearance',counts.no_point_hit_not_clearance],['NoData',counts.query_returned_nodata],['Scenario not connected',counts.source_found_scenario_not_connected],['Other / unavailable',counts.other]];
+    document.getElementById('completenessStrip').innerHTML=items.map(([label,count])=>'<span class="completeness-item"><strong>'+count+'</strong>'+escapeHtml(label)+'</span>').join('');
+  }
+
   function renderRegionalOverview(){
     const sites=Object.values(SITES),regions=[...new Set(sites.map(site=>site.region))],authorities=[...new Set(sites.flatMap(site=>site.sourceAuthorities||[site.territorialAuthority,site.regionalCouncil]))];
     document.getElementById('overviewRegion').textContent=(regions.length===1?regions[0]:'Multi-region')+' pilot';
@@ -1209,17 +1280,22 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
   function syncPortfolioMarkers(){
     for(const site of Object.values(SITES)){
-      const selected=site.id===selectedSiteId,icon=L.divIcon({className:'portfolio-marker',html:'<span class="portfolio-dot '+(selected?'selected':'')+'">'+escapeHtml(site.shortName.slice(0,2).toUpperCase())+'</span>',iconSize:[30,30],iconAnchor:[15,15]});
-      portfolioMarkers[site.id].setIcon(icon).setZIndexOffset(selected?1000:0);
+      const selected=site.id===selectedSiteId,hazard=portfolioHazardForSite(site),display=presentationState(HAZARDS.find(item=>item.id===portfolioHazardId),hazard),matches=siteMatchesPortfolioFilter(site);
+      const icon=L.divIcon({className:'portfolio-marker',html:'<span class="portfolio-dot status-'+display.key+' '+(selected?'selected ':'')+(matches?'':'filtered-out')+'">'+escapeHtml(site.shortName.slice(0,2).toUpperCase())+'</span>',iconSize:[30,30],iconAnchor:[15,15]});
+      portfolioMarkers[site.id].setIcon(icon).setZIndexOffset(selected?1000:0).setOpacity(matches?1:.35);
+      portfolioMarkers[site.id].getTooltip().setContent(site.shortName+' · '+display.label);
     }
   }
 
   function renderPortfolio(){
+    renderPortfolioControls();renderCompleteness();
     const authorities=[...new Set(Object.values(SITES).flatMap(site=>site.sourceAuthorities||[]))];
-    document.getElementById('portfolioContext').innerHTML='<strong>Authority and source context</strong>'+escapeHtml(authorities.join(' · '))+'<br><span>Published council and technical evidence is compared at verified points. No overall score or site ranking is generated.</span>';
-    const header='<table class="portfolio-table"><thead><tr><th>Club / authority</th>'+HAZARDS.map(spec=>'<th>'+escapeHtml(spec.name)+'</th>').join('')+'</tr></thead><tbody>';
-    const rows=Object.values(SITES).map(site=>'<tr><td><button type="button" class="portfolio-site-button" data-portfolio-site="'+site.id+'"><strong>'+escapeHtml(site.shortName)+'</strong><span>'+escapeHtml(site.territorialAuthority)+'</span></button></td>'+HAZARDS.map(spec=>{const hazard=site.hazards[spec.id],display=presentationState(spec,hazard),evidence=(EVIDENCE_STATES[hazard.evidenceState]||EVIDENCE_STATES.unassessed).label;return '<td><button type="button" class="portfolio-state status-'+display.key+'" data-portfolio-site="'+site.id+'" data-portfolio-hazard="'+spec.id+'">'+escapeHtml(display.label)+'<small>'+escapeHtml(evidence)+'</small></button></td>'}).join('')+'</tr>').join('');
-    document.getElementById('portfolioMatrix').innerHTML=header+rows+'</tbody></table>';
+    const scenarioLabel=portfolioScenario==='all'?'all connected scenarios':portfolioScenario;
+    document.getElementById('portfolioContext').innerHTML='<strong>'+escapeHtml(HAZARDS.find(item=>item.id===portfolioHazardId).name)+' · '+escapeHtml(scenarioLabel)+'</strong>'+escapeHtml(authorities.join(' · '))+'<br><span>Marker colours show the selected evidence state only. No overall score or site ranking is generated.</span>';
+    const header='<table class="portfolio-table"><thead><tr><th>Club / authority</th>'+HAZARDS.map(spec=>'<th class="'+(spec.id===portfolioHazardId?'selected-hazard-column':'')+'">'+escapeHtml(spec.name)+'</th>').join('')+'</tr></thead><tbody>';
+    const visibleSites=Object.values(SITES).filter(siteMatchesPortfolioFilter);
+    const rows=visibleSites.map(site=>'<tr><td><button type="button" class="portfolio-site-button" data-portfolio-site="'+site.id+'"><strong>'+escapeHtml(site.shortName)+'</strong><span>'+escapeHtml(site.territorialAuthority)+'</span></button></td>'+HAZARDS.map(spec=>{const hazard=portfolioHazardForSite(site,spec.id),display=presentationState(spec,hazard),evidence=(EVIDENCE_STATES[hazard.evidenceState]||EVIDENCE_STATES.unassessed).label;return '<td class="'+(spec.id===portfolioHazardId?'selected-hazard-column':'')+'"><button type="button" class="portfolio-state status-'+display.key+'" data-portfolio-site="'+site.id+'" data-portfolio-hazard="'+spec.id+'">'+escapeHtml(display.label)+'<small>'+escapeHtml(evidence)+'</small></button></td>'}).join('')+'</tr>').join('');
+    document.getElementById('portfolioMatrix').innerHTML=visibleSites.length?header+rows+'</tbody></table>':'<div class="portfolio-empty">No sites match this evidence filter for the selected hazard and scenario.</div>';
     syncPortfolioMarkers();
   }
 
@@ -1298,8 +1374,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
     document.getElementById('hazardDetailTitle').textContent=spec.name+' · '+currentSite().shortName;
     document.getElementById('hazardDetailSummary').textContent=hazard.blurb+' Evidence states are retained exactly; no professional rating is inferred.';
     const display=presentationState(spec,hazard),state=document.getElementById('hazardDetailState');state.className='state '+stateClass(hazard.state);state.textContent=display.label;
-    document.getElementById('hazardEvidence').innerHTML=hazard.sources.map((item,index)=>'<details class="evidence-source" '+(index===0?'open':'')+'><summary><span><span class="source-title">'+escapeHtml(item.source.organisation)+'</span><span class="source-subtitle">'+escapeHtml(item.source.dataset)+' · '+escapeHtml(item.screeningResult.displayLabel)+'</span></span><span class="expand-label">Source → scenario → rule → result</span></summary><div class="evidence-content"><div class="evidence-grid">'+
-      evidenceRow('Evidence state',item.screeningResult.displayLabel)+evidenceRow('Source organisation',item.source.organisation)+evidenceRow('Dataset or layer',item.source.dataset)+evidenceRow('Layer ID',item.source.layerId)+evidenceRow('Source date / version',evidenceValue(item.source.dateOrVersion))+evidenceRow('Scenario / model',evidenceValue(item.scenarioModel.name))+evidenceRow('Scenario identifier',evidenceValue(item.scenarioModel.scenarioId))+evidenceRow('Flood type',evidenceValue(item.scenarioModel.floodType))+evidenceRow('AEP or return period',evidenceValue(item.scenarioModel.returnPeriodAep))+evidenceRow('Planning horizon',evidenceValue(item.scenarioModel.planningHorizon))+evidenceRow('Climate allowance',evidenceValue(item.scenarioModel.climateChangeAllowance))+evidenceRow('Model / publication year',evidenceValue(item.scenarioModel.modelVersion))+evidenceRow('Depth / extent / class',evidenceValue(item.scenarioModel.depthExtentClassification))+evidenceRow('Screening rule',item.screeningRule.description)+evidenceRow('Rule type',item.screeningRule.type)+evidenceRow('Query geometry',item.screeningRule.geometry)+evidenceRow('Screening result',item.screeningResult.evidence)+evidenceRow('Original classification',item.screeningResult.classification)+evidenceRow('Query point',item.queryPoint)+evidenceRow('Date checked',item.screeningResult.checkedAt)+evidenceRow('Provenance / cross-check',item.screeningResult.provenance)+evidenceRow('Limitations',item.limitations)+'<b>Source URL</b><span><a href="'+escapeHtml(item.source.url)+'" target="_blank" rel="noreferrer">Open original source ↗</a></span></div><pre class="attributes">Original returned attributes\n'+escapeHtml(JSON.stringify(item.originalReturnedAttributes,null,2))+'</pre></div></details>').join('');
+    const scenarioSources=selectedHazardId===portfolioHazardId&&portfolioScenario!=='all'?(hazard.sources||[]).filter(item=>item.scenarioModel&&item.scenarioModel.name===portfolioScenario):hazard.sources;
+    document.getElementById('hazardEvidence').innerHTML=scenarioSources.length?scenarioSources.map((item,index)=>'<details class="evidence-source" '+(index===0?'open':'')+'><summary><span><span class="source-title">'+escapeHtml(item.source.organisation)+'</span><span class="source-subtitle">'+escapeHtml(item.source.dataset)+' · '+escapeHtml(item.screeningResult.displayLabel)+'</span></span><span class="expand-label">Source → scenario → rule → result</span></summary><div class="evidence-content"><div class="evidence-grid">'+
+      evidenceRow('Evidence state',item.screeningResult.displayLabel)+evidenceRow('Source organisation',item.source.organisation)+evidenceRow('Dataset or layer',item.source.dataset)+evidenceRow('Layer ID',item.source.layerId)+evidenceRow('Source date / version',evidenceValue(item.source.dateOrVersion))+evidenceRow('Scenario / model',evidenceValue(item.scenarioModel.name))+evidenceRow('Scenario identifier',evidenceValue(item.scenarioModel.scenarioId))+evidenceRow('Flood type',evidenceValue(item.scenarioModel.floodType))+evidenceRow('AEP or return period',evidenceValue(item.scenarioModel.returnPeriodAep))+evidenceRow('Planning horizon',evidenceValue(item.scenarioModel.planningHorizon))+evidenceRow('Climate allowance',evidenceValue(item.scenarioModel.climateChangeAllowance))+evidenceRow('Model / publication year',evidenceValue(item.scenarioModel.modelVersion))+evidenceRow('Depth / extent / class',evidenceValue(item.scenarioModel.depthExtentClassification))+evidenceRow('Screening rule',item.screeningRule.description)+evidenceRow('Rule type',item.screeningRule.type)+evidenceRow('Query geometry',item.screeningRule.geometry)+evidenceRow('Screening result',item.screeningResult.evidence)+evidenceRow('Original classification',item.screeningResult.classification)+evidenceRow('Query point',item.queryPoint)+evidenceRow('Date checked',item.screeningResult.checkedAt)+evidenceRow('Provenance / cross-check',item.screeningResult.provenance)+evidenceRow('Limitations',item.limitations)+'<b>Source URL</b><span><a href="'+escapeHtml(item.source.url)+'" target="_blank" rel="noreferrer">Open original source ↗</a></span></div><pre class="attributes">Original returned attributes\n'+escapeHtml(JSON.stringify(item.originalReturnedAttributes,null,2))+'</pre></div></details>').join(''):'<div class="portfolio-empty">This scenario is not available or connected for '+escapeHtml(currentSite().shortName)+'. No result has been inferred.</div>';
   }
 
   function hazardLayerIds(hazardId){return Object.entries(LAYERS).filter(([,layer])=>layer.hazard===hazardId).map(([id])=>id)}
@@ -1328,11 +1405,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
   document.getElementById('clubList').addEventListener('click',event=>{const button=event.target.closest('[data-club]');if(button)switchSite(button.dataset.club)});
   document.getElementById('hazardCards').addEventListener('click',event=>{const button=event.target.closest('[data-hazard]');if(button)switchHazard(button.dataset.hazard)});
   document.querySelector('.view-switch').addEventListener('click',event=>{const button=event.target.closest('[data-view]');if(button)setDashboardView(button.dataset.view)});
-  document.getElementById('portfolioMatrix').addEventListener('click',event=>{const button=event.target.closest('[data-portfolio-site]');if(!button)return;switchSite(button.dataset.portfolioSite);if(button.dataset.portfolioHazard)switchHazard(button.dataset.portfolioHazard);setDashboardView('site')});
+  document.getElementById('portfolioMatrix').addEventListener('click',event=>{const button=event.target.closest('[data-portfolio-site]');if(!button)return;if(button.dataset.portfolioHazard&&button.dataset.portfolioHazard!==portfolioHazardId){portfolioHazardId=button.dataset.portfolioHazard;portfolioScenario='all'}switchSite(button.dataset.portfolioSite);if(button.dataset.portfolioHazard)switchHazard(button.dataset.portfolioHazard);setDashboardView('site')});
+  document.getElementById('portfolioHazard').addEventListener('change',event=>{portfolioHazardId=event.target.value;portfolioScenario='all';portfolioFilter='all';renderPortfolio()});
+  document.getElementById('portfolioScenario').addEventListener('change',event=>{portfolioScenario=event.target.value;portfolioFilter='all';renderPortfolio()});
+  document.getElementById('portfolioFilters').addEventListener('click',event=>{const button=event.target.closest('[data-portfolio-filter]');if(!button)return;portfolioFilter=button.dataset.portfolioFilter;renderPortfolio()});
   document.getElementById('layerToggles').addEventListener('change',event=>{const hazardId=event.target.dataset.hazardLayer;if(!hazardId)return;for(const id of hazardLayerIds(hazardId)){event.target.checked?visibleLayers.add(id):visibleLayers.delete(id)}refreshOverlays()});
   document.querySelectorAll('[data-basemap]').forEach(button=>button.addEventListener('click',()=>setBasemap(button.dataset.basemap)));
   document.getElementById('showSelected').addEventListener('click',showSelectedHazard);
-  document.getElementById('exportEvidence').addEventListener('click',()=>{const site=currentSite();saveJson({project:'Surf Life Saving Natural Hazards Pilot',dashboardVersion:'0.5',exportedAt:new Date().toISOString(),site,evidenceStates:EVIDENCE_STATES,limitation:'Evidence screening only. No-hit and NoData are non-clearance states and never green. No professional rating is provided.'},'sls-'+site.id+'-hazard-evidence-v0.5.json');toast('Evidence export prepared for '+site.shortName+'.')});
+  document.getElementById('exportEvidence').addEventListener('click',()=>{const site=currentSite();saveJson({project:'Surf Life Saving Natural Hazards Pilot',dashboardVersion:'0.6',exportedAt:new Date().toISOString(),portfolioContext:{hazardId:portfolioHazardId,scenario:portfolioScenario,filter:portfolioFilter},site,evidenceStates:EVIDENCE_STATES,limitation:'Evidence screening only. No-hit and NoData are non-clearance states and never green. No professional rating is provided.'},'sls-'+site.id+'-hazard-evidence-v0.6.json');toast('Evidence export prepared for '+site.shortName+'.')});
 
   map.on('moveend zoomend resize',refreshOverlays);
   const resizeMap=()=>requestAnimationFrame(()=>{map.invalidateSize({pan:false,animate:false});portfolioMap.invalidateSize({pan:false,animate:false})});
@@ -1347,7 +1427,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   renderRegionalOverview();renderClubList();renderPortfolio();setBasemap(selectedBasemap);renderSite();renderHazardCards();renderEvidence();renderLayerToggles();setDashboardView(selectedView);
   marker.bindPopup('<b>'+SITES.mount.name+'</b><br>'+SITES.mount.address+'<br>'+SITES.mount.lat+', '+SITES.mount.lon+'<br><small>Verified clubhouse point; footprint and lease boundary not verified.</small>');
   resizeMap();refreshOverlays();
-  window.SLSPilot={version:'0.5',sites:SITES,hazards:HAZARDS,layers:LAYERS,evidenceStates:EVIDENCE_STATES,switchSite,switchHazard,setBasemap,setDashboardView,getState:()=>{const position=marker.getLatLng();return {selectedView,selectedSiteId,selectedHazardId,selectedBasemap,basemapActive:Boolean(basemapLayer&&map.hasLayer(basemapLayer)),portfolioBasemapActive:Boolean(portfolioBasemapLayer&&portfolioMap.hasLayer(portfolioBasemapLayer)),markerLat:position.lat,markerLon:position.lng,visibleLayerIds:[...visibleLayers]}}};
+  window.SLSPilot={version:'0.6',sites:SITES,hazards:HAZARDS,layers:LAYERS,evidenceStates:EVIDENCE_STATES,switchSite,switchHazard,setBasemap,setDashboardView,getState:()=>{const position=marker.getLatLng();return {selectedView,selectedSiteId,selectedHazardId,selectedBasemap,portfolioHazardId,portfolioScenario,portfolioFilter,basemapActive:Boolean(basemapLayer&&map.hasLayer(basemapLayer)),portfolioBasemapActive:Boolean(portfolioBasemapLayer&&portfolioMap.hasLayer(portfolioBasemapLayer)),markerLat:position.lat,markerLon:position.lng,visibleLayerIds:[...visibleLayers]}}};
   </script>
 </body>
 </html>
