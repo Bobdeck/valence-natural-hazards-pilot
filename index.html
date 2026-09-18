@@ -985,7 +985,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     Object.values(renderedOverlays).forEach(layer=>map.removeLayer(layer));
     Object.keys(renderedOverlays).forEach(key=>delete renderedOverlays[key]);
     for(const id of visibleLayers){const spec=LAYERS[id];if(!spec)continue;const image=L.imageOverlay(mapExportUrl(spec),map.getBounds(),{opacity:spec.opacity,interactive:false,pane:'overlayPane'}).addTo(map);renderedOverlays[id]=image}
-    marker.bringToFront();
+    marker.setZIndexOffset(1000);
   }
 
   function renderClubList(){
