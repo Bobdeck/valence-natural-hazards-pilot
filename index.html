@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="noindex,nofollow">
-  <title>SLS Natural Hazard Pilot v0.3</title>
+  <title>SLS Natural Hazard Pilot v0.3.1</title>
   <style data-bundled-library="leaflet-1.9.4">/* required styles */
 
 .leaflet-pane,
@@ -685,6 +685,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .subtitle{font-size:12px;color:#c9e8e7;margin-top:4px}
     .top-status{text-align:right;font-size:11px;line-height:1.45;color:#dce8ee;text-transform:uppercase;letter-spacing:.05em}
     .dashboard{display:grid;grid-template-columns:240px minmax(600px,1fr) 370px;gap:16px;padding:16px;max-width:1900px;margin:0 auto;align-items:start}
+    .overview-strip{grid-column:1/-1;display:grid;grid-template-columns:1.15fr .65fr .65fr 2fr 1.1fr;align-items:stretch;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+    .overview-cell{min-width:0;padding:12px 15px;border-left:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
+    .overview-cell:first-child{border-left:0;background:linear-gradient(135deg,var(--navy),var(--navy-2));color:#fff}
+    .overview-label{font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+    .overview-cell:first-child .overview-label{color:#a9d9d7}.overview-cell strong{font-size:14px;line-height:1.25;color:var(--navy)}
+    .overview-cell:first-child strong{color:#fff;font-size:17px}.overview-cell small{font-size:10px;line-height:1.35;color:var(--muted);margin-top:2px}
+    .overview-authorities strong{font-size:11px;line-height:1.45}.overview-status strong{display:flex;align-items:center;gap:7px;font-size:12px}
+    .overview-status-dot{width:9px;height:9px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px rgba(23,125,131,.12);flex:0 0 auto}
     .panel{background:var(--white);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);min-width:0;overflow:hidden}
     .panel-head{padding:14px 16px;border-bottom:1px solid var(--line)}
     .panel-head h2{font-size:15px;margin:0;color:var(--navy)}
@@ -721,21 +729,34 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .action{border:0;border-radius:7px;padding:8px 10px;background:var(--teal);color:#fff;font-weight:700;font-size:11px}
     .action.secondary{background:#edf3f6;color:var(--navy)}
     .right-column{display:grid;gap:14px;min-width:0}
-    .site-summary{padding:14px 16px}
-    .site-summary h2{font-size:18px;color:var(--navy);margin:0 0 4px}.address{font-size:12px;color:var(--muted);line-height:1.4;margin:0 0 13px}
-    .site-grid{display:grid;grid-template-columns:108px 1fr;gap:6px 9px;font-size:11px;line-height:1.35}
+    .site-summary{padding:13px 15px}
+    .site-summary h2{font-size:18px;color:var(--navy);margin:0 0 4px}.address{font-size:12px;color:var(--muted);line-height:1.4;margin:0 0 11px}
+    .site-grid{display:grid;grid-template-columns:104px 1fr;gap:5px 9px;font-size:11px;line-height:1.32}
     .site-grid dt{color:var(--muted)}.site-grid dd{margin:0;color:var(--ink);font-weight:650;overflow-wrap:anywhere}
-    .verification{margin-top:12px;padding:9px 10px;background:var(--teal-soft);border-radius:8px;font-size:11px;line-height:1.45;color:var(--navy)}
-    .hazard-list{padding:8px}
-    .hazard-card{display:block;width:100%;text-align:left;border:1px solid transparent;border-bottom-color:#e8eef1;background:#fff;padding:10px 11px;border-radius:8px;color:var(--ink)}
-    .hazard-card:last-child{border-bottom-color:transparent}.hazard-card:hover{background:#f7fafb}
-    .hazard-card.active{border-color:var(--teal);background:var(--teal-soft);box-shadow:inset 3px 0 0 var(--teal)}
-    .hazard-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
-    .hazard-name{font-size:12px;font-weight:750;color:var(--navy)}
+    .verification{margin-top:10px;padding:8px 9px;display:grid;grid-template-columns:23px minmax(0,1fr);gap:8px;background:#f4f8fa;border:1px solid #dce8ed;border-radius:8px;color:var(--ink)}
+    .verification-icon{width:21px;height:21px;border-radius:50%;display:grid;place-items:center;background:#dceef0;color:var(--teal-dark);font-size:11px;font-weight:850}
+    .verification-title{display:block;font-size:11px;color:var(--navy);line-height:1.3}.verification-copy{display:block;margin-top:2px;font-size:10px;line-height:1.4;color:var(--muted)}
+    .verification-links{display:block;margin-top:4px;font-size:10px}
+    .hazard-list{padding:9px;display:grid;gap:7px}
+    .hazard-card{display:grid;grid-template-columns:32px minmax(0,1fr) auto;grid-template-areas:'icon name status' 'icon blurb blurb';column-gap:9px;row-gap:4px;width:100%;text-align:left;border:1px solid var(--line);border-left-width:4px;background:#fff;padding:9px 10px 9px 8px;border-radius:9px;color:var(--ink);transition:transform .12s,box-shadow .12s,border-color .12s}
+    .hazard-card:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(16,44,69,.08)}
+    .hazard-card.active{box-shadow:0 0 0 2px rgba(23,125,131,.3),0 6px 16px rgba(16,44,69,.1)}
+    .hazard-icon{grid-area:icon;align-self:center;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-size:18px;font-weight:800;background:#edf2f4;color:var(--navy)}
+    .hazard-name{grid-area:name;align-self:center;font-size:12px;font-weight:800;color:var(--navy)}
+    .hazard-status{grid-area:status;align-self:center;padding:4px 7px;border-radius:11px;font-size:9px;font-weight:800;line-height:1.2;text-align:right;white-space:nowrap}
+    .hazard-blurb{grid-area:blurb;font-size:10px;line-height:1.35;color:var(--muted)}
+    .hazard-card.status-zone{border-color:#efc3cd;border-left-color:#bd3451;background:#fff5f7}.status-zone .hazard-icon,.status-zone .hazard-status{background:#f8dce3;color:#9b203c}
+    .hazard-card.status-reported{border-color:#efcfb4;border-left-color:#cf5d25;background:#fff7f0}.status-reported .hazard-icon,.status-reported .hazard-status{background:#f8e2d1;color:#9b421a}
+    .hazard-card.status-hit{border-color:#bfd9e7;border-left-color:#2878a0;background:#f3f9fc}.status-hit .hazard-icon,.status-hit .hazard-status{background:#dcecf4;color:#1f6688}
+    .hazard-card.status-caution{border-color:#ecdba7;border-left-color:#c28a18;background:#fffaf0}.status-caution .hazard-icon,.status-caution .hazard-status{background:#f8edc9;color:#805b0f}
+    .hazard-card.status-neutral{border-color:#dce3e7;border-left-color:#8796a1;background:#f8fafb}.status-neutral .hazard-icon,.status-neutral .hazard-status{background:#e9eef1;color:#596875}
     .state{display:inline-flex;align-items:center;max-width:175px;padding:4px 7px;border-radius:10px;font-size:10px;font-weight:750;line-height:1.2;text-align:right}
     .state.hit{background:var(--info-bg);color:var(--info)}.state.published{background:#e9e7f6;color:#51457c}
     .state.no-hit{background:var(--warn-bg);color:var(--warn)}.state.nodata,.state.unassessed,.state.source{background:#eef1f3;color:#596876}
-    .hazard-blurb{font-size:11px;line-height:1.38;color:var(--muted);margin-top:5px}
+    .valence-site-marker{background:transparent!important;border:0!important}
+    .site-pin{display:block;position:relative;width:44px;height:44px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#d12e52;border:4px solid #fff;box-shadow:0 4px 13px rgba(16,44,69,.48)}
+    .site-pin:before{content:'';position:absolute;inset:7px;border-radius:50%;background:var(--navy);box-shadow:inset 0 0 0 4px #fff}
+    .site-pin:after{content:'';position:absolute;inset:-9px;border:2px solid rgba(209,46,82,.45);border-radius:50%;transform:rotate(45deg);pointer-events:none}
     .evidence-panel{grid-column:2/4;min-width:0}
     .evidence-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:16px 18px;border-bottom:1px solid var(--line)}
     .evidence-head h2{font-size:17px;color:var(--navy);margin:0}.evidence-head p{font-size:12px;line-height:1.45;color:var(--muted);margin:5px 0 0}
@@ -752,18 +773,26 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .method-note{grid-column:1/4;padding:12px 16px;color:var(--muted);font-size:11px;line-height:1.5;text-align:center}
     .toast{position:fixed;right:18px;bottom:18px;z-index:9999;max-width:360px;background:var(--navy);color:#fff;padding:11px 14px;border-radius:8px;box-shadow:0 10px 30px #0004;font-size:12px;line-height:1.4;opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s}
     .toast.show{opacity:1;transform:translateY(0)}
-    @media(max-width:1280px){.dashboard{grid-template-columns:210px minmax(520px,1fr) 330px;gap:12px;padding:12px}.state{max-width:140px}#map{height:620px}}
-    @media(max-width:1000px){.dashboard{display:block;padding:9px}.sidebar{position:static;min-height:0;margin-bottom:10px}.map-panel,.right-column,.evidence-panel{margin-bottom:10px}.right-column{display:block}.right-column>.panel{margin-bottom:10px}.evidence-panel{grid-column:auto}#map{height:500px}.method-note{grid-column:auto}.topbar{display:block}.top-status{text-align:left;margin-top:8px}.club-list{grid-template-columns:1fr 1fr}.region-note{margin-bottom:14px}}
+    @media(max-width:1280px){.dashboard{grid-template-columns:210px minmax(520px,1fr) 330px;gap:12px;padding:12px}.overview-strip{grid-template-columns:1fr .55fr .55fr 1.7fr 1fr}.overview-cell{padding:10px 11px}.state{max-width:140px}#map{height:620px}.hazard-status{white-space:normal}}
+    @media(max-width:1000px){.dashboard{display:block;padding:9px}.overview-strip{display:grid;grid-template-columns:1fr 1fr;margin-bottom:10px}.overview-cell{border-left:0;border-top:1px solid var(--line)}.overview-cell:first-child{grid-column:1/-1;border-top:0}.sidebar{position:static;min-height:0;margin-bottom:10px}.map-panel,.right-column,.evidence-panel{margin-bottom:10px}.right-column{display:block}.right-column>.panel{margin-bottom:10px}.evidence-panel{grid-column:auto}#map{height:500px}.method-note{grid-column:auto}.topbar{display:block}.top-status{text-align:left;margin-top:8px}.club-list{grid-template-columns:1fr 1fr}.region-note{margin-bottom:14px}}
     @media(max-width:560px){.club-list{grid-template-columns:1fr}.map-toolbar,.map-foot,.evidence-head{display:block}.segmented,.map-actions{margin-top:10px}.evidence-grid{grid-template-columns:1fr}.evidence-grid b{margin-top:5px}#map{height:390px}}
   </style>
 </head>
 <body>
   <header class="topbar">
-    <div><div class="brand">VALENCE TEST INSTANCE</div><div class="subtitle">SLS Natural Hazard Pilot v0.3 · Region → Club → Hazard</div></div>
+    <div><div class="brand">VALENCE TEST INSTANCE</div><div class="subtitle">SLS Natural Hazard Pilot v0.3.1 · Region → Club → Hazard</div></div>
     <div class="top-status">Working pilot<br>Not a safety clearance</div>
   </header>
 
   <main class="dashboard">
+    <section class="overview-strip" aria-label="Bay of Plenty regional overview">
+      <div class="overview-cell"><span class="overview-label">Regional overview</span><strong>Bay of Plenty pilot</strong><small>Comparative hazard evidence screening</small></div>
+      <div class="overview-cell"><span class="overview-label">Clubs</span><strong>2</strong><small>Verified site points</small></div>
+      <div class="overview-cell"><span class="overview-label">Hazard types</span><strong>7</strong><small>Per club</small></div>
+      <div class="overview-cell overview-authorities"><span class="overview-label">Source authorities</span><strong>Tauranga City Council · Bay of Plenty Regional Council · GNS Science</strong></div>
+      <div class="overview-cell overview-status"><span class="overview-label">Data status</span><strong><span class="overview-status-dot"></span>Published evidence</strong><small>Source links retained</small></div>
+    </section>
+
     <aside class="panel sidebar" aria-label="Region and club selector">
       <p class="eyebrow">Select region</p>
       <select class="region-select" id="regionSelect" aria-label="Region"><option value="bay-of-plenty">Bay of Plenty</option></select>
@@ -801,7 +830,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <div class="verification" id="verificationStatus"></div>
       </section>
       <section class="panel" aria-labelledby="hazardSummaryTitle">
-        <div class="panel-head"><h2 id="hazardSummaryTitle">Hazard summary</h2><p>Choose a hazard to see its source evidence and available map layers.</p></div>
+        <div class="panel-head"><h2 id="hazardSummaryTitle">Hazard summary</h2><p>Published evidence state — not a professional risk rating.</p></div>
         <div class="hazard-list" id="hazardCards"></div>
       </section>
     </aside>
@@ -847,6 +876,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
     {id:'coastalInundation',name:'Coastal inundation'},
     {id:'activeFaults',name:'Active faults'}
   ];
+
+  const HAZARD_ICONS={flooding:'≋',landslide:'▲',liquefaction:'◫',tsunami:'≈',coastalErosion:'↔',coastalInundation:'∿',activeFaults:'╱'};
 
   const LAYERS={
     floodTcc:{name:'TCC rainfall flood',hazard:'flooding',service:SERVICES.tccFlood,layer:1,opacity:.62},
@@ -945,12 +976,22 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
   const map=L.map('map',{zoomControl:true,preferCanvas:true}).setView([SITES.mount.lat,SITES.mount.lon],17);
   const mapElement=document.getElementById('map');
-  let marker=L.marker([SITES.mount.lat,SITES.mount.lon]).addTo(map);
+  const siteIcon=L.divIcon({className:'valence-site-marker',html:'<span class="site-pin" aria-hidden="true"></span>',iconSize:[44,44],iconAnchor:[22,44],popupAnchor:[0,-48]});
+  let marker=L.marker([SITES.mount.lat,SITES.mount.lon],{icon:siteIcon,title:'Selected club location',alt:'Selected club location',zIndexOffset:2000}).addTo(map);
   let basemapLayer=null;
 
   function escapeHtml(value){return String(value==null?'':value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))}
   function toast(message){const el=document.getElementById('toast');el.textContent=message;el.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('show'),2800)}
   function stateClass(state){return ['hit','published','no-hit','nodata','unassessed','source'].includes(state)?state:'unassessed'}
+  function presentationState(spec,hazard){
+    if(hazard.state==='published')return {key:'reported',label:'Reported risk'};
+    if(hazard.state==='hit'&&spec.id==='tsunami')return {key:'zone',label:'Within mapped zone'};
+    if(hazard.state==='hit')return {key:'hit',label:'GIS point hit'};
+    if(hazard.state==='no-hit')return {key:'caution',label:'No point hit — not cleared'};
+    if(hazard.state==='source')return {key:'neutral',label:'No scenario result linked'};
+    if(hazard.state==='nodata')return {key:'neutral',label:'No mapped result'};
+    return {key:'neutral',label:'Unassessed'};
+  }
   function currentSite(){return SITES[selectedSiteId]}
   function currentHazard(){return currentSite().hazards[selectedHazardId]}
 
@@ -986,7 +1027,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     Object.values(renderedOverlays).forEach(layer=>map.removeLayer(layer));
     Object.keys(renderedOverlays).forEach(key=>delete renderedOverlays[key]);
     for(const id of visibleLayers){const spec=LAYERS[id];if(!spec)continue;const image=L.imageOverlay(mapExportUrl(spec),map.getBounds(),{opacity:spec.opacity,interactive:false,pane:'overlayPane'}).addTo(map);renderedOverlays[id]=image}
-    marker.setZIndexOffset(1000);
+    marker.setZIndexOffset(2000);
   }
 
   function renderClubList(){
@@ -1000,13 +1041,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
     document.getElementById('mapContext').textContent=site.address+' · '+site.lat+', '+site.lon;
     document.getElementById('siteSummaryTitle').textContent=site.name;
     document.getElementById('siteAddress').textContent=site.address;
-    document.getElementById('siteGrid').innerHTML='<dt>Region</dt><dd>'+escapeHtml(site.region)+'</dd><dt>Territorial authority</dt><dd>'+escapeHtml(site.territorialAuthority)+'</dd><dt>Regional council</dt><dd>'+escapeHtml(site.regionalCouncil)+'</dd><dt>Coordinates</dt><dd>'+escapeHtml(site.lat+', '+site.lon)+'</dd><dt>Evidence checked</dt><dd>'+escapeHtml(site.checkedDate)+'</dd><dt>Location status</dt><dd>Verified clubhouse point</dd>';
-    document.getElementById('verificationStatus').innerHTML='<strong>Location verification</strong><br>'+escapeHtml(site.locationStatus)+'<br>'+site.locationSources.map((url,index)=>'<a href="'+escapeHtml(url)+'" target="_blank" rel="noreferrer">Source '+(index+1)+' ↗</a>').join(' · ');
+    document.getElementById('siteGrid').innerHTML='<dt>Region</dt><dd>'+escapeHtml(site.region)+'</dd><dt>Territorial authority</dt><dd>'+escapeHtml(site.territorialAuthority)+'</dd><dt>Regional council</dt><dd>'+escapeHtml(site.regionalCouncil)+'</dd><dt>Coordinates</dt><dd>'+escapeHtml(site.lat+', '+site.lon)+'</dd><dt>Evidence checked</dt><dd>'+escapeHtml(site.checkedDate)+'</dd>';
+    const verification=document.getElementById('verificationStatus');verification.title=site.locationStatus;
+    verification.innerHTML='<span class="verification-icon" aria-hidden="true">i</span><span><strong class="verification-title">Clubhouse point used</strong><span class="verification-copy">Approximate location shown · Property and lease boundaries not verified.</span><span class="verification-links">'+site.locationSources.map((url,index)=>'<a href="'+escapeHtml(url)+'" target="_blank" rel="noreferrer">Source '+(index+1)+' ↗</a>').join(' · ')+'</span></span>';
   }
 
   function renderHazardCards(){
     const site=currentSite();
-    document.getElementById('hazardCards').innerHTML=HAZARDS.map(spec=>{const hazard=site.hazards[spec.id];return '<button class="hazard-card '+(spec.id===selectedHazardId?'active':'')+'" data-hazard="'+spec.id+'"><span class="hazard-top"><span class="hazard-name">'+escapeHtml(spec.name)+'</span><span class="state '+stateClass(hazard.state)+'">'+escapeHtml(hazard.label)+'</span></span><span class="hazard-blurb">'+escapeHtml(hazard.blurb)+'</span></button>'}).join('');
+    document.getElementById('hazardCards').innerHTML=HAZARDS.map(spec=>{const hazard=site.hazards[spec.id],display=presentationState(spec,hazard);return '<button class="hazard-card status-'+display.key+' '+(spec.id===selectedHazardId?'active':'')+'" data-hazard="'+spec.id+'"><span class="hazard-icon" aria-hidden="true">'+HAZARD_ICONS[spec.id]+'</span><span class="hazard-name">'+escapeHtml(spec.name)+'</span><span class="hazard-status">'+escapeHtml(display.label)+'</span><span class="hazard-blurb">'+escapeHtml(hazard.blurb)+'</span></button>'}).join('');
   }
 
   function evidenceRow(label,value){return '<b>'+escapeHtml(label)+'</b><span>'+escapeHtml(value)+'</span>'}
@@ -1014,7 +1056,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     const spec=HAZARDS.find(item=>item.id===selectedHazardId),hazard=currentHazard();
     document.getElementById('hazardDetailTitle').textContent=spec.name+' · '+currentSite().shortName;
     document.getElementById('hazardDetailSummary').textContent=hazard.blurb+' Evidence states are retained exactly; no professional rating is inferred.';
-    const state=document.getElementById('hazardDetailState');state.className='state '+stateClass(hazard.state);state.textContent=hazard.label;
+    const display=presentationState(spec,hazard),state=document.getElementById('hazardDetailState');state.className='state '+stateClass(hazard.state);state.textContent=display.label;
     document.getElementById('hazardEvidence').innerHTML=hazard.sources.map((item,index)=>'<details class="evidence-source" '+(index===0?'open':'')+'><summary><span><span class="source-title">'+escapeHtml(item.sourceOrganisation)+'</span><span class="source-subtitle">'+escapeHtml(item.dataset)+' · '+escapeHtml(item.originalClassification)+'</span></span><span class="expand-label">Evidence details</span></summary><div class="evidence-content"><div class="evidence-grid">'+
       evidenceRow('Source organisation',item.sourceOrganisation)+evidenceRow('Dataset or layer',item.dataset)+evidenceRow('Layer ID',item.layerId)+evidenceRow('Original classification',item.originalClassification)+evidenceRow('Finding',item.result)+evidenceRow('Scenario',item.scenario)+evidenceRow('AEP or return period',item.aepReturnPeriod)+evidenceRow('Model or publication year',item.modelPublicationYear)+evidenceRow('Query point',item.queryPoint)+evidenceRow('Query date',item.queryDate)+evidenceRow('Cross-check status',item.crossCheck)+evidenceRow('Limitations',item.limitations)+'<b>Source URL</b><span><a href="'+escapeHtml(item.sourceUrl)+'" target="_blank" rel="noreferrer">Open original source ↗</a></span></div><pre class="attributes">Original returned attributes\n'+escapeHtml(JSON.stringify(item.originalReturnedAttributes,null,2))+'</pre></div></details>').join('');
   }
@@ -1046,7 +1088,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   document.getElementById('layerToggles').addEventListener('change',event=>{const hazardId=event.target.dataset.hazardLayer;if(!hazardId)return;for(const id of hazardLayerIds(hazardId)){event.target.checked?visibleLayers.add(id):visibleLayers.delete(id)}refreshOverlays()});
   document.querySelectorAll('[data-basemap]').forEach(button=>button.addEventListener('click',()=>setBasemap(button.dataset.basemap)));
   document.getElementById('showSelected').addEventListener('click',showSelectedHazard);
-    document.getElementById('exportEvidence').addEventListener('click',()=>{const site=currentSite();saveJson({project:'Surf Life Saving Natural Hazards Pilot',dashboardVersion:'0.3',exportedAt:new Date().toISOString(),site,limitation:'Evidence screening only. No-hit and NoData are unassessed and never green. No professional rating is provided.'},'sls-'+site.id+'-hazard-evidence-v0.3.json');toast('Evidence export prepared for '+site.shortName+'.')});
+    document.getElementById('exportEvidence').addEventListener('click',()=>{const site=currentSite();saveJson({project:'Surf Life Saving Natural Hazards Pilot',dashboardVersion:'0.3.1',exportedAt:new Date().toISOString(),site,limitation:'Evidence screening only. No-hit and NoData are unassessed and never green. No professional rating is provided.'},'sls-'+site.id+'-hazard-evidence-v0.3.1.json');toast('Evidence export prepared for '+site.shortName+'.')});
 
   map.on('moveend zoomend resize',refreshOverlays);
   const resizeMap=()=>requestAnimationFrame(()=>map.invalidateSize({pan:false,animate:false}));
@@ -1061,7 +1103,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   renderClubList();setBasemap(selectedBasemap);renderSite();renderHazardCards();renderEvidence();renderLayerToggles();
   marker.bindPopup('<b>'+SITES.mount.name+'</b><br>'+SITES.mount.address+'<br>'+SITES.mount.lat+', '+SITES.mount.lon+'<br><small>Verified clubhouse point; footprint and lease boundary not verified.</small>');
   resizeMap();refreshOverlays();
-  window.SLSPilot={version:'0.3',sites:SITES,layers:LAYERS,switchSite,switchHazard,setBasemap,getState:()=>({selectedSiteId,selectedHazardId,selectedBasemap,basemapActive:Boolean(basemapLayer&&map.hasLayer(basemapLayer))})};
+  window.SLSPilot={version:'0.3.1',sites:SITES,layers:LAYERS,switchSite,switchHazard,setBasemap,getState:()=>({selectedSiteId,selectedHazardId,selectedBasemap,basemapActive:Boolean(basemapLayer&&map.hasLayer(basemapLayer))})};
   </script>
 </body>
 </html>
