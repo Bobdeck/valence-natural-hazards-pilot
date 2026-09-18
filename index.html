@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="noindex,nofollow">
-  <title>SLS Natural Hazard Pilot v0.8</title>
+  <title>SLS Natural Hazard Pilot v0.8.1</title>
   <style data-bundled-library="leaflet-1.9.4">/* required styles */
 
 .leaflet-pane,
@@ -723,6 +723,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
     #map .leaflet-control{pointer-events:auto}
     #map .leaflet-image-layer{pointer-events:none!important}
     .local-map-notice{max-width:300px;padding:11px 13px;background:#fff7e7;border:1px solid #c98b2c;border-radius:8px;box-shadow:0 2px 8px #0002;color:var(--navy);font:12px/1.45 Aptos,"Segoe UI",Arial,sans-serif}
+    .map-legend-control{width:min(310px,calc(100vw - 70px));border:1px solid #cbd8de;border-radius:9px;background:rgba(255,255,255,.97);box-shadow:0 3px 14px rgba(16,44,69,.2);color:var(--ink);font:11px/1.35 Aptos,"Segoe UI",Arial,sans-serif;overflow:hidden}
+    .map-legend-toggle{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;border:0;background:#fff;color:var(--navy);padding:9px 11px;font-weight:850;text-align:left}.map-legend-toggle:hover,.map-legend-toggle:focus-visible{background:#f1f7f8}.map-legend-chevron{font-size:13px;transition:transform .15s}.map-legend-control.expanded .map-legend-chevron{transform:rotate(180deg)}
+    .map-legend-body{display:none;max-height:360px;overflow:auto;border-top:1px solid var(--line);padding:9px;background:#fff}.map-legend-control.expanded .map-legend-body{display:block}
+    .map-legend-context{margin:0 0 8px;padding:7px 8px;border-radius:6px;background:#f3f7f9;color:var(--muted);font-size:9px;line-height:1.4}.map-legend-context strong{display:block;color:var(--navy);font-size:10px;margin-bottom:2px}
+    .map-legend-layer{padding:8px 0;border-top:1px solid #e4ebee}.map-legend-layer:first-of-type{border-top:0;padding-top:0}.map-legend-layer-name{display:flex;justify-content:space-between;gap:8px;color:var(--navy);font-size:10px;font-weight:850}.map-legend-type{flex:0 0 auto;color:var(--muted);font-size:8px;text-transform:uppercase;letter-spacing:.04em}.map-legend-meta{margin:2px 0 6px;color:var(--muted);font-size:8px;line-height:1.35}
+    .map-legend-item{display:grid;grid-template-columns:24px minmax(0,1fr);align-items:center;gap:7px;margin-top:4px;color:var(--ink);font-size:9px}.map-legend-item img{display:block;width:20px;height:20px;object-fit:contain;image-rendering:auto}.map-legend-empty{padding:8px;color:var(--muted);font-size:9px;line-height:1.45}.map-legend-note{margin-top:6px;padding-top:6px;border-top:1px dashed #d8e1e5;color:var(--muted);font-size:8px;line-height:1.4}
     .layer-section{padding:11px 14px 13px;border-top:1px solid var(--line);background:#fff;position:relative;z-index:2}
     .layer-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px}
     .layer-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border:1px solid var(--line);border-radius:16px;background:#fff;color:var(--ink);font-size:11px;font-weight:600}
@@ -794,7 +800,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 </head>
 <body>
   <header class="topbar">
-    <div><div class="brand">VALENCE TEST INSTANCE</div><div class="subtitle">SLS Natural Hazard Pilot v0.8 · Screening Reporting + Export</div></div>
+    <div><div class="brand">VALENCE TEST INSTANCE</div><div class="subtitle">SLS Natural Hazard Pilot v0.8.1 · Map Legend Hotfix</div></div>
     <div class="top-status">Working pilot<br>Not a safety clearance</div>
   </header>
 
@@ -978,16 +984,42 @@ svg.leaflet-image-layer.leaflet-interactive path {
     unassessed:{label:'Unassessed',description:'No assessment has yet been completed for this evidence need.'}
   };
 
+  const AUTHORITATIVE_LEGENDS={
+    tccFlood:[
+      ['Floodplain','iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAQklEQVQ4jWNh8ClxYGBgAGFqgAMsEMP+11PHPEYGkIFUBSyjBlIMWCg3AhWMGkg5YKGCGShg1MCREoYHQCUtlcABACZXBZHOEcKbAAAAAElFTkSuQmCC'],
+      ['Major Overland Flowpath','iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAQklEQVQ4jWPxYShxYGBgAGFqgAMsEMP+11PHPEYGkIFUBSyjBlIMWCg3AhWMGkg5YKGCGShg1MCREoYHQCUtlcABACajBZGOWfmXAAAAAElFTkSuQmCC'],
+      ['Minor Overland Flowpath','iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAR0lEQVQ4je3UsQkAIBBD0Y9kMDdzNcG9VAQb60vn/QFekSIarFqgYmhC18WaAyyAMKcEwylOvCUYTwbjKcE/NpzQz9M6OtYG/HsIlLPy6EkAAAAASUVORK5CYII='],
+      ['Flood Prone Area Flood depth 300mm or more','iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAPklEQVQ4jWNhKPjvwMDAAMLUAAdYoIbVU8lABpCBVAUsowZSDFgoNwIVjBpIOWChghkoYNTAkRKGB6ho3gEAe7oFP0FgnzEAAAAASUVORK5CYII='],
+      ['Flood Prone Area Flood depth 100mm-299mm','iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAASklEQVQ4je3UsRGAMAxD0U9Og2UoelbzJmzicClTWx3+A7xChXS/azKYOEpCG1vwOLxrgDCnBsupTpw1WE8G46jBf2yYxH5aS0l8heQKJSZpa28AAAAASUVORK5CYII=']
+    ],
+    historicFlood:[['Published source symbol','iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAATElEQVQ4jWNhUCvZysDIYMdADfCf4RAL2DA1k2VUMfDWmSgWBioDllEDKQYslBuBCkYNpBywUMEMFDBq4MgIw/8Mh0AlLVVM+89wCABwuAxhgwwh+QAAAABJRU5ErkJggg==']],
+    liquefaction:[
+      ['Possible','iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAATElEQVQ4je3UMRHAMAxDUUcnYGFWCKUUFmWj5Dxmtrb6A3iDBnF/7xQ0wxCExcRGjMcBCgqGOTZYjnXirsF6NBhXDf5iQwgrn9ZRWgd84BE1pkxt5AAAAABJRU5ErkJggg=='],
+      ['Undetermined','iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAPklEQVQ4jWPZv3+/AwMDAwhTAxxggRpWTyUDGUAGUhWwjBpIMWCh3AhUMGog5YCFCmaggFEDR0oYHqCieQcAkwAGDWV52BkAAAAASUVORK5CYII='],
+      ['Unlikely','iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAATUlEQVQ4jWOZf3uzA9M/BgcGKoB/TAwHWMCGMTLWU8NApn//GVgYqAxYRg2kGLBQbgQqGDWQcsBCBTNQwKiBIyIM/zExHACVtNQAILMA3YsO/fy49g8AAAAASUVORK5CYII='],
+      ['High','iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAATklEQVQ4jWO5HKLh8O8fgwMDFQATE8MBFpBhjAz/66lh4L9/jAwsDFQGLKMGUgxYKDcCFYwaSDlgoYIZKGDUwBERhkxMDAdAJS01AMgsACm8Dh1So2MeAAAAAElFTkSuQmCC'],
+      ['Medium','iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAASUlEQVQ4je3UMREAIAxD0cBFEBJwhhDMVFnhOCbmZqNfwBsyhGu2jooORQ7jxdaQgLWAEMcEwzFOvCUYTwbjKcE/NnTYeVpJDtspfwmdeWnRkQAAAABJRU5ErkJggg=='],
+      ['Low','iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAARklEQVQ4jWOx2X3agYHhnwMDVQDTARaIYYz11DHwHwMLA5UBy6iBFAMWyo1ABaMGUg5YqGAGChg1cISEIdMBUElLHcB0AADC/AmRdRAE+wAAAABJRU5ErkJggg=='],
+      ['Very low','iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAS0lEQVQ4jWNRSVnvwMDE5MBADfDv3wEWsGH/GeqpYiATEwMLA5UBy6iBFAMWyo1ABaMGUg5YqGAGChg1cGSE4b9/B0AlLVXAv38HAO8aDAoE9OAqAAAAAElFTkSuQmCC']
+    ],
+    tsunamiEvac:[
+      ['Estuary/Sea','iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAATUlEQVQ4jWNRmf7cgYHpnwMDNcA/pgMsIMP+MzDWU8M8RqZ/DCwMVAYsowZSDFgoNwIVjBpIOWChghkoYNTAkRGG/5gOgEpaqoB/TAcAZy4NdMzmqh8AAAAASUVORK5CYII='],
+      ['Land','iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAATklEQVQ4je3UsRGAMAxDUfmiPYBF2Jp9UrFFTpzL1FaH/wCvUCFez3uMiBOGljSZmIDbAY4IEObYYDnWib0G69FgbDX4iw2XNPNpHaX1AYuyD04WLkRcAAAAAElFTkSuQmCC']
+    ],
+    tsunamiModel:[['Published source symbol','iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAATElEQVQ4je3UIQ4AIAxD0YoeDE4ON4NUQDbdyX1FEC8EUQI4KIzhvE1rRFDYNMElNL6wJDZoR5/INejHAiPVoN/7Q42j9swpDey/cLsNrQXPp9cQngAAAABJRU5ErkJggg==']],
+    activeFaults:[['Published source symbol','iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAQklEQVQ4jWNhoDJgGTWQYsBCuRGoYCQb+J+BYT8ONQcZGRgaCMkz0NyFjAwMjvgUEpIfgpFCLcBCNZOgYNRABooBAHp4BtX2t3wMAAAAAElFTkSuQmCC']]
+  };
+
   const LAYERS={
-    floodTcc:{name:'TCC rainfall flood',hazard:'flooding',service:SERVICES.tccFlood,layer:1,opacity:.62},
-    historicFlood:{name:'BOPRC historic flood',hazard:'flooding',service:SERVICES.bopHazards,layer:5,opacity:.62},
-    liquefactionB:{name:'Liquefaction Level B',hazard:'liquefaction',service:SERVICES.bopHazards,layer:11,opacity:.62},
-    liquefactionA:{name:'Liquefaction Level A',hazard:'liquefaction',service:SERVICES.bopHazards,layer:10,opacity:.62},
-    tsunamiEvac:{name:'Tsunami evacuation',hazard:'tsunami',service:SERVICES.bopHazards,layer:6,opacity:.58},
-    tsunami2500:{name:'Tsunami 2,500-year',hazard:'tsunami',service:SERVICES.bopHazards,layer:105,opacity:.78},
-    tsunami5m:{name:'Tsunami 5 m',hazard:'tsunami',service:SERVICES.bopHazards,layer:106,opacity:.78},
-    tsunami2m:{name:'Tsunami 2 m',hazard:'tsunami',service:SERVICES.bopHazards,layer:107,opacity:.78},
-    activeFaults:{name:'Active faults',hazard:'activeFaults',service:SERVICES.bopHazards,layer:1,opacity:.8}
+    floodTcc:{name:'TCC rainfall flood',hazard:'flooding',service:SERVICES.tccFlood,layer:1,opacity:.62,sourceOrganisation:'Tauranga City Council',dataset:'ePlan Natural Hazards · Flood Risk',legendType:'range',legendSpec:AUTHORITATIVE_LEGENDS.tccFlood},
+    historicFlood:{name:'BOPRC historic flood',hazard:'flooding',service:SERVICES.bopHazards,layer:5,opacity:.62,sourceOrganisation:'Bay of Plenty Regional Council',dataset:'Historic Flood Extents',legendType:'symbol',legendSpec:AUTHORITATIVE_LEGENDS.historicFlood},
+    liquefactionB:{name:'Liquefaction Level B',hazard:'liquefaction',service:SERVICES.bopHazards,layer:11,opacity:.62,sourceOrganisation:'Bay of Plenty Regional Council',dataset:'Liquefaction · Level B (Detailed Assessment)',legendType:'categorical',legendSpec:AUTHORITATIVE_LEGENDS.liquefaction},
+    liquefactionA:{name:'Liquefaction Level A',hazard:'liquefaction',service:SERVICES.bopHazards,layer:10,opacity:.62,sourceOrganisation:'Bay of Plenty Regional Council',dataset:'Liquefaction · Level A (Basic Desktop Assessment)',legendType:'categorical',legendSpec:AUTHORITATIVE_LEGENDS.liquefaction},
+    tsunamiEvac:{name:'Tsunami evacuation',hazard:'tsunami',service:SERVICES.bopHazards,layer:6,opacity:.58,sourceOrganisation:'Bay of Plenty Regional Council',dataset:'Tsunami Evacuation Zone',legendType:'categorical',legendSpec:AUTHORITATIVE_LEGENDS.tsunamiEvac},
+    tsunami2500:{name:'Tsunami 2,500-year',hazard:'tsunami',service:SERVICES.bopHazards,layer:105,opacity:.78,sourceOrganisation:'Bay of Plenty Regional Council',dataset:'Tsunami Inundation Max Depth · 2,500 year ARI',legendType:'symbol',legendSpec:AUTHORITATIVE_LEGENDS.tsunamiModel},
+    tsunami5m:{name:'Tsunami 5 m',hazard:'tsunami',service:SERVICES.bopHazards,layer:106,opacity:.78,sourceOrganisation:'Bay of Plenty Regional Council',dataset:'Tsunami Inundation Max Depth · 5 m wave above MHWS',legendType:'symbol',legendSpec:AUTHORITATIVE_LEGENDS.tsunamiModel},
+    tsunami2m:{name:'Tsunami 2 m',hazard:'tsunami',service:SERVICES.bopHazards,layer:107,opacity:.78,sourceOrganisation:'Bay of Plenty Regional Council',dataset:'Tsunami Inundation Max Depth · 2 m wave above MHWS',legendType:'symbol',legendSpec:AUTHORITATIVE_LEGENDS.tsunamiModel},
+    activeFaults:{name:'Active faults',hazard:'activeFaults',service:SERVICES.bopHazards,layer:1,opacity:.8,sourceOrganisation:'Bay of Plenty Regional Council / GNS QMAP',dataset:'Active Faults',legendType:'symbol',legendSpec:AUTHORITATIVE_LEGENDS.activeFaults}
   };
 
   function evidenceStateFromQuery(queryStatus){
@@ -1211,6 +1243,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
   let portfolioFilter='all';
   let draftConfiguration=null;
   let draftPreviewed=false;
+  let legendExpanded=false;
+  let legendContainer=null;
+  let legendBody=null;
+  let legendToggle=null;
   const publishedConfiguration={version:'0.7.0',lastChanged:'2026-09-18',scenarioLabels:{}};
   const visibleLayers=new Set(['tsunamiEvac','tsunami2500','tsunami5m']);
   const renderedOverlays={};
@@ -1220,6 +1256,18 @@ svg.leaflet-image-layer.leaflet-interactive path {
   const mapElement=document.getElementById('map');
   const siteIcon=L.divIcon({className:'valence-site-marker',html:'<span class="site-pin" aria-hidden="true"></span>',iconSize:[44,44],iconAnchor:[22,44],popupAnchor:[0,-48]});
   let marker=L.marker([SITES.mount.lat,SITES.mount.lon],{icon:siteIcon,title:'Selected club location',alt:'Selected club location',zIndexOffset:2000}).addTo(map);
+  const MapLegend=L.Control.extend({
+    onAdd(){
+      legendContainer=L.DomUtil.create('section','map-legend-control');
+      legendContainer.setAttribute('aria-label','Map layer legend');
+      legendContainer.innerHTML='<button type="button" class="map-legend-toggle" aria-expanded="false"><span>Legend</span><span class="map-legend-chevron" aria-hidden="true">⌄</span></button><div class="map-legend-body"></div>';
+      legendToggle=legendContainer.querySelector('.map-legend-toggle');legendBody=legendContainer.querySelector('.map-legend-body');
+      L.DomEvent.disableClickPropagation(legendContainer);L.DomEvent.disableScrollPropagation(legendContainer);
+      legendToggle.addEventListener('click',()=>{legendExpanded=!legendExpanded;renderLegend()});
+      renderLegend();return legendContainer;
+    }
+  });
+  new MapLegend({position:'bottomright'}).addTo(map);
   let basemapLayer=null;
   const portfolioMap=L.map('portfolioMap',{zoomControl:true,preferCanvas:true,scrollWheelZoom:false});
   const portfolioBounds=L.latLngBounds(Object.values(SITES).map(site=>[site.lat,site.lon]));
@@ -1331,7 +1379,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     return '<div class="report-title"><h2>'+escapeHtml(title)+'</h2><p>'+escapeHtml(subtitle)+'</p></div><div class="report-warning">VALENCE TEST INSTANCE · SCREENING ONLY · NOT A SAFETY CLEARANCE. No overall professional risk score is provided. NoData and no-point-hit results are not clearance.</div>';
   }
   function reportMeta(scope){
-    return '<div class="report-meta"><span>Report version<strong>v0.8.0</strong></span><span>Configuration<strong>v'+escapeHtml(publishedConfiguration.version)+'</strong></span><span>Generated<strong>'+escapeHtml(new Date().toISOString())+'</strong></span><span>Scope<strong>'+escapeHtml(scope)+'</strong></span></div>';
+    return '<div class="report-meta"><span>Report version<strong>v0.8.1</strong></span><span>Configuration<strong>v'+escapeHtml(publishedConfiguration.version)+'</strong></span><span>Generated<strong>'+escapeHtml(new Date().toISOString())+'</strong></span><span>Scope<strong>'+escapeHtml(scope)+'</strong></span></div>';
   }
   function renderSiteReport(site,hazardId){
     const selected=site.hazards[hazardId],spec=HAZARDS.find(item=>item.id===hazardId),display=presentationState(spec,selected);
@@ -1473,11 +1521,33 @@ svg.leaflet-image-layer.leaflet-interactive path {
     return layer.service+'/export?'+params.toString();
   }
 
+  function legendEvidenceForLayer(spec){
+    const hazard=currentSite().hazards[spec.hazard];
+    if(!hazard)return null;
+    const matching=(hazard.sources||[]).filter(item=>String(item.source&&item.source.layerId)===String(spec.layer)&&String(item.source&&item.source.url||'').startsWith(spec.service));
+    if(spec.hazard===portfolioHazardId&&portfolioScenario!=='all')return matching.find(item=>item.scenarioModel&&item.scenarioModel.name===portfolioScenario)||matching[0]||null;
+    return matching[0]||null;
+  }
+
+  function renderLegend(){
+    if(!legendContainer||!legendBody||!legendToggle)return;
+    legendContainer.classList.toggle('expanded',legendExpanded);legendToggle.setAttribute('aria-expanded',String(legendExpanded));
+    const activeIds=Object.keys(LAYERS).filter(id=>visibleLayers.has(id));
+    const context='<div class="map-legend-context"><strong>'+escapeHtml(currentSite().shortName)+' · active map layers</strong>Source symbology only. Screening-status card colours are separate.</div>';
+    if(!activeIds.length){legendBody.innerHTML=context+'<div class="map-legend-empty">No hazard layers are active.</div>';return}
+    legendBody.innerHTML=context+activeIds.map(id=>{
+      const spec=LAYERS[id],evidence=legendEvidenceForLayer(spec),scenario=evidence&&evidence.scenarioModel&&evidence.scenarioModel.name?evidence.scenarioModel.name:'No connected scenario result for this site',items=Array.isArray(spec.legendSpec)?spec.legendSpec:[];
+      const symbols=items.length?items.map(item=>'<div class="map-legend-item"><img src="data:image/png;base64,'+item[1]+'" alt=""><span>'+escapeHtml(item[0])+'</span></div>').join(''):'<div class="map-legend-empty">Legend not published / not yet connected</div>';
+      return '<section class="map-legend-layer" data-legend-layer="'+escapeHtml(id)+'"><div class="map-legend-layer-name"><span>'+escapeHtml(spec.name)+'</span><span class="map-legend-type">'+escapeHtml(spec.legendType||'symbol')+'</span></div><div class="map-legend-meta">'+escapeHtml(spec.sourceOrganisation)+' · Layer '+escapeHtml(spec.layer)+'<br>'+escapeHtml(spec.dataset)+'<br>'+escapeHtml(scenario)+'</div>'+symbols+'<div class="map-legend-note">Verified ArcGIS source-service legend · not a screening or risk rating.</div></section>';
+    }).join('');
+  }
+
   function refreshOverlays(){
     Object.values(renderedOverlays).forEach(layer=>map.removeLayer(layer));
     Object.keys(renderedOverlays).forEach(key=>delete renderedOverlays[key]);
     for(const id of visibleLayers){const spec=LAYERS[id];if(!spec)continue;const image=L.imageOverlay(mapExportUrl(spec),map.getBounds(),{opacity:spec.opacity,interactive:false,pane:'overlayPane'}).addTo(map);renderedOverlays[id]=image}
     marker.setZIndexOffset(2000);
+    renderLegend();
   }
 
   function renderClubList(){
@@ -1550,11 +1620,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
   document.getElementById('publishDraft').addEventListener('click',()=>{if(!draftConfiguration||!draftPreviewed)return;const validation=validateConfiguration(draftConfiguration);if(!validation.valid)return;publishedConfiguration.scenarioLabels[draftConfiguration.hazardId]=publishedConfiguration.scenarioLabels[draftConfiguration.hazardId]||{};publishedConfiguration.scenarioLabels[draftConfiguration.hazardId][draftConfiguration.scenarioName]=draftConfiguration.displayLabel;publishedConfiguration.version='0.7.1';publishedConfiguration.lastChanged=new Date().toISOString().slice(0,10);document.getElementById('configValidation').className='validation-box valid';document.getElementById('configValidation').textContent='Published v0.7.1. Source, scenario, rule, result and evidence provenance are unchanged; only reviewed scenario presentation wording changed.';draftConfiguration=null;draftPreviewed=false;document.getElementById('previewDraft').disabled=true;document.getElementById('publishDraft').disabled=true;renderConfiguration();renderPortfolio()});
   document.getElementById('runValidation').addEventListener('click',()=>{const selected=selectedConfigEntry(),item=selected.entry&&selected.entry.item,validFixture={configId:'validation-valid',hazardId:selected.hazardId,scenarioName:selected.entry?selected.entry.name:'',sourceOrganisation:item?item.source.organisation:'',sourceUrl:item?item.source.url:'',ruleType:item?item.screeningRule.type:'',resultState:item?item.screeningResult.state:'',displayLabel:'Published scenario evidence',caution:'Screening evidence only; not a clearance.'},invalidFixture={...validFixture,configId:'',sourceUrl:'',displayLabel:'Safe and cleared',caution:''},valid=validateConfiguration(validFixture),invalid=validateConfiguration(invalidFixture),box=document.getElementById('configValidation');box.className='validation-box '+(valid.valid&&!invalid.valid?'valid':'invalid');box.textContent=valid.valid&&!invalid.valid?'Validation tests passed: complete source-backed configuration accepted; missing source/ID and unsafe wording rejected safely.':'Validation test failed; configuration was not published.'});
   document.getElementById('reportType').addEventListener('change',renderReport);document.getElementById('reportSite').addEventListener('change',renderReport);document.getElementById('reportHazard').addEventListener('change',renderReport);document.getElementById('refreshReport').addEventListener('click',renderReport);document.getElementById('printReport').addEventListener('click',()=>window.print());
-  document.getElementById('downloadReportData').addEventListener('click',()=>{const type=document.getElementById('reportType').value,siteId=document.getElementById('reportSite').value,hazardId=document.getElementById('reportHazard').value,data={project:'SLS Natural Hazard Pilot',reportVersion:'0.8.0',configurationVersion:publishedConfiguration.version,generatedAt:new Date().toISOString(),type,selectedHazardId:hazardId,scenarioContext:reportScenarioContext(hazardId),limitation:'TEST INSTANCE. Screening only. Not a safety clearance. NoData and no-point-hit are not clearance.',sites:type==='site'?[SITES[siteId]]:Object.values(SITES),evidenceStates:EVIDENCE_STATES};saveJson(data,'sls-'+type+'-screening-report-data-v0.8.json');toast('Report data download prepared.')});
+  document.getElementById('downloadReportData').addEventListener('click',()=>{const type=document.getElementById('reportType').value,siteId=document.getElementById('reportSite').value,hazardId=document.getElementById('reportHazard').value,data={project:'SLS Natural Hazard Pilot',reportVersion:'0.8.1',configurationVersion:publishedConfiguration.version,generatedAt:new Date().toISOString(),type,selectedHazardId:hazardId,scenarioContext:reportScenarioContext(hazardId),limitation:'TEST INSTANCE. Screening only. Not a safety clearance. NoData and no-point-hit are not clearance.',sites:type==='site'?[SITES[siteId]]:Object.values(SITES),evidenceStates:EVIDENCE_STATES};saveJson(data,'sls-'+type+'-screening-report-data-v0.8.1.json');toast('Report data download prepared.')});
   document.getElementById('layerToggles').addEventListener('change',event=>{const hazardId=event.target.dataset.hazardLayer;if(!hazardId)return;for(const id of hazardLayerIds(hazardId)){event.target.checked?visibleLayers.add(id):visibleLayers.delete(id)}refreshOverlays()});
   document.querySelectorAll('[data-basemap]').forEach(button=>button.addEventListener('click',()=>setBasemap(button.dataset.basemap)));
   document.getElementById('showSelected').addEventListener('click',showSelectedHazard);
-  document.getElementById('exportEvidence').addEventListener('click',()=>{const site=currentSite();saveJson({project:'Surf Life Saving Natural Hazards Pilot',dashboardVersion:'0.8',configurationVersion:publishedConfiguration.version,exportedAt:new Date().toISOString(),portfolioContext:{hazardId:portfolioHazardId,scenario:portfolioScenario,filter:portfolioFilter},site,evidenceStates:EVIDENCE_STATES,limitation:'Evidence screening only. No-hit and NoData are non-clearance states and never green. No professional rating is provided.'},'sls-'+site.id+'-hazard-evidence-v0.8.json');toast('Evidence export prepared for '+site.shortName+'.')});
+  document.getElementById('exportEvidence').addEventListener('click',()=>{const site=currentSite();saveJson({project:'Surf Life Saving Natural Hazards Pilot',dashboardVersion:'0.8.1',configurationVersion:publishedConfiguration.version,exportedAt:new Date().toISOString(),portfolioContext:{hazardId:portfolioHazardId,scenario:portfolioScenario,filter:portfolioFilter},site,evidenceStates:EVIDENCE_STATES,limitation:'Evidence screening only. No-hit and NoData are non-clearance states and never green. No professional rating is provided.'},'sls-'+site.id+'-hazard-evidence-v0.8.1.json');toast('Evidence export prepared for '+site.shortName+'.')});
 
   map.on('moveend zoomend resize',refreshOverlays);
   const resizeMap=()=>requestAnimationFrame(()=>{map.invalidateSize({pan:false,animate:false});portfolioMap.invalidateSize({pan:false,animate:false})});
@@ -1569,7 +1639,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   renderRegionalOverview();renderClubList();renderPortfolio();renderConfiguration();renderReportControls();renderReport();setBasemap(selectedBasemap);renderSite();renderHazardCards();renderEvidence();renderLayerToggles();setDashboardView(selectedView);
   marker.bindPopup('<b>'+SITES.mount.name+'</b><br>'+SITES.mount.address+'<br>'+SITES.mount.lat+', '+SITES.mount.lon+'<br><small>Verified clubhouse point; footprint and lease boundary not verified.</small>');
   resizeMap();refreshOverlays();
-  window.SLSPilot={version:'0.8',sites:SITES,hazards:HAZARDS,layers:LAYERS,evidenceStates:EVIDENCE_STATES,publishedConfiguration,switchSite,switchHazard,setBasemap,setDashboardView,getState:()=>{const position=marker.getLatLng();return {selectedView,selectedSiteId,selectedHazardId,selectedBasemap,portfolioHazardId,portfolioScenario,portfolioFilter,configurationVersion:publishedConfiguration.version,draftActive:Boolean(draftConfiguration),reportType:document.getElementById('reportType').value,basemapActive:Boolean(basemapLayer&&map.hasLayer(basemapLayer)),portfolioBasemapActive:Boolean(portfolioBasemapLayer&&portfolioMap.hasLayer(portfolioBasemapLayer)),markerLat:position.lat,markerLon:position.lng,visibleLayerIds:[...visibleLayers]}}};
+  window.SLSPilot={version:'0.8.1',sites:SITES,hazards:HAZARDS,layers:LAYERS,evidenceStates:EVIDENCE_STATES,publishedConfiguration,switchSite,switchHazard,setBasemap,setDashboardView,getState:()=>{const position=marker.getLatLng();return {selectedView,selectedSiteId,selectedHazardId,selectedBasemap,portfolioHazardId,portfolioScenario,portfolioFilter,configurationVersion:publishedConfiguration.version,draftActive:Boolean(draftConfiguration),reportType:document.getElementById('reportType').value,basemapActive:Boolean(basemapLayer&&map.hasLayer(basemapLayer)),portfolioBasemapActive:Boolean(portfolioBasemapLayer&&portfolioMap.hasLayer(portfolioBasemapLayer)),markerLat:position.lat,markerLon:position.lng,visibleLayerIds:[...visibleLayers],legendExpanded,legendLayerIds:Object.keys(LAYERS).filter(id=>visibleLayers.has(id))}}};
   </script>
 </body>
 </html>
