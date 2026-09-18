@@ -1,5 +1,5 @@
 VALENCE | SURF LIFE SAVING NATURAL HAZARDS PILOT
-Dashboard v0.7 | configurable screening administration | checked 18 September 2026 NZST
+Dashboard v0.8 | screening reporting and export | checked 18 September 2026 NZST
 
 HOSTED TEST INSTANCE
 The live review environment is https://valence-natural-hazards-pilot.vercel.app/ and deploys from Bobdeck/valence-natural-hazards-pilot main through the existing GitHub → Vercel connection. Open_Map.cmd remains a local fallback only.
@@ -22,7 +22,7 @@ PILOT SITES
 Use Regional portfolio to compare the five clubs across seven hazards. Select a site or matrix cell to drill into Site detail. The selected marker, site summary, hazard cards, evidence detail and map view update together.
 
 FILES
-index.html — Dashboard v0.7 portfolio/site views plus controlled draft, validation, preview and publish configuration workflow
+index.html — Dashboard v0.8 portfolio/site/configuration views plus site and portfolio screening reports with print/PDF and data export
 Open_Map.cmd — Windows launcher
 serve-map.ps1 — loopback-only local server using an available port
 robots.txt — prevents search-engine crawling of the test instance
@@ -40,7 +40,7 @@ EVIDENCE RULES
 - Results are original source observations, not professional risk ratings.
 - No point hit and NoData remain non-clearance states and never become green.
 - Evidence is structured as site → hazard → source → scenario/model → screening rule → screening result → presentation state.
-- Lee's company will define configurable thresholds, consequences, rating methods and approvals; v0.7 proves controlled source-backed configuration without providing a professional risk score.
+- Lee's company will define configurable thresholds, consequences, rating methods and approvals; v0.8 reports the current screening evidence without providing a professional risk score.
 - Public property parcel sources are identified but not connected. No suitable public portfolio dataset for club lease boundaries was identified in this review.
 - Public GIS access does not itself confirm commercial redistribution rights. Retain attribution and confirm council/GNS rights before reproducing source geometry in a client-facing product.
 
