@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="noindex,nofollow">
-  <title>SLS Natural Hazard Pilot v0.3.1</title>
+  <title>SLS Natural Hazard Pilot v0.4</title>
   <style data-bundled-library="leaflet-1.9.4">/* required styles */
 
 .leaflet-pane,
@@ -780,17 +780,17 @@ svg.leaflet-image-layer.leaflet-interactive path {
 </head>
 <body>
   <header class="topbar">
-    <div><div class="brand">VALENCE TEST INSTANCE</div><div class="subtitle">SLS Natural Hazard Pilot v0.3.1 · Region → Club → Hazard</div></div>
+    <div><div class="brand">VALENCE TEST INSTANCE</div><div class="subtitle">SLS Natural Hazard Pilot v0.4 · Portfolio Proof · Region → Club → Hazard</div></div>
     <div class="top-status">Working pilot<br>Not a safety clearance</div>
   </header>
 
   <main class="dashboard">
     <section class="overview-strip" aria-label="Bay of Plenty regional overview">
-      <div class="overview-cell"><span class="overview-label">Regional overview</span><strong>Bay of Plenty pilot</strong><small>Comparative hazard evidence screening</small></div>
-      <div class="overview-cell"><span class="overview-label">Clubs</span><strong>2</strong><small>Verified site points</small></div>
-      <div class="overview-cell"><span class="overview-label">Hazard types</span><strong>7</strong><small>Per club</small></div>
-      <div class="overview-cell overview-authorities"><span class="overview-label">Source authorities</span><strong>Tauranga City Council · Bay of Plenty Regional Council · GNS Science</strong></div>
-      <div class="overview-cell overview-status"><span class="overview-label">Data status</span><strong><span class="overview-status-dot"></span>Published evidence</strong><small>Source links retained</small></div>
+      <div class="overview-cell"><span class="overview-label">Regional overview</span><strong id="overviewRegion"></strong><small>Comparative hazard evidence screening</small></div>
+      <div class="overview-cell"><span class="overview-label">Clubs</span><strong id="overviewClubCount"></strong><small>Verified site points</small></div>
+      <div class="overview-cell"><span class="overview-label">Hazard types</span><strong id="overviewHazardCount"></strong><small>Per club</small></div>
+      <div class="overview-cell overview-authorities"><span class="overview-label">Source authorities</span><strong id="overviewAuthorities"></strong></div>
+      <div class="overview-cell overview-status"><span class="overview-label">Data status</span><strong><span class="overview-status-dot"></span><span id="overviewDataStatus"></span></strong><small>Source links retained</small></div>
     </section>
 
     <aside class="panel sidebar" aria-label="Region and club selector">
@@ -904,7 +904,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
   const SITES={
     mount:{
-      id:'mount',shortName:'Mount Maunganui',name:'Mount Maunganui Lifeguard Service',address:'21 Adams Avenue, Mount Maunganui',region:'Bay of Plenty',territorialAuthority:'Tauranga City Council',regionalCouncil:'Bay of Plenty Regional Council',lat:-37.631147,lon:176.177011,checkedDate:'18 September 2026 NZST',
+      id:'mount',shortName:'Mount Maunganui',name:'Mount Maunganui Lifeguard Service',address:'21 Adams Avenue, Mount Maunganui',region:'Bay of Plenty',territorialAuthority:'Tauranga City Council',regionalCouncil:'Bay of Plenty Regional Council',sourceAuthorities:['Tauranga City Council','Bay of Plenty Regional Council','GNS Science','Surf Life Saving New Zealand'],verificationState:'verified',lat:-37.631147,lon:176.177011,checkedDate:'18 September 2026 NZST',
       locationStatus:'Verified named clubhouse point. Coordinates align with the clubhouse in satellite imagery and TCC property data returns 21 Adams Avenue. Building footprint and lease boundary are not verified.',
       locationSources:['https://mountlifeguards.co.nz/contact','https://www.google.com/maps/search/?api=1&query=Mount%20Maunganui%20Lifeguard%20Service'],
       hazards:{
@@ -933,7 +933,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       }
     },
     omanu:{
-      id:'omanu',shortName:'Omanu',name:'Omanu SLSC',address:'15 Surf Road, Omanu, Mt Maunganui 3116',region:'Bay of Plenty',territorialAuthority:'Tauranga City Council',regionalCouncil:'Bay of Plenty Regional Council',lat:-37.6588411,lon:176.2153694,checkedDate:'18 September 2026 NZST',
+      id:'omanu',shortName:'Omanu',name:'Omanu SLSC',address:'15 Surf Road, Omanu, Mt Maunganui 3116',region:'Bay of Plenty',territorialAuthority:'Tauranga City Council',regionalCouncil:'Bay of Plenty Regional Council',sourceAuthorities:['Tauranga City Council','Bay of Plenty Regional Council','GNS Science','Surf Life Saving New Zealand'],verificationState:'verified',lat:-37.6588411,lon:176.2153694,checkedDate:'18 September 2026 NZST',
       locationStatus:'Verified named clubhouse point. The official club and SLSNZ list 15 Surf Road; the mapped point sits on the clubhouse building in aerial imagery. The TCC point query returns 15 Surf Road and an overlapping recreation-reserve record. Building footprint and lease boundary are not verified.',
       locationSources:['https://omanubeach.co.nz/','https://www.surflifesaving.org.nz/club-directory/omanu-slsc','https://www.google.com/maps/place/Omanu+Beach+Surf+Life+Saving+Club/@-37.6588411,176.2153694,884m/data=!3m2!1e3!4b1!4m6!3m5!1s0x6d6dded5f1c66b01:0x31e45bedd97a7d79!8m2!3d-37.6588411!4d176.2153694!16s%2Fg%2F1tfqr3yh'],
       hazards:{
@@ -961,6 +961,99 @@ svg.leaflet-image-layer.leaflet-interactive path {
       }
     }
   };
+
+  const PORTFOLIO_CHECKED='2026-09-18T04:55:17Z';
+  const PORTFOLIO_SITE_CONFIGS=[
+    {
+      id:'papamoa',shortName:'Papamoa',name:'Pāpāmoa Surf Life Saving Club',address:'561 Pāpāmoa Beach Road, Pāpāmoa Beach, Tauranga 3118',region:'Bay of Plenty',
+      territorialAuthority:'Tauranga City Council',regionalCouncil:'Bay of Plenty Regional Council',sourceAuthorities:['Tauranga City Council','Bay of Plenty Regional Council','GNS Science','Surf Life Saving New Zealand'],
+      lat:-37.69605,lon:176.28609,verificationState:'verified',
+      locationStatus:'Verified named clubhouse point. The SLSNZ Club Finder point aligns with the official club address and TCC property data returns 561 Papamoa Beach Road on a recreation reserve. Building footprint and lease boundary are not verified.',
+      locationSources:['https://papamoalifeguards.co.nz/','https://slsnz.github.io/ClubMap/clubs.json',SERVICES.tccProperty],
+      results:{
+        tccFlood:{OBJECTID:690956,FloodRiskSource:2,FloodRiskClassification:'Flood depth 300mm or more',RuleID:null,GlobalID:'{396BF837-B5E6-4836-82C7-80F6A1787BD1}'},
+        landslide:[null,null],liquefaction:{10:null,11:null},
+        tsunami:{6:{OBJECTID:831,AreaType:'Land',TA:'TCC'},105:{OBJECTID:10,Zone:'Yellow'},106:{OBJECTID:7,Zone:'Orange',GlobalID:'{D896E928-4DB1-4E28-9958-3F3A1CA36D44}'},107:null}
+      }
+    },
+    {
+      id:'maketu',shortName:'Maketu',name:'Maketu Surf Life Saving Club',address:'1 Town Point Road, Maketu',region:'Bay of Plenty',
+      territorialAuthority:'Western Bay of Plenty District Council',regionalCouncil:'Bay of Plenty Regional Council',sourceAuthorities:['Western Bay of Plenty District Council','Bay of Plenty Regional Council','GNS Science','Surf Life Saving New Zealand'],
+      lat:-37.75427,lon:176.45614,verificationState:'verified',
+      locationStatus:'Verified named club point from the SLSNZ Club Finder. The club site lists 1 Town Point Road; the SLSNZ directory describes the physical address as Beach Road. The point is retained as the authoritative club-location reference; building footprint and lease boundary are not verified.',
+      locationSources:['https://maketusurflifesaving.co.nz/','https://www.surflifesaving.org.nz/join-us/find-a-surf-life-saving-club/eastern-region/maketu-slsc','https://slsnz.github.io/ClubMap/clubs.json'],
+      results:{
+        landslide:[{'UniqueValue.Pixel Value':'1','Raster.OBJECTID':'1','Raster.Count':'289620241','Raster.Susceptibility':'Very low'},{'UniqueValue.Pixel Value':'1','Raster.OBJECTID':'1','Raster.Count':'308327908','Raster.Susceptibility':'Very low'}],liquefaction:{10:null,11:null},
+        tsunami:{6:{OBJECTID:829,AreaType:'Land',TA:'WBOP'},105:{OBJECTID:10,Zone:'Yellow'},106:{OBJECTID:7,Zone:'Orange',GlobalID:'{D896E928-4DB1-4E28-9958-3F3A1CA36D44}'},107:{OBJECTID:261,Zone:'Red',GlobalID:'{3ACBEA39-861D-4C98-9733-69ECDF3EAD37}'}}
+      }
+    },
+    {
+      id:'ohope',shortName:'Ōhope',name:'Whakatāne SLSC — Ōhope',address:'6 Mair Street, Ōhope Beach, Ōhope',region:'Bay of Plenty',
+      territorialAuthority:'Whakatāne District Council',regionalCouncil:'Bay of Plenty Regional Council',sourceAuthorities:['Whakatāne District Council','Bay of Plenty Regional Council','GNS Science','Surf Life Saving New Zealand'],
+      lat:-37.96321,lon:177.03593,verificationState:'verified',
+      locationStatus:'Verified named clubhouse point. The SLSNZ Club Finder point identifies Whakatāne SLSC at Ōhope Beach and the official club site lists 6 Mair Street. Building footprint and lease boundary are not verified.',
+      locationSources:['https://surf.org.nz/','https://www.surflifesaving.org.nz/join-us/find-a-surf-life-saving-club/eastern-region/whakatane-slsc','https://slsnz.github.io/ClubMap/clubs.json'],
+      results:{
+        landslide:[null,null],
+        liquefaction:{10:{OBJECTID:104,Terrain:'Debris flow and landslide deposits',LiquefactionVulnerabilityCatego:'Undetermined',LateralSpreading:'No',Detail:'Level A (Basic Desktop Assessment)',Date:1619611200000,Author:'Tonkin & Taylor Ltd, PO Box 317, Tauranga 3140',ReportReference:'Liquefaction Vulnerability Assessment for Bay of Plenty Regional',Purpose:'Region-wide liquefaction vulnerability assessment to inform planning and consent processes.',Notes:'Broad regional assessment; not intended to precisely describe an individual property.'},11:null},
+        tsunami:{6:{OBJECTID:828,AreaType:'Land',TA:'WHK'},105:{OBJECTID:10,Zone:'Yellow'},106:{OBJECTID:7,Zone:'Orange',GlobalID:'{D896E928-4DB1-4E28-9958-3F3A1CA36D44}'},107:null}
+      }
+    }
+  ];
+
+  function portfolioPoint(site){return site.lat+', '+site.lon+' (EPSG:4326)'}
+  function noHitSource(org,dataset,layerId,site,result,scenario,limitations){
+    return source(org,dataset,'No intersecting feature returned',result,scenario,portfolioPoint(site),PORTFOLIO_CHECKED,SERVICES.bopHazards+'/'+layerId,'BOPRC REST point query returned no intersecting feature at the verified club point.',limitations,{}, {layerId,queryStatus:'no-hit'});
+  }
+  function buildPortfolioHazards(site){
+    const point=portfolioPoint(site),r=site.results;
+    const floodSources=[];
+    if(r.tccFlood)floodSources.push(source('Tauranga City Council','ePlan Natural Hazards layer 1',r.tccFlood.FloodRiskClassification,'Point intersects the published TCC rainfall-flood polygon.','1% AEP (100-year ARI), 2130 climate, RCP 8.5',point,PORTFOLIO_CHECKED,SERVICES.tccFlood+'/1','TCC REST point intersection returned the published flood-depth class.','This is one modelled scenario at one point. It does not provide a professional risk rating or rule out other flood mechanisms.',r.tccFlood,{layerId:1,queryStatus:'hit',aepReturnPeriod:'1% AEP / 100-year ARI',modelPublicationYear:'2130 climate scenario'}));
+    floodSources.push(noHitSource('Bay of Plenty Regional Council','Natural Hazards layer 5 historic flood extents',5,site,'No BOPRC historic flood extent intersected the point.','Published historic flood extents; event-specific and incomplete','Historic mapped extents are event- and capture-dependent. District-specific model results are not connected outside the TCC source.'));
+
+    const landslideSources=r.landslide.map((attrs,index)=>{
+      const layerId=index,dataset=index===0?'Landslide Susceptibility Rainfall raster':'Landslide Susceptibility Earthquake raster',org=index===0?'Bay of Plenty Regional Council':'Bay of Plenty Regional Council / WSP';
+      if(!attrs)return source(org,dataset,'NoData','BOPRC raster identify returned NoData at the point.','Regional susceptibility; not annual risk',point,PORTFOLIO_CHECKED,SERVICES.bopLandslide,'BOPRC raster identify operation checked at the same EPSG:4326 point.','NoData means the raster provides no classification at this pixel. It remains unassessed and cannot be treated as low or absent hazard.',{'UniqueValue.Pixel Value':'NoData'},{layerId,queryStatus:'no-data'});
+      return source(org,dataset,attrs['Raster.Susceptibility'],'Point returns the published '+attrs['Raster.Susceptibility']+' susceptibility class.','Regional susceptibility raster; not annual risk',point,PORTFOLIO_CHECKED,SERVICES.bopLandslide,'BOPRC raster identify returned a classified pixel at the verified point.','The published susceptibility class is retained as evidence; it is not converted into a site-specific professional risk rating.',attrs,{layerId,queryStatus:'hit'});
+    });
+
+    const liquefactionSources=[10,11].map(layerId=>{
+      const attrs=r.liquefaction[layerId],level=layerId===10?'Level A':'Level B';
+      if(!attrs)return noHitSource('Bay of Plenty Regional Council','Natural Hazards layer '+layerId+' Liquefaction '+level,layerId,site,'No '+level+' liquefaction feature intersected the exact point.',level==='Level A'?'Basic desktop assessment; coverage varies':'Calibrated desktop assessment; coverage varies','No point hit is not a clearance. Coverage and study resolution vary, and site-specific geotechnical work may be required.');
+      const classification=attrs.LiquefactionVulnerabilityCatego||'Published feature';
+      return source('Bay of Plenty Regional Council','Natural Hazards layer '+layerId+' Liquefaction '+level,classification,'Point intersects a '+level+' polygon classified '+classification+'.',attrs.Detail||'Published liquefaction assessment',point,PORTFOLIO_CHECKED,SERVICES.bopHazards+'/'+layerId,'BOPRC REST point query returned the published feature and classification.','This is a broad regional or neighbourhood-scale assessment and does not precisely describe an individual property.',attrs,{layerId,queryStatus:'hit',modelPublicationYear:attrs.Date?'2021 source feature':'Not recorded in the returned feature'});
+    });
+
+    const tsunamiDefinitions=[
+      {layerId:6,org:'BOPRC / Emergency Management BOP / GNS',dataset:'Natural Hazards layer 6 tsunami evacuation',scenario:'October 2025 single blue evacuation zone',period:'Not specified by this source result',year:'2025'},
+      {layerId:105,org:'BOPRC derived from GNS Science 2024 modelling',dataset:'Natural Hazards layer 105 tsunami inundation',scenario:'2,500-year average recurrence interval extent',period:'2,500-year ARI',year:'2024'},
+      {layerId:106,org:'BOPRC derived from GNS Science 2024 modelling',dataset:'Natural Hazards layer 106 tsunami inundation',scenario:'5 m wave height above mean high water springs',period:'Not specified by this source result',year:'2024'},
+      {layerId:107,org:'BOPRC derived from GNS Science 2024 modelling',dataset:'Natural Hazards layer 107 tsunami inundation',scenario:'2 m wave height above mean high water springs',period:'Not specified by this source result',year:'2024'}
+    ];
+    const tsunamiSources=tsunamiDefinitions.map(def=>{
+      const attrs=r.tsunami[def.layerId];
+      if(!attrs)return noHitSource(def.org,def.dataset,def.layerId,site,'No '+(def.layerId===107?'2 m wave-height inundation polygon':'published tsunami feature')+' intersected the point.',def.scenario,'This is only the stated scenario at the exact point. It is not a safety finding and does not override other tsunami-source intersections.');
+      const classification=attrs.AreaType||attrs.Zone||'Published feature';
+      return source(def.org,def.dataset,classification,'Point intersects the published '+(def.layerId===6?'tsunami evacuation zone.':'tsunami inundation extent.'),def.scenario,point,PORTFOLIO_CHECKED,SERVICES.bopHazards+'/'+def.layerId,'BOPRC REST point query returned the published feature at the verified point.','Evacuation and modelled extent polygons are evidence layers, not site-specific depth, likelihood or professional risk ratings.',attrs,{layerId:def.layerId,queryStatus:'hit',aepReturnPeriod:def.period,modelPublicationYear:def.year});
+    });
+
+    const coastalHazard=kind=>({state:'source',label:'Source not connected',blurb:'No reproducible scenario-specific point result is connected.',sources:[source('Bay of Plenty Regional Council','Coastal hazard catalogue','Unassessed','A site-point coastal '+kind+' classification has not been extracted.','Scenario-specific coastal layer connection still required',point,PORTFOLIO_CHECKED,SERVICES.bopCoastal,'Not completed.','The catalogue source is identified but no reproducible point result is connected. Do not infer exposure or safety.',{}, {queryStatus:'unassessed'})]});
+    const classifiedLandslide=r.landslide.some(Boolean),classifiedLiquefaction=Object.values(r.liquefaction).some(Boolean),hasTwoMetre=Boolean(r.tsunami[107]);
+    return {
+      flooding:{state:r.tccFlood?'hit':'no-hit',label:r.tccFlood?'GIS point hit':'No point hit — not cleared',blurb:r.tccFlood?'The TCC rainfall-flood layer intersects the point; the regional historic layer does not.':'No regional historic-flood point hit; no district scenario result is connected.',sources:floodSources},
+      landslide:{state:classifiedLandslide?'hit':'nodata',label:classifiedLandslide?'GIS point hit':'NoData',blurb:classifiedLandslide?'Both regional susceptibility rasters classify the point Very low.':'Both regional susceptibility rasters return NoData at the point.',sources:landslideSources},
+      liquefaction:{state:classifiedLiquefaction?'hit':'no-hit',label:classifiedLiquefaction?'GIS point hit':'No point hit — not cleared',blurb:classifiedLiquefaction?'Level A intersects the point and is classified Undetermined; Level B has no point hit.':'Neither published liquefaction layer intersects the exact point; this is not a clearance.',sources:liquefactionSources},
+      tsunami:{state:'hit',label:'GIS point hit',blurb:hasTwoMetre?'Evacuation, 2,500-year, 5 m and 2 m scenario layers intersect the point.':'Evacuation, 2,500-year and 5 m scenario layers intersect the point; the 2 m layer does not.',sources:tsunamiSources},
+      coastalErosion:coastalHazard('erosion'),
+      coastalInundation:coastalHazard('inundation'),
+      activeFaults:{state:'no-hit',label:'No point hit — not cleared',blurb:'No mapped fault line intersects the exact point.',sources:[noHitSource('BOPRC / GNS QMAP','Natural Hazards layer 1 active faults',1,site,'No active-fault line intersected the exact point.','GNS QMAP 1:250,000 fault line; proximity is not a risk rating','The 1:250,000 QMAP line layer is not a site-scale assessment. Distance to the nearest fault and engineering significance were not assessed.')]}
+    };
+  }
+
+  for(const config of PORTFOLIO_SITE_CONFIGS){
+    SITES[config.id]={...config,checkedDate:'18 September 2026 NZST',hazards:buildPortfolioHazards(config)};
+    delete SITES[config.id].results;
+  }
 
   const BASEMAPS={
     map:{url:'https://tile.openstreetmap.org/{z}/{x}/{y}.png',options:{maxZoom:19,attribution:'© OpenStreetMap contributors'}},
@@ -994,6 +1087,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
   function currentSite(){return SITES[selectedSiteId]}
   function currentHazard(){return currentSite().hazards[selectedHazardId]}
+
+  function renderRegionalOverview(){
+    const sites=Object.values(SITES),regions=[...new Set(sites.map(site=>site.region))],authorities=[...new Set(sites.flatMap(site=>site.sourceAuthorities||[site.territorialAuthority,site.regionalCouncil]))];
+    document.getElementById('overviewRegion').textContent=(regions.length===1?regions[0]:'Multi-region')+' pilot';
+    document.getElementById('overviewClubCount').textContent=sites.length;
+    document.getElementById('overviewHazardCount').textContent=HAZARDS.length;
+    document.getElementById('overviewAuthorities').textContent=authorities.join(' · ');
+    document.getElementById('overviewDataStatus').textContent=sites.every(site=>site.verificationState!=='unverified')?'Published evidence':'Published evidence · verification gaps';
+  }
 
   function syncSelectionState(){
     document.querySelectorAll('[data-club]').forEach(button=>{const active=button.dataset.club===selectedSiteId;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));active?button.setAttribute('aria-current','true'):button.removeAttribute('aria-current')});
@@ -1041,7 +1143,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     document.getElementById('mapContext').textContent=site.address+' · '+site.lat+', '+site.lon;
     document.getElementById('siteSummaryTitle').textContent=site.name;
     document.getElementById('siteAddress').textContent=site.address;
-    document.getElementById('siteGrid').innerHTML='<dt>Region</dt><dd>'+escapeHtml(site.region)+'</dd><dt>Territorial authority</dt><dd>'+escapeHtml(site.territorialAuthority)+'</dd><dt>Regional council</dt><dd>'+escapeHtml(site.regionalCouncil)+'</dd><dt>Coordinates</dt><dd>'+escapeHtml(site.lat+', '+site.lon)+'</dd><dt>Evidence checked</dt><dd>'+escapeHtml(site.checkedDate)+'</dd>';
+    document.getElementById('siteGrid').innerHTML='<dt>Region</dt><dd>'+escapeHtml(site.region)+'</dd><dt>Territorial authority</dt><dd>'+escapeHtml(site.territorialAuthority)+'</dd><dt>Regional council</dt><dd>'+escapeHtml(site.regionalCouncil)+'</dd><dt>Source authorities</dt><dd>'+escapeHtml((site.sourceAuthorities||[]).join(' · '))+'</dd><dt>Coordinates</dt><dd>'+escapeHtml(site.lat+', '+site.lon)+'</dd><dt>Evidence checked</dt><dd>'+escapeHtml(site.checkedDate)+'</dd>';
     const verification=document.getElementById('verificationStatus');verification.title=site.locationStatus;
     verification.innerHTML='<span class="verification-icon" aria-hidden="true">i</span><span><strong class="verification-title">Clubhouse point used</strong><span class="verification-copy">Approximate location shown · Property and lease boundaries not verified.</span><span class="verification-links">'+site.locationSources.map((url,index)=>'<a href="'+escapeHtml(url)+'" target="_blank" rel="noreferrer">Source '+(index+1)+' ↗</a>').join(' · ')+'</span></span>';
   }
@@ -1088,7 +1190,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   document.getElementById('layerToggles').addEventListener('change',event=>{const hazardId=event.target.dataset.hazardLayer;if(!hazardId)return;for(const id of hazardLayerIds(hazardId)){event.target.checked?visibleLayers.add(id):visibleLayers.delete(id)}refreshOverlays()});
   document.querySelectorAll('[data-basemap]').forEach(button=>button.addEventListener('click',()=>setBasemap(button.dataset.basemap)));
   document.getElementById('showSelected').addEventListener('click',showSelectedHazard);
-    document.getElementById('exportEvidence').addEventListener('click',()=>{const site=currentSite();saveJson({project:'Surf Life Saving Natural Hazards Pilot',dashboardVersion:'0.3.1',exportedAt:new Date().toISOString(),site,limitation:'Evidence screening only. No-hit and NoData are unassessed and never green. No professional rating is provided.'},'sls-'+site.id+'-hazard-evidence-v0.3.1.json');toast('Evidence export prepared for '+site.shortName+'.')});
+    document.getElementById('exportEvidence').addEventListener('click',()=>{const site=currentSite();saveJson({project:'Surf Life Saving Natural Hazards Pilot',dashboardVersion:'0.4',exportedAt:new Date().toISOString(),site,limitation:'Evidence screening only. No-hit and NoData are unassessed and never green. No professional rating is provided.'},'sls-'+site.id+'-hazard-evidence-v0.4.json');toast('Evidence export prepared for '+site.shortName+'.')});
 
   map.on('moveend zoomend resize',refreshOverlays);
   const resizeMap=()=>requestAnimationFrame(()=>map.invalidateSize({pan:false,animate:false}));
@@ -1100,10 +1202,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
     new LocalNotice({position:'topleft'}).addTo(map);
   }
 
-  renderClubList();setBasemap(selectedBasemap);renderSite();renderHazardCards();renderEvidence();renderLayerToggles();
+  renderRegionalOverview();renderClubList();setBasemap(selectedBasemap);renderSite();renderHazardCards();renderEvidence();renderLayerToggles();
   marker.bindPopup('<b>'+SITES.mount.name+'</b><br>'+SITES.mount.address+'<br>'+SITES.mount.lat+', '+SITES.mount.lon+'<br><small>Verified clubhouse point; footprint and lease boundary not verified.</small>');
   resizeMap();refreshOverlays();
-  window.SLSPilot={version:'0.3.1',sites:SITES,layers:LAYERS,switchSite,switchHazard,setBasemap,getState:()=>({selectedSiteId,selectedHazardId,selectedBasemap,basemapActive:Boolean(basemapLayer&&map.hasLayer(basemapLayer))})};
+  window.SLSPilot={version:'0.4',sites:SITES,layers:LAYERS,switchSite,switchHazard,setBasemap,getState:()=>{const position=marker.getLatLng();return {selectedSiteId,selectedHazardId,selectedBasemap,basemapActive:Boolean(basemapLayer&&map.hasLayer(basemapLayer)),markerLat:position.lat,markerLon:position.lng,visibleLayerIds:[...visibleLayers]}}};
   </script>
 </body>
 </html>
