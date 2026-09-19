@@ -1,7 +1,7 @@
 {
-  "version": "0.9.0",
+  "version": "0.10.0",
   "lastChanged": "2026-09-19",
-  "regionId": "bay-of-plenty",
+  "regionId": "multi-region",
   "persistence": {
     "mode": "repository_seed_plus_browser_publish",
     "source": "published-config.json",
@@ -28,9 +28,13 @@
     { "id": "bop-liquefaction-point-hit", "regionId": "bay-of-plenty", "hazardId": "liquefaction", "priority": 20, "rag": "amber", "when": { "queryStatusAny": ["hit"] } },
     { "id": "bop-liquefaction-covered-no-hit", "regionId": "bay-of-plenty", "hazardId": "liquefaction", "priority": 30, "rag": "green", "when": { "allConnectedNoHit": true, "minConnectedSources": 2, "requiresCompleteness": 100 } },
     { "id": "bop-tsunami-zone-hit", "regionId": "bay-of-plenty", "hazardId": "tsunami", "priority": 10, "rag": "red", "when": { "queryStatusAny": ["hit"] } },
+    { "id": "cor-coastal-inundation-point-hit", "regionId": "coromandel", "hazardId": "coastalInundation", "priority": 10, "rag": "red", "when": { "queryStatusAny": ["hit"] } },
+    { "id": "cor-coastal-inundation-covered-no-hit", "regionId": "coromandel", "hazardId": "coastalInundation", "priority": 30, "rag": "green", "when": { "allConnectedNoHit": true, "minConnectedSources": 2, "requiresCompleteness": 100 } },
+    { "id": "cor-tsunami-model-hit", "regionId": "coromandel", "hazardId": "tsunami", "priority": 10, "rag": "red", "when": { "queryStatusAny": ["hit"] } },
     { "id": "evidence-gap-fallback", "regionId": "*", "hazardId": "*", "priority": 999, "rag": "grey", "when": { "always": true } }
   ],
   "versionHistory": [
-    { "version": "0.9.0", "date": "2026-09-19", "summary": "Initial configurable RAG rules, objective completeness requirements and five-site published seed." }
+    { "version": "0.9.0", "date": "2026-09-19", "summary": "Initial configurable RAG rules, objective completeness requirements and five-site published seed." },
+    { "version": "0.10.0", "date": "2026-09-19", "summary": "Added Coromandel / TCDC as a configuration-led second-region proof with three verified SLSNZ locations and explicit evidence gaps." }
   ]
 }
