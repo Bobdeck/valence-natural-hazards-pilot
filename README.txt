@@ -67,3 +67,10 @@ OMANU POINT RESULTS
 - Coastal erosion and coastal inundation: authoritative source found; scenario result not yet connected.
 
 The Mount Maunganui findings already verified for this pilot are preserved in the dashboard without re-querying or reclassification.
+
+V0.10 ARCHITECTURE ASSESSMENT
+- Answer: yes. Coromandel was added primarily through reusable region, site, source, scenario and RAG-rule configuration; no duplicate regional page or component tree was created.
+- Data/config additions: REGIONS, three COROMANDEL_SITE_CONFIGS records, reusable coromandelGap source mappings, and Coromandel-scoped coastal-inundation and tsunami RAG rules.
+- Shared-model changes: activeSites/currentRegion selection, region-aware evaluateRag filtering, regional report/marker roll-ups, and source applicability labels. These changes serve any configured region rather than encoding TCDC-specific UI behavior.
+- Shared UI refinements required by the v0.10 scope: summary-led portfolio hierarchy, compact future-ready RAG matrix, subordinate map-view controls, detailed evidence table, plain-English rule labels with optional technical details, explicit complete-evidence/no-rule wording, and a viewport-contained mobile legend.
+- Unresolved evidence gaps remain explicit: no reproducible Coromandel club-point result is connected for any hazard; no site-applicable public coastal-erosion scenario was confirmed; property parcels and club lease boundaries are not connected. These gaps remain Grey and are not risk conclusions.
