@@ -1,0 +1,36 @@
+{
+  "version": "0.9.0",
+  "lastChanged": "2026-09-19",
+  "regionId": "bay-of-plenty",
+  "persistence": {
+    "mode": "repository_seed_plus_browser_publish",
+    "source": "published-config.json",
+    "limitation": "The deployed repository seed is project-owned. Reviewed UI publishes persist in this browser only; central multi-user writes require a project backend and authenticated write path that are not available in this static Vercel project."
+  },
+  "completenessRequirements": [
+    { "id": "source", "label": "Authoritative source identified" },
+    { "id": "scenario", "label": "Scenario/model connected" },
+    { "id": "rule", "label": "Reproducible screening rule" },
+    { "id": "result", "label": "Usable point/document result" }
+  ],
+  "futureWeighting": {
+    "enabled": false,
+    "hazardWeights": {},
+    "criticalOverrides": []
+  },
+  "ragRules": [
+    { "id": "bop-flood-depth-300", "regionId": "bay-of-plenty", "hazardId": "flooding", "priority": 10, "rag": "red", "when": { "classificationIncludesAny": ["300mm or more"] } },
+    { "id": "bop-flood-point-hit", "regionId": "bay-of-plenty", "hazardId": "flooding", "priority": 20, "rag": "amber", "when": { "queryStatusAny": ["hit"] } },
+    { "id": "bop-flood-covered-no-hit", "regionId": "bay-of-plenty", "hazardId": "flooding", "priority": 30, "rag": "green", "when": { "allConnectedNoHit": true, "minConnectedSources": 2, "requiresCompleteness": 100 } },
+    { "id": "bop-landslide-published-risk", "regionId": "bay-of-plenty", "hazardId": "landslide", "priority": 10, "rag": "red", "when": { "queryStatusAny": ["document-evidence"] } },
+    { "id": "bop-landslide-mapped-class", "regionId": "bay-of-plenty", "hazardId": "landslide", "priority": 20, "rag": "amber", "when": { "classificationIncludesAny": ["Possible", "Medium", "High"] } },
+    { "id": "bop-landslide-low-covered", "regionId": "bay-of-plenty", "hazardId": "landslide", "priority": 30, "rag": "green", "when": { "allClassificationsIn": ["Low", "Very low"], "minConnectedSources": 2, "requiresCompleteness": 100 } },
+    { "id": "bop-liquefaction-point-hit", "regionId": "bay-of-plenty", "hazardId": "liquefaction", "priority": 20, "rag": "amber", "when": { "queryStatusAny": ["hit"] } },
+    { "id": "bop-liquefaction-covered-no-hit", "regionId": "bay-of-plenty", "hazardId": "liquefaction", "priority": 30, "rag": "green", "when": { "allConnectedNoHit": true, "minConnectedSources": 2, "requiresCompleteness": 100 } },
+    { "id": "bop-tsunami-zone-hit", "regionId": "bay-of-plenty", "hazardId": "tsunami", "priority": 10, "rag": "red", "when": { "queryStatusAny": ["hit"] } },
+    { "id": "evidence-gap-fallback", "regionId": "*", "hazardId": "*", "priority": 999, "rag": "grey", "when": { "always": true } }
+  ],
+  "versionHistory": [
+    { "version": "0.9.0", "date": "2026-09-19", "summary": "Initial configurable RAG rules, objective completeness requirements and five-site published seed." }
+  ]
+}
