@@ -1,5 +1,5 @@
 VALENCE | SURF LIFE SAVING NATURAL HAZARDS PILOT
-Dashboard v0.10 | two-region configurable RAG screening and data completeness | checked 19 September 2026 NZST
+Dashboard v0.10.1 | two-region navigation, corrected TCDC clubhouse points and connected source coverage | checked 20 September 2026 NZST
 
 HOSTED TEST INSTANCE
 The live review environment is https://valence-natural-hazards-pilot.vercel.app/ and deploys from Bobdeck/valence-natural-hazards-pilot main through the existing GitHub → Vercel connection. Open_Map.cmd remains a local fallback only.
@@ -21,14 +21,14 @@ Bay of Plenty
 - Whakatāne SLSC at Ōhope — 6 Mair Street — verified point -37.96321, 177.03593.
 
 Coromandel / Thames-Coromandel District
-- Pauanui SLSC — verified SLSNZ club point -37.01343, 175.86549.
-- Tairua SLSC — verified SLSNZ club point -36.99166, 175.85925.
-- Whangamatā SLSC — verified SLSNZ club point -37.2143, 175.87947.
+- Tairua SLSC — 38 Paku Drive, Tairua 3508 — verified clubhouse point -36.9952582, 175.8611453.
+- Pāuanui SLSC — 27 Pauanui Boulevard, Pāuanui — verified clubhouse point -37.014158, 175.8659196.
+- Whangamatā SLSC — Cnr Lowe Street & Esplanade Drive, Whangamatā 3620 — verified clubhouse point -37.21401, 175.87878.
 
-Use the region selector to switch the same Regional portfolio between Bay of Plenty and Coromandel. Select a site or matrix cell to drill into Site detail. The selected marker, site summary, hazard cards, evidence detail and map view update together.
+Use the prominent Region selector in the blue Regional overview banner, or the sidebar selector, to switch the same portfolio directly between Bay of Plenty and Coromandel without entering Site detail. Each region change refits the portfolio map to its configured sites; manual pan and zoom are then preserved until the region changes. Select a site or matrix cell to drill into Site detail. The selected marker, site summary, hazard cards, evidence detail and map view update together.
 
 FILES
-index.html — Dashboard v0.10 multi-region Portfolio, Site Detail, Rules & Sources, Configuration and Reports views with RAG screening, completeness, exports and contextual map legend
+index.html — Dashboard v0.10.1 multi-region Portfolio, Site Detail, Rules & Sources, Configuration and Reports views with direct region navigation, deterministic map fitting, RAG screening, completeness, exports and contextual map legend
 published-config.json — project-owned published RAG/completeness configuration seed and version record
 Open_Map.cmd — Windows launcher
 serve-map.ps1 — loopback-only local server using an available port
@@ -47,8 +47,10 @@ EVIDENCE RULES
 - Results are original source observations, not professional risk ratings.
 - Green is permitted only where a configured below-threshold rule has adequate connected evidence; it never means safe or cleared. NoData and evidence gaps remain Grey.
 - Evidence is structured as site → hazard → source → scenario/model → screening rule → screening result → presentation state.
-- v0.10 proves the same source/scenario/region-aware RAG and completeness architecture across Bay of Plenty and Coromandel without bespoke regional UI forks or a professional risk score.
-- Coromandel uses verified SLSNZ club points and authoritative TCDC, Waikato Regional Council, NIWA and GNS sources. Where site-point scenarios are not reproducibly connected, the app preserves the gap as Grey rather than inferring exposure or clearance.
+- v0.10.1 preserves the same source/scenario/region-aware RAG and completeness architecture across Bay of Plenty and Coromandel without bespoke regional UI forks or a professional risk score.
+- Coromandel clubhouse addresses come from official SLSNZ club pages. Google place pins were visually cross-checked against current satellite imagery before replacing the earlier general Club Finder coordinates.
+- TCDC's published stormwater/flood-model coverage is connected: Tairua and Pāuanui have no model undertaken and are estimated for 2028–2030; Whangamatā has an August 2023 model whose published context includes the 1% AEP event, with a 2026 topography/climate-factor update scheduled. These are coverage facts, not connected clubhouse-point flood results.
+- TCDC's completed Shoreline Management Pathways programme and interactive coastal mapping, WRC's 0.8 m sea-level-rise raster source, NIWA extreme sea-level scenarios, and GNS national sources are identified with provenance. Where a site-point scenario, coast section, or pathway has not been reproducibly extracted, the app preserves the gap as Grey rather than inferring exposure or clearance.
 - The deployed repository seed is project-owned. Reviewed Configuration publishes survive reload in that browser only; central multi-user configuration writes remain blocked by the static project having no authenticated backend write path.
 - Public property parcel sources are identified but not connected. No suitable public portfolio dataset for club lease boundaries was identified in this review.
 - Public GIS access does not itself confirm commercial redistribution rights. Retain attribution and confirm council/GNS rights before reproducing source geometry in a client-facing product.
@@ -68,9 +70,10 @@ OMANU POINT RESULTS
 
 The Mount Maunganui findings already verified for this pilot are preserved in the dashboard without re-querying or reclassification.
 
-V0.10 ARCHITECTURE ASSESSMENT
+V0.10.1 ARCHITECTURE ASSESSMENT
 - Answer: yes. Coromandel was added primarily through reusable region, site, source, scenario and RAG-rule configuration; no duplicate regional page or component tree was created.
 - Data/config additions: REGIONS, three COROMANDEL_SITE_CONFIGS records, reusable coromandelGap source mappings, and Coromandel-scoped coastal-inundation and tsunami RAG rules.
 - Shared-model changes: activeSites/currentRegion selection, region-aware evaluateRag filtering, regional report/marker roll-ups, and source applicability labels. These changes serve any configured region rather than encoding TCDC-specific UI behavior.
-- Shared UI refinements required by the v0.10 scope: summary-led portfolio hierarchy, compact future-ready RAG matrix, subordinate map-view controls, detailed evidence table, plain-English rule labels with optional technical details, explicit complete-evidence/no-rule wording, and a viewport-contained mobile legend.
-- Unresolved evidence gaps remain explicit: no reproducible Coromandel club-point result is connected for any hazard; no site-applicable public coastal-erosion scenario was confirmed; property parcels and club lease boundaries are not connected. These gaps remain Grey and are not risk conclusions.
+- Shared UI refinements include the prominent Regional overview selector, summary-led portfolio hierarchy, compact future-ready RAG matrix, subordinate map-view controls, detailed evidence table, plain-English rule labels with optional technical details, explicit complete-evidence/no-rule wording, and a viewport-contained mobile legend.
+- Regional map fitting is driven by valid configured site coordinates with per-region fallback bounds. It runs at initial load and after an actual region change, not during ordinary portfolio re-renders, so manual pan and zoom are preserved.
+- Unresolved evidence gaps remain explicit: no reproducible Coromandel club-point hazard result is connected; the site-applicable coastal segment/pathway is not selected; property parcels and club lease boundaries are not connected. These gaps remain Grey and are not risk conclusions.

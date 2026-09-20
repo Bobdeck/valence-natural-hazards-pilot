@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="noindex,nofollow">
-  <title>SLS Natural Hazard Pilot v0.10</title>
+  <title>SLS Natural Hazard Pilot v0.10.1</title>
   <style data-bundled-library="leaflet-1.9.4">/* required styles */
 
 .leaflet-pane,
@@ -691,6 +691,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .overview-label{font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
     .overview-cell:first-child .overview-label{color:#a9d9d7}.overview-cell strong{font-size:14px;line-height:1.25;color:var(--navy)}
     .overview-cell:first-child strong{color:#fff;font-size:17px}.overview-cell small{font-size:10px;line-height:1.35;color:var(--muted);margin-top:2px}
+    .overview-region-control{display:grid;gap:4px;margin-top:8px}.overview-region-control label{font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#a9d9d7}.overview-region-select{width:100%;border:1px solid #ffffff66;border-radius:8px;background:#fff;color:var(--navy);padding:8px 30px 8px 9px;font-size:12px;font-weight:800}
     .overview-authorities strong{font-size:11px;line-height:1.45}.overview-status strong{display:flex;align-items:center;gap:7px;font-size:12px}
     .overview-status-dot{width:9px;height:9px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px rgba(23,125,131,.12);flex:0 0 auto}
     .view-toolbar{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 12px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow)}
@@ -809,13 +810,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
 </head>
 <body>
   <header class="topbar">
-    <div><div class="brand">VALENCE TEST INSTANCE</div><div class="subtitle">SLS Natural Hazard Pilot v0.10 · Two-region configurable screening proof</div></div>
+    <div><div class="brand">VALENCE TEST INSTANCE</div><div class="subtitle">SLS Natural Hazard Pilot v0.10.1 · Two-region configurable screening proof</div></div>
     <div class="top-status">Working pilot<br>Not a safety clearance</div>
   </header>
 
   <main class="dashboard portfolio-mode">
     <section class="overview-strip" aria-label="Selected regional overview">
-      <div class="overview-cell"><span class="overview-label">Regional overview</span><strong id="overviewRegion"></strong><small>Comparative hazard evidence screening</small></div>
+      <div class="overview-cell"><span class="overview-label">Regional overview</span><strong id="overviewRegion"></strong><small>Comparative hazard evidence screening</small><div class="overview-region-control"><label for="overviewRegionSelect">Switch region</label><select class="overview-region-select" id="overviewRegionSelect" aria-label="Regional portfolio region"><option value="bay-of-plenty">Bay of Plenty</option><option value="coromandel">Coromandel / TCDC</option></select></div></div>
       <div class="overview-cell"><span class="overview-label">Clubs</span><strong id="overviewClubCount"></strong><small>Verified site points</small></div>
       <div class="overview-cell"><span class="overview-label">Hazard types</span><strong id="overviewHazardCount"></strong><small>Per club</small></div>
       <div class="overview-cell overview-authorities"><span class="overview-label">Source authorities</span><strong id="overviewAuthorities"></strong></div>
@@ -871,7 +872,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     </section>
 
     <section class="panel config-panel" id="configPanel" aria-labelledby="configTitle">
-      <div class="config-head"><div><p class="eyebrow">Controlled prototype configuration</p><h1 id="configTitle">Screening configuration</h1><p>Manage source-backed scenario presentation through draft, validation, regional preview and explicit publish. Published evidence is never changed silently.</p></div><span class="config-status" id="configStatus">Published · v0.10.0</span></div>
+      <div class="config-head"><div><p class="eyebrow">Controlled prototype configuration</p><h1 id="configTitle">Screening configuration</h1><p>Manage source-backed scenario presentation through draft, validation, regional preview and explicit publish. Published evidence is never changed silently.</p></div><span class="config-status" id="configStatus">Published · v0.10.1</span></div>
       <div class="config-summary" id="configSummary"></div>
       <div class="persistence-note" id="persistenceStatus"></div>
       <div class="config-body">
@@ -986,6 +987,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
     mountQlra:'https://newsbeat.tauranga.govt.nz/news-article/artmid/24836/articleid/15909/landslide-risk-assessment-provides-important-next-step-in-mauao-recovery',
     slsnzClubs:'https://slsnz.github.io/ClubMap/clubs.json',
     tcdc:'https://www.tcdc.govt.nz/',
+    tcdcSmartMaps:'https://www.tcdc.govt.nz/Our-Services/SMART-Maps',
+    tcdcStormwaterModels:'https://www.tcdc.govt.nz/Our-Services/Water-Services/Stormwater-Flood-Models',
+    tcdcShorelinePathways:'https://www.tcdc.govt.nz/Our-Community/Council-Projects/Current-Projects/Coastal-Management/Shoreline-Management-Pathways-Project',
+    tcdcCoastalIReport:'https://storymaps.arcgis.com/collections/6788b3cb015a40da9dac9671b2208f04?item=1',
     wrcHazards:'https://www.waikatoregion.govt.nz/services/regional-hazards-and-emergency-management/natural-hazards-in-the-waikato-region/',
     wrcCoastalTool:'https://subsite.waikatoregion.govt.nz/services/regional-hazards-and-emergency-management/coastal-inundation-tool/',
     wrcCoastalWebMap:'https://www.arcgis.com/home/item.html?id=7e50769975aa4eecaabe1a5952d28bb5',
@@ -1264,36 +1269,43 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
 
   const REGIONS={
-    'bay-of-plenty':{id:'bay-of-plenty',name:'Bay of Plenty',label:'Bay of Plenty pilot',regionalCouncil:'Bay of Plenty Regional Council',description:'Five-club verified portfolio using the established BOPRC, district-council and GNS evidence model.'},
-    coromandel:{id:'coromandel',name:'Coromandel / TCDC',label:'Coromandel / TCDC pilot',regionalCouncil:'Waikato Regional Council',description:'Three-club second-region proof using TCDC, Waikato Regional Council, NIWA and SLSNZ source mappings.'}
+    'bay-of-plenty':{id:'bay-of-plenty',name:'Bay of Plenty',label:'Bay of Plenty pilot',regionalCouncil:'Bay of Plenty Regional Council',description:'Five-club verified portfolio using the established BOPRC, district-council and GNS evidence model.',mapBounds:[[-38.02,176.10],[-37.56,177.12]]},
+    coromandel:{id:'coromandel',name:'Coromandel / TCDC',label:'Coromandel / TCDC pilot',regionalCouncil:'Waikato Regional Council',description:'Three-club second-region proof using TCDC, Waikato Regional Council, NIWA and SLSNZ source mappings.',mapBounds:[[-37.30,175.78],[-36.93,175.94]]}
   };
   for(const site of Object.values(SITES))site.regionId='bay-of-plenty';
 
   function coromandelGap(site,hazardId){
     const point=sitePoint(site),common={state:'source',label:'Scenario not yet connected',evidenceState:'source_found_scenario_not_connected'};
-    const general=(organisation,dataset,result,scenario,url,extra={})=>source(organisation,dataset,'Not queried',result,scenario,point,'2026-09-19T00:00:00Z',url,'Authoritative public source and scope reviewed during the focused v0.10 source pass.','The source is authoritative, but no reproducible site-point result is connected. No exposure, safety or clearance conclusion is inferred.',{}, {queryStatus:'source-found',evidenceState:'source_found_scenario_not_connected',ruleType:'not_connected',...extra});
-    if(hazardId==='coastalInundation')return {...common,blurb:'Waikato and national coastal-inundation scenarios are identified; no reproducible club-point pixel result is connected.',sources:[
-      general('Waikato Regional Council','Coastal Inundation Tool · 0.8 m sea-level surface','The 0.8 m NZVD2016 scenario is published, but its connected/disconnected raster class has not been extracted at this club point.','0.8 m sea level relative to NZVD2016 · connected and disconnected inundation',SERVICES.wrcCoastal08,{sourceDateVersion:'2024 tool/data refresh',modelPublicationYear:'2024',ruleDescription:'Identify the published WRC raster class at the verified clubhouse point; point extraction is not yet connected.',scenarioParameters:{waterLevelMetres:0.8,verticalDatum:'NZVD2016',modelType:'static bathtub model',connectedClass:'blue',disconnectedClass:'green'}}),
+    const general=(organisation,dataset,result,scenario,url,extra={})=>source(organisation,dataset,extra.classification||'Site-point result not connected',result,scenario,point,'2026-09-20',url,'Authoritative public source and scope reviewed during the focused v0.10.1 source pass.','The source is authoritative, but no reproducible site-point result is connected. No exposure, safety or clearance conclusion is inferred.',{}, {queryStatus:'source-found',evidenceState:'source_found_scenario_not_connected',ruleType:'not_connected',...extra});
+    if(hazardId==='flooding'){
+      const hasModel=site.id==='whangamata';
+      const result=hasModel?'TCDC identifies the Whangamatā Model Build and System Performance (HAL Ltd, August 2023). The existing model is being updated with new land topography and current climate-change factors; updated SmartMaps results were scheduled for 2026. No clubhouse-point result is connected.':'TCDC records that a stormwater flood model has not been undertaken for '+site.shortName+' and lists an estimated 2028–2030 period for a proposed model. This is an explicit coverage gap, not a no-flood result.';
+      const scenario=hasModel?'Whangamatā stormwater model · August 2023 · 1% AEP context · 2026 update underway':'No settlement stormwater model undertaken · proposed 2028–2030';
+      return {...common,blurb:hasModel?'A real TCDC settlement model is documented, but its clubhouse-point result is not connected.':'TCDC explicitly records that no settlement stormwater model has been undertaken; the evidence gap remains Grey.',sources:[general('Thames-Coromandel District Council','Stormwater Flood Models',result,scenario,SERVICES.tcdcStormwaterModels,{classification:hasModel?'Settlement model exists; point result not connected':'Settlement model not undertaken',sourceDateVersion:'Page published 25 June 2026',modelPublicationYear:hasModel?'August 2023; update scheduled 2026':'Proposed 2028–2030',aepReturnPeriod:hasModel?'1% AEP context stated by TCDC':'Unavailable — model not undertaken',floodType:'Stormwater / pluvial',ruleType:'published_evidence_review',ruleDescription:'Use TCDC’s published settlement model-coverage status. This does not create a clubhouse-point flood classification.'})]};
+    }
+    if(hazardId==='coastalInundation')return {...common,blurb:'Waikato and TCDC coastal-inundation scenario structures are connected; no reproducible club-point pixel or pathway result is connected.',sources:[
+      general('Thames-Coromandel District Council','Shoreline Management Pathways · coastal hazard mapping','TCDC provides interactive 20 cm increment mapping for 1% AEP, 5% AEP and king-tide events and 138 coast-section adaptation pathways. The pathway or pixel applicable to this clubhouse has not been extracted.','1% AEP · 5% AEP · king tide · 20 cm sea-level increments',SERVICES.tcdcShorelinePathways,{classification:'Coastal source connected; site segment not extracted',sourceDateVersion:'Project completed September 2022; page published 3 July 2026',modelPublicationYear:'2022',aepReturnPeriod:'1% AEP and 5% AEP; king tide',ruleType:'published_evidence_review',ruleDescription:'Review the TCDC coastal pathway and inundation scenario structure for the verified clubhouse point; no point result is inferred.'}),
+      general('Waikato Regional Council','Coastal Inundation Tool · 0.8 m sea-level surface','The 0.8 m NZVD2016 scenario is published, but its connected/disconnected raster class has not been extracted at this club point.','0.8 m sea level relative to NZVD2016 · connected and disconnected inundation',SERVICES.wrcCoastal08,{classification:'Raster available; site pixel not extracted',sourceDateVersion:'2024 tool/data refresh',modelPublicationYear:'2024',ruleType:'published_evidence_review',ruleDescription:'Identify the published WRC raster class at the verified clubhouse point; point extraction is not yet connected.',scenarioParameters:{waterLevelMetres:0.8,verticalDatum:'NZVD2016',modelType:'static bathtub model',connectedClass:'blue',disconnectedClass:'green'}}),
       general('NIWA / Earth Sciences New Zealand','Extreme sea-level flood maps for Aotearoa','The published national scenario structure is retained; no site-point result has been extracted.','1% AEP extreme sea level plus 0–2 m relative sea-level rise',SERVICES.niwaCoastalFlood,{aepReturnPeriod:'1% AEP',climateChangeAllowance:'0–2 m relative sea-level rise',sourceDateVersion:'Paulik et al. 2023',modelPublicationYear:'2023'})
     ]};
     if(hazardId==='tsunami'){
       const applies=site.id==='pauanui'||site.id==='tairua';
       return {...common,blurb:applies?'WRC TR 2013/24 models tsunami effects for Tairua–Pauanui; no clubhouse-point result is connected.':'Authoritative regional tsunami sources are identified; no Whangamatā clubhouse-point result is connected.',sources:[general('Waikato Regional Council / eCoast','TR 2013/24 tsunami modelling'+(applies?' · Tairua–Pauanui':' · regional context'),'The report contains source-model and inundation outputs, but no reproducible clubhouse-point classification is connected.',applies?'Tairua–Pauanui far-field and Kermadec trench source scenarios':'Coromandel regional tsunami source review',SERVICES.wrcTsunamiTairua,{sourceDateVersion:'TR 2013/24',modelPublicationYear:'2013'})]};
     }
-    if(hazardId==='coastalErosion')return {state:'unassessed',label:'Source not yet identified',evidenceState:'source_not_yet_found',blurb:'No site-applicable public erosion scenario dataset was confirmed in the focused source pass.',sources:[source('Thames-Coromandel District Council','Site-applicable coastal erosion scenario','Not identified','The focused source pass did not confirm a reproducible public erosion scenario for this club point.','Unavailable',point,'2026-09-19T00:00:00Z',SERVICES.tcdc,'TCDC and WRC public hazard routes were reviewed.','This means the public source connection remains incomplete; it does not mean TCDC lacks coastal-erosion information.',{}, {queryStatus:'source-not-found',evidenceState:'source_not_yet_found',ruleType:'not_connected'})]};
+    if(hazardId==='coastalErosion')return {...common,blurb:'TCDC’s Shoreline Management Pathways source and coastal hazard modelling are connected; the coast-section pathway applicable to the clubhouse point has not been extracted.',sources:[general('Thames-Coromandel District Council','Shoreline Management Pathways · 138 coast-section pathways','The project completed coastal hazard modelling and 138 adaptation pathways for sea-level rise. The applicable pathway for this clubhouse point remains to be selected in the iReport.','Coast-section adaptation pathway · sea-level-rise and coastal-hazard planning',SERVICES.tcdcShorelinePathways,{classification:'Pathway source available; site segment not connected',sourceDateVersion:'Project completed September 2022; page published 3 July 2026',modelPublicationYear:'2022',ruleType:'published_evidence_review',ruleDescription:'Select the coloured coast section that contains the verified clubhouse point in TCDC’s iReport before recording a site-applicable pathway.'}),general('Thames-Coromandel District Council','Coastal Adaptation Pathways iReport','The map viewer supports address search and coast-section pathway selection; no pathway result has been recorded for this clubhouse.','Interactive coast-section pathway viewer',SERVICES.tcdcCoastalIReport,{classification:'Interactive source connected; site pathway not selected',sourceDateVersion:'Current TCDC iReport linked 20 September 2026'})]};
     if(hazardId==='activeFaults')return {...common,blurb:'The national active-fault source is identified; no compliant point-intersection or proximity result is connected.',sources:[general('GNS Science','New Zealand Active Faults Database','The national 1:250,000 and high-resolution datasets are published, but no site-point result is connected.','NZAFD-AF250 and NZAFD-HighRes national active-fault mapping',SERVICES.gnsActiveFaults,{sourceDateVersion:'Version 5.0.2 · 8 September 2026',modelPublicationYear:'2016 / 2024 publications',ruleDescription:'Review an appropriately scaled NZAFD result at the verified clubhouse point; point extraction is not connected and source terms restrict commercial use.'})]};
-    const labels={flooding:['Waikato Regional Hazards Portal','Flooding source identified; site-specific model/scenario result not connected.'],landslide:['Waikato Regional Hazards Portal','Landslide source identified; site-specific susceptibility result not connected.'],liquefaction:['Waikato Regional Hazards Portal','Liquefaction source identified; site-specific classification not connected.'],activeFaults:['Waikato Regional Hazards Portal / GNS national mapping','Active-fault source identified; point-intersection/proximity result not connected.']};
+    const labels={landslide:['Waikato Regional Hazards Portal','Landslide source identified; site-specific susceptibility result not connected.'],liquefaction:['Waikato Regional Hazards Portal','Liquefaction source identified; site-specific classification not connected.'],activeFaults:['Waikato Regional Hazards Portal / GNS national mapping','Active-fault source identified; point-intersection/proximity result not connected.']};
     const [dataset,result]=labels[hazardId];
     return {...common,blurb:result,sources:[general(hazardId==='activeFaults'?'Waikato Regional Council / GNS Science':'Waikato Regional Council',dataset,result,'Regionally published hazard information; applicable scenario metadata unavailable in the connected pilot source.',SERVICES.wrcHazards)]};
   }
 
   const COROMANDEL_SITE_CONFIGS=[
-    {id:'pauanui',shortName:'Pauanui',name:'Pauanui Surf Life Saving Club',address:'Verified SLSNZ clubhouse point · Pauanui Beach',lat:-37.01343,lon:175.86549,clubUrl:'https://www.pauanuilifeguards.org.nz/'},
-    {id:'tairua',shortName:'Tairua',name:'Tairua Surf Life Saving Club',address:'Verified SLSNZ clubhouse point · Tairua Beach',lat:-36.99166,lon:175.85925,clubUrl:'https://www.tairuaslsc.org.nz/'},
-    {id:'whangamata',shortName:'Whangamatā',name:'Whangamatā Surf Life Saving Club',address:'Verified SLSNZ clubhouse point · Whangamatā Beach',lat:-37.2143,lon:175.87947,clubUrl:'https://whangamatasurf.co.nz/'}
+    {id:'tairua',shortName:'Tairua',name:'Tairua Surf Life Saving Club',address:'38 Paku Drive, Tairua 3508',lat:-36.9952582,lon:175.8611453,clubUrl:'https://www.tairuaslsc.org.nz/',addressSourceUrl:'https://www.surflifesaving.org.nz/join-us/find-a-surf-life-saving-club/eastern-region/tairua-slsc/',mapSourceUrl:'https://www.google.com/maps/search/?api=1&query=Tairua%20Surf%20Life%20Saving%20Club'},
+    {id:'pauanui',shortName:'Pāuanui',name:'Pāuanui Surf Life Saving Club',address:'27 Pauanui Boulevard, Pāuanui',lat:-37.014158,lon:175.8659196,clubUrl:'https://www.pauanuilifeguards.org.nz/',addressSourceUrl:'https://www.surflifesaving.org.nz/join-us/find-a-surf-life-saving-club/eastern-region/pauanui-slsc/',mapSourceUrl:'https://www.google.com/maps/search/?api=1&query=Pauanui%20Surf%20Life%20Saving%20Club'},
+    {id:'whangamata',shortName:'Whangamatā',name:'Whangamatā Surf Life Saving Club',address:'Cnr Lowe Street & Esplanade Drive, Whangamatā 3620',lat:-37.21401,lon:175.87878,clubUrl:'https://whangamatasurf.co.nz/',addressSourceUrl:'https://www.surflifesaving.org.nz/join-us/find-a-surf-life-saving-club/eastern-region/whangamata-slsc/',mapSourceUrl:'https://www.google.com/maps/search/?api=1&query=Whangamata%20Surf%20Life%20Saving%20Club'}
   ];
   for(const config of COROMANDEL_SITE_CONFIGS){
-    const site={...config,regionId:'coromandel',region:'Coromandel / TCDC',territorialAuthority:'Thames-Coromandel District Council',regionalCouncil:'Waikato Regional Council',sourceAuthorities:['Thames-Coromandel District Council','Waikato Regional Council','NIWA / Earth Sciences New Zealand','GNS Science','Surf Life Saving New Zealand'],verificationState:'verified',checkedDate:'19 September 2026 NZST',locationStatus:'Verified named club point from the official SLSNZ Club Finder dataset. The point is used for portfolio screening; building footprint, property parcel and lease boundary are not verified.',locationSources:[config.clubUrl,SERVICES.slsnzClubs]};
+    const site={...config,regionId:'coromandel',region:'Coromandel / TCDC',territorialAuthority:'Thames-Coromandel District Council',regionalCouncil:'Waikato Regional Council',sourceAuthorities:['Thames-Coromandel District Council','Waikato Regional Council','NIWA / Earth Sciences New Zealand','GNS Science','Surf Life Saving New Zealand'],verificationState:'verified',checkedDate:'20 September 2026 NZST',locationStatus:'Verified from the official SLSNZ physical address and club identity. The Google Maps club place pin was visually cross-checked against current satellite imagery and lands on the clubhouse building. The point replaces the earlier general SLSNZ Club Finder coordinate; property parcel and lease boundaries remain unverified.',locationSources:[config.addressSourceUrl,config.clubUrl,config.mapSourceUrl,SERVICES.slsnzClubs]};
     site.hazards=Object.fromEntries(HAZARDS.map(hazard=>[hazard.id,coromandelGap(site,hazard.id)]));
     site.geometryEvidence=[
       {evidenceNeed:'Property parcel boundary',evidenceState:'source_found_scenario_not_connected',displayLabel:EVIDENCE_STATES.source_found_scenario_not_connected.label,sourceOrganisation:'Waikato Regional Council / LINZ',dataset:'Public property boundaries',sourceUrl:SERVICES.wrcCoastalWebMap,limitation:'A public parcel layer is present in the WRC tool, but no parcel is connected to the verified club point.'},
@@ -1310,11 +1322,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
   };
 
   const PROJECT_CONFIG_SEED={
-    version:'0.10.0',lastChanged:'2026-09-19',regionId:'multi-region',scenarioLabels:{},
+    version:'0.10.1',lastChanged:'2026-09-20',regionId:'multi-region',scenarioLabels:{},
     persistence:{mode:'repository_seed_plus_browser_publish',source:'published-config.json',limitation:'The deployed repository seed is project-owned. Reviewed UI publishes persist in this browser only; central multi-user writes require a project backend and authenticated write path that are not available in this static Vercel project.'},
     versionHistory:[
       {version:'0.9.0',date:'2026-09-19',summary:'Initial configurable RAG rules, objective completeness requirements and five-site published seed.'},
-      {version:'0.10.0',date:'2026-09-19',summary:'Added Coromandel / TCDC as a configuration-led second-region proof with three verified SLSNZ locations and explicit evidence gaps.'}
+      {version:'0.10.0',date:'2026-09-19',summary:'Added Coromandel / TCDC as a configuration-led second-region proof with three verified SLSNZ locations and explicit evidence gaps.'},
+      {version:'0.10.1',date:'2026-09-20',summary:'Added direct regional portfolio switching, corrected the three TCDC clubhouse points, connected TCDC coastal and stormwater coverage evidence, and made regional map fitting deterministic.'}
     ],
     completenessRequirements:[
       {id:'source',label:'Authoritative source identified'},
@@ -1354,8 +1367,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
   let legendContainer=null;
   let legendBody=null;
   let legendToggle=null;
+  let configurationLoadedFromBrowser=false;
+  function compareVersions(left,right){
+    const a=String(left||'').split('.').map(value=>Number(value)||0),b=String(right||'').split('.').map(value=>Number(value)||0),length=Math.max(a.length,b.length);
+    for(let index=0;index<length;index++){const delta=(a[index]||0)-(b[index]||0);if(delta)return delta}
+    return 0;
+  }
   function loadPublishedConfiguration(){
-    try{const stored=JSON.parse(localStorage.getItem('slsPublishedConfiguration')||'null');if(stored&&Array.isArray(stored.ragRules)&&String(stored.version||'').startsWith('0.10.'))return stored}catch(error){}
+    try{const stored=JSON.parse(localStorage.getItem('slsPublishedConfiguration')||'null');if(stored&&Array.isArray(stored.ragRules)&&compareVersions(stored.version,PROJECT_CONFIG_SEED.version)>=0){configurationLoadedFromBrowser=true;return stored}}catch(error){}
     return JSON.parse(JSON.stringify(PROJECT_CONFIG_SEED));
   }
   const publishedConfiguration=loadPublishedConfiguration();
@@ -1383,13 +1402,24 @@ svg.leaflet-image-layer.leaflet-interactive path {
   const portfolioMap=L.map('portfolioMap',{zoomControl:true,preferCanvas:true,scrollWheelZoom:false});
   const portfolioMarkers={};
   let portfolioBasemapLayer=null;
+  let portfolioMapFittedRegion=null;
   for(const site of Object.values(SITES)){
     const icon=L.divIcon({className:'portfolio-marker',html:'<span class="portfolio-dot '+(site.id===selectedSiteId?'selected':'')+'">'+escapeHtml(site.shortName.slice(0,2).toUpperCase())+'</span>',iconSize:[30,30],iconAnchor:[15,15]});
     portfolioMarkers[site.id]=L.marker([site.lat,site.lon],{icon,title:site.name,alt:site.name,zIndexOffset:site.id===selectedSiteId?1000:0}).bindTooltip(site.shortName,{direction:'top',offset:[0,-10]});
     if(site.regionId===selectedRegionId)portfolioMarkers[site.id].addTo(portfolioMap);
     portfolioMarkers[site.id].on('click',()=>{switchSite(site.id);setDashboardView('site')});
   }
-  portfolioMap.fitBounds(L.latLngBounds(sitesForRegion(selectedRegionId).map(site=>[site.lat,site.lon])).pad(.12));
+  function fitPortfolioRegion(force=false){
+    if(!force&&portfolioMapFittedRegion===selectedRegionId)return;
+    const points=sitesForRegion(selectedRegionId).filter(site=>Number.isFinite(site.lat)&&Number.isFinite(site.lon)&&Math.abs(site.lat)<=90&&Math.abs(site.lon)<=180).map(site=>[site.lat,site.lon]);
+    const configured=REGIONS[selectedRegionId]&&REGIONS[selectedRegionId].mapBounds;
+    const bounds=points.length?L.latLngBounds(points):configured?L.latLngBounds(configured):null;
+    if(!bounds||!bounds.isValid())return;
+    portfolioMap.invalidateSize({pan:false,animate:false});
+    portfolioMap.fitBounds(bounds.pad(.16),{padding:[24,24],maxZoom:11,animate:false});
+    portfolioMapFittedRegion=selectedRegionId;
+  }
+  requestAnimationFrame(()=>fitPortfolioRegion(true));
 
   function escapeHtml(value){return String(value==null?'':value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))}
   function toast(message){const el=document.getElementById('toast');el.textContent=message;el.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('show'),2800)}
@@ -1517,8 +1547,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     const entities=configurationEntities(),counts=[['Sites',entities.sites.length],['Hazards',entities.hazards.length],['Sources',entities.sources.length],['Scenarios',entities.scenarios.length],['RAG rules',publishedConfiguration.ragRules.length],['Required checks',publishedConfiguration.completenessRequirements.length]];
     document.getElementById('configSummary').innerHTML=counts.map(([label,count])=>'<span class="config-count"><strong>'+count+'</strong>'+label+'</span>').join('');
     document.getElementById('configStatus').textContent='Published · v'+publishedConfiguration.version+' · '+publishedConfiguration.lastChanged;
-    const hasBrowserPublish=Boolean(localStorage.getItem('slsPublishedConfiguration'));
-    document.getElementById('persistenceStatus').innerHTML='<strong>Persistence:</strong> '+(hasBrowserPublish?'Reviewed published configuration loaded from browser storage.':'Project-owned published seed loaded from <code>published-config.json</code>.')+' '+escapeHtml(publishedConfiguration.persistence.limitation);
+    document.getElementById('persistenceStatus').innerHTML='<strong>Persistence:</strong> '+(configurationLoadedFromBrowser?'Reviewed published configuration loaded from browser storage.':'Project-owned published seed loaded from <code>published-config.json</code>.')+' '+escapeHtml(publishedConfiguration.persistence.limitation);
     document.getElementById('configEntities').innerHTML='<div class="entity-row"><strong>Sites</strong><span>'+entities.sites.map(site=>escapeHtml(site.shortName+' · '+site.region)).join('<br>')+'</span></div><div class="entity-row"><strong>Hazards</strong><span>'+entities.hazards.map(item=>escapeHtml(item.name)).join(' · ')+'</span></div><div class="entity-row"><strong>Evidence checks</strong><span>'+entities.rules.map(type=>escapeHtml(plainRuleType(type))).join('<br>')+'</span></div><div class="entity-row"><strong>Published RAG rules</strong><span>'+publishedConfiguration.ragRules.map(rule=>escapeHtml((REGIONS[rule.regionId]||{name:'All regions'}).name+' · '+(HAZARDS.find(item=>item.id===rule.hazardId)||{name:'Evidence fallback'}).name+' → '+rule.rag.toUpperCase()+' · '+rule.label)+'<details><summary>Technical details</summary>'+escapeHtml(rule.id)+'</details>').join('<br>')+'</span></div><div class="entity-row"><strong>Data-completeness checks</strong><span>'+publishedConfiguration.completenessRequirements.map(item=>escapeHtml(item.label)).join('<br>')+'</span></div><div class="entity-row"><strong>Version history</strong><span>'+publishedConfiguration.versionHistory.map(item=>escapeHtml('v'+item.version+' · '+item.date+' · '+item.summary)).join('<br>')+'</span></div>';
     renderConfigForm(!document.getElementById('configDisplayLabel').value);
   }
@@ -1547,7 +1576,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     return '<div class="report-title"><h2>'+escapeHtml(title)+'</h2><p>'+escapeHtml(subtitle)+'</p></div><div class="report-warning">VALENCE TEST INSTANCE · SCREENING ONLY · NOT A SAFETY CLEARANCE. No overall professional risk score is provided. NoData and no-point-hit results are not clearance.</div>';
   }
   function reportMeta(scope){
-    return '<div class="report-meta"><span>Report version<strong>v0.10</strong></span><span>Configuration<strong>v'+escapeHtml(publishedConfiguration.version)+'</strong></span><span>Generated<strong>'+escapeHtml(new Date().toISOString())+'</strong></span><span>Scope<strong>'+escapeHtml(scope)+'</strong></span></div>';
+    return '<div class="report-meta"><span>Report version<strong>v0.10.1</strong></span><span>Configuration<strong>v'+escapeHtml(publishedConfiguration.version)+'</strong></span><span>Generated<strong>'+escapeHtml(new Date().toISOString())+'</strong></span><span>Scope<strong>'+escapeHtml(scope)+'</strong></span></div>';
   }
   function renderSiteReport(site,hazardId){
     const selected=site.hazards[hazardId],spec=HAZARDS.find(item=>item.id===hazardId),display=presentationState(spec,selected);
@@ -1627,6 +1656,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
   function renderRegionalOverview(){
     const sites=activeSites(),region=currentRegion(),authorities=[...new Set(sites.flatMap(site=>site.sourceAuthorities||[site.territorialAuthority,site.regionalCouncil]))];
     document.getElementById('overviewRegion').textContent=region.name+' pilot';
+    document.getElementById('overviewRegionSelect').value=selectedRegionId;
+    document.getElementById('regionSelect').value=selectedRegionId;
     document.getElementById('overviewClubCount').textContent=sites.length;
     document.getElementById('overviewHazardCount').textContent=HAZARDS.length;
     document.getElementById('overviewAuthorities').textContent=authorities.join(' · ');
@@ -1668,7 +1699,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     document.getElementById('viewTitle').textContent=selectedView==='portfolio'?'Regional portfolio':selectedView==='rules'?'Rules & Sources':selectedView==='config'?'Screening configuration':selectedView==='reports'?'Screening reports':currentSite().shortName+' site detail';
     document.getElementById('viewDescription').textContent=selectedView==='portfolio'?'Compare configured RAG results and data completeness across '+activeSites().length+' '+currentRegion().name+' clubs.':selectedView==='rules'?'Review authoritative sources, scenarios, configured rules and regional applicability.':selectedView==='config'?'Draft, validate, preview and explicitly publish source-backed configuration changes.':selectedView==='reports'?'Generate traceable '+currentRegion().name+' site and portfolio screening reports.':'Map, RAG hazard summary, completeness and source evidence for the selected clubhouse point.';
     requestAnimationFrame(()=>{
-      if(selectedView==='portfolio'){portfolioMap.invalidateSize({pan:false,animate:false});ensureBasemap();syncPortfolioMarkers()}
+      if(selectedView==='portfolio'){portfolioMap.invalidateSize({pan:false,animate:false});ensureBasemap();syncPortfolioMarkers();fitPortfolioRegion()}
       else if(selectedView==='site'){map.invalidateSize({pan:false,animate:false});ensureBasemap();refreshOverlays()}
       else if(selectedView==='rules')renderRulesSources();
       else if(selectedView==='config')renderConfiguration();
@@ -1751,7 +1782,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     document.getElementById('siteAddress').textContent=site.address;
     document.getElementById('siteGrid').innerHTML='<dt>Region</dt><dd>'+escapeHtml(site.region)+'</dd><dt>Territorial authority</dt><dd>'+escapeHtml(site.territorialAuthority)+'</dd><dt>Regional council</dt><dd>'+escapeHtml(site.regionalCouncil)+'</dd><dt>Source authorities</dt><dd>'+escapeHtml((site.sourceAuthorities||[]).join(' · '))+'</dd><dt>Coordinates</dt><dd>'+escapeHtml(site.lat+', '+site.lon)+'</dd><dt>Data completeness</dt><dd>'+completeness.percent+'% · '+completeness.complete+' complete / '+completeness.partial+' partial / '+completeness.gaps+' gaps</dd><dt>Evidence checked</dt><dd>'+escapeHtml(site.checkedDate)+'</dd>';
     const verification=document.getElementById('verificationStatus');verification.title=site.locationStatus;
-    verification.innerHTML='<span class="verification-icon" aria-hidden="true">i</span><span><strong class="verification-title">Clubhouse point used</strong><span class="verification-copy">Approximate location shown · Property parcel: scenario not yet connected · Lease boundary: no suitable public dataset identified.</span><span class="verification-links">'+site.locationSources.map((url,index)=>'<a href="'+escapeHtml(url)+'" target="_blank" rel="noreferrer">Source '+(index+1)+' ↗</a>').join(' · ')+'</span></span>';
+    verification.innerHTML='<span class="verification-icon" aria-hidden="true">i</span><span><strong class="verification-title">Verified clubhouse point used</strong><span class="verification-copy">'+escapeHtml(site.locationStatus)+'</span><span class="verification-links">'+site.locationSources.map((url,index)=>'<a href="'+escapeHtml(url)+'" target="_blank" rel="noreferrer">Location source '+(index+1)+' ↗</a>').join(' · ')+'</span></span>';
   }
 
   function renderHazardCards(){
@@ -1787,7 +1818,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   function switchSite(id){
     if(!SITES[id])return;
     selectedSiteId=id;const site=currentSite();
-    if(site.regionId!==selectedRegionId){selectedRegionId=site.regionId;portfolioScenario='all';portfolioFilter='all'}
+    if(site.regionId!==selectedRegionId){selectedRegionId=site.regionId;portfolioScenario='all';portfolioFilter='all';portfolioMapFittedRegion=null}
     marker.setLatLng([site.lat,site.lon]).bindPopup('<b>'+escapeHtml(site.name)+'</b><br>'+escapeHtml(site.address)+'<br>'+site.lat+', '+site.lon+'<br><small>Verified clubhouse point; footprint and lease boundary not verified.</small>');
     map.setView([site.lat,site.lon],17,{animate:false});renderRegionalOverview();renderClubList();renderPortfolio();renderReportControls();renderSite();renderHazardCards();renderEvidence();renderLayerToggles();syncPortfolioMarkers();ensureBasemap();
     if(selectedView==='site')document.getElementById('viewTitle').textContent=site.shortName+' site detail';
@@ -1796,17 +1827,18 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
   function switchRegion(id){
     if(!REGIONS[id]||id===selectedRegionId)return;
-    selectedRegionId=id;portfolioScenario='all';portfolioFilter='all';
+    selectedRegionId=id;portfolioScenario='all';portfolioFilter='all';portfolioMapFittedRegion=null;
     const sites=activeSites();selectedSiteId=sites[0].id;
     renderRegionalOverview();renderClubList();renderPortfolio();renderReportControls();renderReport();switchSite(selectedSiteId);
-    portfolioMap.fitBounds(L.latLngBounds(sites.map(site=>[site.lat,site.lon])).pad(.16),{animate:false});
     setDashboardView('portfolio');
+    requestAnimationFrame(()=>fitPortfolioRegion(true));
   }
 
   function saveJson(data,fileName){const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=fileName;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(url);a.remove()},1000)}
 
   document.getElementById('clubList').addEventListener('click',event=>{const button=event.target.closest('[data-club]');if(button)switchSite(button.dataset.club)});
   document.getElementById('regionSelect').addEventListener('change',event=>switchRegion(event.target.value));
+  document.getElementById('overviewRegionSelect').addEventListener('change',event=>switchRegion(event.target.value));
   document.getElementById('hazardCards').addEventListener('click',event=>{const button=event.target.closest('[data-hazard]');if(button)switchHazard(button.dataset.hazard)});
   document.querySelector('.view-switch').addEventListener('click',event=>{const button=event.target.closest('[data-view]');if(button)setDashboardView(button.dataset.view)});
   document.getElementById('returnPortfolio').addEventListener('click',()=>setDashboardView('portfolio'));
@@ -1819,14 +1851,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
   document.getElementById('configScenario').addEventListener('change',()=>{draftConfiguration=null;draftPreviewed=false;renderConfigForm(true);document.getElementById('previewDraft').disabled=true;document.getElementById('publishDraft').disabled=true});
   document.getElementById('createDraft').addEventListener('click',()=>{const selected=selectedConfigEntry(),item=selected.entry&&selected.entry.item;const candidate={configId:'scenario-presentation|'+selected.hazardId+'|'+(selected.entry?selected.entry.name:''),hazardId:selected.hazardId,scenarioName:selected.entry?selected.entry.name:'',sourceOrganisation:item?item.source.organisation:'',sourceUrl:item?item.source.url:'',ruleType:item?item.screeningRule.type:'',resultState:item?item.screeningResult.state:'',displayLabel:document.getElementById('configDisplayLabel').value.trim(),caution:document.getElementById('configCaution').value.trim(),configurationVersion:publishedConfiguration.version,changedAt:new Date().toISOString()};const validation=validateConfiguration(candidate),box=document.getElementById('configValidation');box.className='validation-box '+(validation.valid?'valid':'invalid');box.textContent=validation.valid?'Valid draft created. Published configuration remains unchanged until explicit publish.':'Draft rejected: '+validation.errors.join('; ');draftConfiguration=validation.valid?candidate:null;draftPreviewed=false;document.getElementById('previewDraft').disabled=!validation.valid;document.getElementById('publishDraft').disabled=true});
   document.getElementById('previewDraft').addEventListener('click',()=>{if(!draftConfiguration)return;const rows=activeSites().map(site=>{const matches=(site.hazards[draftConfiguration.hazardId].sources||[]).filter(item=>item.scenarioModel.name===draftConfiguration.scenarioName),result=matches.length?matches.map(item=>item.screeningResult.displayLabel).join(' · '):'Scenario not connected / unavailable';return '<tr><td>'+escapeHtml(site.shortName)+'</td><td>'+escapeHtml(result)+'</td><td>'+escapeHtml(matches.length?draftConfiguration.displayLabel:'No presentation change')+'</td></tr>'}).join('');document.getElementById('configPreview').innerHTML='<strong>Draft preview · '+escapeHtml(currentRegion().name)+' · published results unchanged</strong><table class="preview-table"><thead><tr><th>Site</th><th>Current source result</th><th>Draft display</th></tr></thead><tbody>'+rows+'</tbody></table>';draftPreviewed=true;document.getElementById('publishDraft').disabled=false});
-  document.getElementById('publishDraft').addEventListener('click',()=>{if(!draftConfiguration||!draftPreviewed)return;const validation=validateConfiguration(draftConfiguration);if(!validation.valid)return;publishedConfiguration.scenarioLabels[draftConfiguration.hazardId]=publishedConfiguration.scenarioLabels[draftConfiguration.hazardId]||{};publishedConfiguration.scenarioLabels[draftConfiguration.hazardId][draftConfiguration.scenarioName]=draftConfiguration.displayLabel;const revision=Number(String(publishedConfiguration.version).split('.').pop())+1;publishedConfiguration.version='0.10.'+(Number.isFinite(revision)?revision:1);publishedConfiguration.lastChanged=new Date().toISOString().slice(0,10);publishedConfiguration.versionHistory.push({version:publishedConfiguration.version,date:publishedConfiguration.lastChanged,summary:'Reviewed scenario presentation label published in this browser; source evidence and RAG rule logic unchanged.'});localStorage.setItem('slsPublishedConfiguration',JSON.stringify(publishedConfiguration));document.getElementById('configValidation').className='validation-box valid';document.getElementById('configValidation').textContent='Published v'+publishedConfiguration.version+' in this browser. It will survive reload here. Project-wide publication still requires a reviewed repository commit/deployment.';draftConfiguration=null;draftPreviewed=false;document.getElementById('previewDraft').disabled=true;document.getElementById('publishDraft').disabled=true;renderConfiguration();renderRulesSources();renderPortfolio();renderHazardCards();renderEvidence();renderReport()});
+  document.getElementById('publishDraft').addEventListener('click',()=>{if(!draftConfiguration||!draftPreviewed)return;const validation=validateConfiguration(draftConfiguration);if(!validation.valid)return;publishedConfiguration.scenarioLabels[draftConfiguration.hazardId]=publishedConfiguration.scenarioLabels[draftConfiguration.hazardId]||{};publishedConfiguration.scenarioLabels[draftConfiguration.hazardId][draftConfiguration.scenarioName]=draftConfiguration.displayLabel;const versionParts=String(publishedConfiguration.version).split('.').map(Number),lastIndex=versionParts.length-1;versionParts[lastIndex]=Number.isFinite(versionParts[lastIndex])?versionParts[lastIndex]+1:1;publishedConfiguration.version=versionParts.join('.');publishedConfiguration.lastChanged=new Date().toISOString().slice(0,10);publishedConfiguration.versionHistory.push({version:publishedConfiguration.version,date:publishedConfiguration.lastChanged,summary:'Reviewed scenario presentation label published in this browser; source evidence and RAG rule logic unchanged.'});localStorage.setItem('slsPublishedConfiguration',JSON.stringify(publishedConfiguration));configurationLoadedFromBrowser=true;document.getElementById('configValidation').className='validation-box valid';document.getElementById('configValidation').textContent='Published v'+publishedConfiguration.version+' in this browser. It will survive reload here. Project-wide publication still requires a reviewed repository commit/deployment.';draftConfiguration=null;draftPreviewed=false;document.getElementById('previewDraft').disabled=true;document.getElementById('publishDraft').disabled=true;renderConfiguration();renderRulesSources();renderPortfolio();renderHazardCards();renderEvidence();renderReport()});
   document.getElementById('runValidation').addEventListener('click',()=>{const selected=selectedConfigEntry(),item=selected.entry&&selected.entry.item,validFixture={configId:'validation-valid',hazardId:selected.hazardId,scenarioName:selected.entry?selected.entry.name:'',sourceOrganisation:item?item.source.organisation:'',sourceUrl:item?item.source.url:'',ruleType:item?item.screeningRule.type:'',resultState:item?item.screeningResult.state:'',displayLabel:'Published scenario evidence',caution:'Screening evidence only; not a clearance.'},invalidFixture={...validFixture,configId:'',sourceUrl:'',displayLabel:'Safe and cleared',caution:''},valid=validateConfiguration(validFixture),invalid=validateConfiguration(invalidFixture),box=document.getElementById('configValidation');box.className='validation-box '+(valid.valid&&!invalid.valid?'valid':'invalid');box.textContent=valid.valid&&!invalid.valid?'Validation tests passed: complete source-backed configuration accepted; missing source/ID and unsafe wording rejected safely.':'Validation test failed; configuration was not published.'});
   document.getElementById('reportType').addEventListener('change',renderReport);document.getElementById('reportSite').addEventListener('change',renderReport);document.getElementById('reportHazard').addEventListener('change',renderReport);document.getElementById('refreshReport').addEventListener('click',renderReport);document.getElementById('printReport').addEventListener('click',()=>window.print());
-  document.getElementById('downloadReportData').addEventListener('click',()=>{const type=document.getElementById('reportType').value,siteId=document.getElementById('reportSite').value,hazardId=document.getElementById('reportHazard').value,sites=type==='site'?[SITES[siteId]]:activeSites(),data={project:'SLS Natural Hazard Pilot',reportVersion:'0.10',configurationVersion:publishedConfiguration.version,generatedAt:new Date().toISOString(),type,selectedHazardId:hazardId,scenarioContext:reportScenarioContext(hazardId),limitation:'TEST INSTANCE. Screening only. Not a safety clearance. Green is not clearance; NoData and no-point-hit are not clearance.',sites,ragResults:Object.fromEntries(sites.map(site=>[site.id,Object.fromEntries(HAZARDS.map(spec=>[spec.id,evaluateRag(site,spec.id)]))])),completeness:{regional:regionalCompleteness(sites),sites:Object.fromEntries(sites.map(site=>[site.id,siteCompleteness(site)]))},evidenceStates:EVIDENCE_STATES};saveJson(data,'sls-'+type+'-screening-report-data-v0.10.json');toast('Report data download prepared.')});
+  document.getElementById('downloadReportData').addEventListener('click',()=>{const type=document.getElementById('reportType').value,siteId=document.getElementById('reportSite').value,hazardId=document.getElementById('reportHazard').value,sites=type==='site'?[SITES[siteId]]:activeSites(),data={project:'SLS Natural Hazard Pilot',reportVersion:'0.10.1',configurationVersion:publishedConfiguration.version,generatedAt:new Date().toISOString(),type,selectedHazardId:hazardId,scenarioContext:reportScenarioContext(hazardId),limitation:'TEST INSTANCE. Screening only. Not a safety clearance. Green is not clearance; NoData and no-point-hit are not clearance.',sites,ragResults:Object.fromEntries(sites.map(site=>[site.id,Object.fromEntries(HAZARDS.map(spec=>[spec.id,evaluateRag(site,spec.id)]))])),completeness:{regional:regionalCompleteness(sites),sites:Object.fromEntries(sites.map(site=>[site.id,siteCompleteness(site)]))},evidenceStates:EVIDENCE_STATES};saveJson(data,'sls-'+type+'-screening-report-data-v0.10.1.json');toast('Report data download prepared.')});
   document.getElementById('layerToggles').addEventListener('change',event=>{const hazardId=event.target.dataset.hazardLayer;if(!hazardId)return;for(const id of hazardLayerIds(hazardId)){event.target.checked?visibleLayers.add(id):visibleLayers.delete(id)}refreshOverlays()});
   document.querySelectorAll('[data-basemap]').forEach(button=>button.addEventListener('click',()=>setBasemap(button.dataset.basemap)));
   document.getElementById('showSelected').addEventListener('click',showSelectedHazard);
-  document.getElementById('exportEvidence').addEventListener('click',()=>{const site=currentSite();saveJson({project:'Surf Life Saving Natural Hazards Pilot',dashboardVersion:'0.10',configurationVersion:publishedConfiguration.version,exportedAt:new Date().toISOString(),portfolioContext:{hazardId:portfolioHazardId,scenario:portfolioScenario,filter:portfolioFilter},site,ragResults:Object.fromEntries(HAZARDS.map(spec=>[spec.id,evaluateRag(site,spec.id)])),completeness:siteCompleteness(site),evidenceStates:EVIDENCE_STATES,limitation:'Evidence screening only. Green is below a configured threshold with adequate evidence, not safety or clearance. No professional rating is provided.'},'sls-'+site.id+'-hazard-evidence-v0.10.json');toast('Evidence export prepared for '+site.shortName+'.')});
+  document.getElementById('exportEvidence').addEventListener('click',()=>{const site=currentSite();saveJson({project:'Surf Life Saving Natural Hazards Pilot',dashboardVersion:'0.10.1',configurationVersion:publishedConfiguration.version,exportedAt:new Date().toISOString(),portfolioContext:{hazardId:portfolioHazardId,scenario:portfolioScenario,filter:portfolioFilter},site,ragResults:Object.fromEntries(HAZARDS.map(spec=>[spec.id,evaluateRag(site,spec.id)])),completeness:siteCompleteness(site),evidenceStates:EVIDENCE_STATES,limitation:'Evidence screening only. Green is below a configured threshold with adequate evidence, not safety or clearance. No professional rating is provided.'},'sls-'+site.id+'-hazard-evidence-v0.10.1.json');toast('Evidence export prepared for '+site.shortName+'.')});
 
   map.on('moveend zoomend resize',refreshOverlays);
   const resizeMap=()=>requestAnimationFrame(()=>{map.invalidateSize({pan:false,animate:false});portfolioMap.invalidateSize({pan:false,animate:false})});
@@ -1841,7 +1873,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   renderRegionalOverview();renderClubList();renderPortfolio();renderRulesSources();renderConfiguration();renderReportControls();renderReport();setBasemap(selectedBasemap);renderSite();renderHazardCards();renderEvidence();renderLayerToggles();setDashboardView(selectedView);
   marker.bindPopup('<b>'+SITES.mount.name+'</b><br>'+SITES.mount.address+'<br>'+SITES.mount.lat+', '+SITES.mount.lon+'<br><small>Verified clubhouse point; footprint and lease boundary not verified.</small>');
   resizeMap();refreshOverlays();
-  window.SLSPilot={version:'0.10',sites:SITES,hazards:HAZARDS,layers:LAYERS,evidenceStates:EVIDENCE_STATES,publishedConfiguration,evaluateRag,hazardCompleteness,siteCompleteness,regionalCompleteness,switchSite,switchHazard,setBasemap,setDashboardView,getState:()=>{const position=marker.getLatLng();return {selectedView,selectedSiteId,selectedHazardId,selectedBasemap,portfolioHazardId,portfolioScenario,portfolioFilter,selectedRegionId,configurationVersion:publishedConfiguration.version,draftActive:Boolean(draftConfiguration),reportType:document.getElementById('reportType').value,basemapActive:Boolean(basemapLayer&&map.hasLayer(basemapLayer)),portfolioBasemapActive:Boolean(portfolioBasemapLayer&&portfolioMap.hasLayer(portfolioBasemapLayer)),markerLat:position.lat,markerLon:position.lng,visibleLayerIds:[...visibleLayers],legendExpanded,legendLayerIds:Object.keys(LAYERS).filter(id=>visibleLayers.has(id)),ragResult:evaluateRag(currentSite(),selectedHazardId),siteCompleteness:siteCompleteness(currentSite()),regionalCompleteness:regionalCompleteness(activeSites())}}};
+  window.SLSPilot={version:'0.10.1',sites:SITES,hazards:HAZARDS,layers:LAYERS,evidenceStates:EVIDENCE_STATES,publishedConfiguration,evaluateRag,hazardCompleteness,siteCompleteness,regionalCompleteness,switchSite,switchRegion,switchHazard,setBasemap,setDashboardView,fitPortfolioRegion,getState:()=>{const position=marker.getLatLng(),portfolioCenter=portfolioMap.getCenter();return {selectedView,selectedSiteId,selectedHazardId,selectedBasemap,portfolioHazardId,portfolioScenario,portfolioFilter,selectedRegionId,configurationVersion:publishedConfiguration.version,draftActive:Boolean(draftConfiguration),reportType:document.getElementById('reportType').value,basemapActive:Boolean(basemapLayer&&map.hasLayer(basemapLayer)),portfolioBasemapActive:Boolean(portfolioBasemapLayer&&portfolioMap.hasLayer(portfolioBasemapLayer)),portfolioMapFittedRegion,portfolioMapCenter:{lat:portfolioCenter.lat,lon:portfolioCenter.lng},portfolioMapZoom:portfolioMap.getZoom(),markerLat:position.lat,markerLon:position.lng,visibleLayerIds:[...visibleLayers],legendExpanded,legendLayerIds:Object.keys(LAYERS).filter(id=>visibleLayers.has(id)),ragResult:evaluateRag(currentSite(),selectedHazardId),siteCompleteness:siteCompleteness(currentSite()),regionalCompleteness:regionalCompleteness(activeSites())}}};
   </script>
 </body>
 </html>

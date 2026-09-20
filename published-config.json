@@ -1,6 +1,6 @@
 {
-  "version": "0.10.0",
-  "lastChanged": "2026-09-19",
+  "version": "0.10.1",
+  "lastChanged": "2026-09-20",
   "regionId": "multi-region",
   "persistence": {
     "mode": "repository_seed_plus_browser_publish",
@@ -35,6 +35,7 @@
   ],
   "versionHistory": [
     { "version": "0.9.0", "date": "2026-09-19", "summary": "Initial configurable RAG rules, objective completeness requirements and five-site published seed." },
-    { "version": "0.10.0", "date": "2026-09-19", "summary": "Added Coromandel / TCDC as a configuration-led second-region proof with three verified SLSNZ locations and explicit evidence gaps." }
+    { "version": "0.10.0", "date": "2026-09-19", "summary": "Added Coromandel / TCDC as a configuration-led second-region proof with three verified SLSNZ locations and explicit evidence gaps." },
+    { "version": "0.10.1", "date": "2026-09-20", "summary": "Added direct regional portfolio switching, corrected the three TCDC clubhouse points, connected TCDC coastal and stormwater coverage evidence, and made regional map fitting deterministic." }
   ]
 }
