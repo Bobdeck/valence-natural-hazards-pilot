@@ -1,12 +1,13 @@
 {
-  "version": "0.10.1",
+  "version": "0.10.2",
   "lastChanged": "2026-09-20",
   "regionId": "multi-region",
   "persistence": {
-    "mode": "repository_seed_plus_browser_publish",
+    "mode": "repository_seed_plus_direct_browser_edit",
     "source": "published-config.json",
-    "limitation": "The deployed repository seed is project-owned. Reviewed UI publishes persist in this browser only; central multi-user writes require a project backend and authenticated write path that are not available in this static Vercel project."
+    "limitation": "The deployed repository seed is project-owned. Unlocked edits save directly in this browser; shared multi-user persistence requires an authenticated project write path that is not available in this static Vercel project."
   },
+  "regionalOverrides": {},
   "completenessRequirements": [
     { "id": "source", "label": "Authoritative source identified" },
     { "id": "scenario", "label": "Scenario/model connected" },
@@ -36,6 +37,7 @@
   "versionHistory": [
     { "version": "0.9.0", "date": "2026-09-19", "summary": "Initial configurable RAG rules, objective completeness requirements and five-site published seed." },
     { "version": "0.10.0", "date": "2026-09-19", "summary": "Added Coromandel / TCDC as a configuration-led second-region proof with three verified SLSNZ locations and explicit evidence gaps." },
-    { "version": "0.10.1", "date": "2026-09-20", "summary": "Added direct regional portfolio switching, corrected the three TCDC clubhouse points, connected TCDC coastal and stormwater coverage evidence, and made regional map fitting deterministic." }
+    { "version": "0.10.1", "date": "2026-09-20", "summary": "Added direct regional portfolio switching, corrected the three TCDC clubhouse points, connected TCDC coastal and stormwater coverage evidence, and made regional map fitting deterministic." },
+    { "version": "0.10.2", "date": "2026-09-20", "summary": "Consolidated region state, reconciled coastal and TCDC evidence, simplified direct configuration editing, and aligned site and hazard-filtered reports." }
   ]
 }
