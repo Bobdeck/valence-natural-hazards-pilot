@@ -1,5 +1,5 @@
 VALENCE | SURF LIFE SAVING NATURAL HAZARDS PILOT
-Dashboard v0.10.3 | activated Coromandel point screening and compact mobile hazard-card status treatment | checked 21 September 2026 NZST
+Dashboard v0.10.4 | shared Master RAG Thresholds plus separate Regional Data Mapping | checked 21 September 2026 NZST
 
 HOSTED TEST INSTANCE
 The live review environment is https://valence-natural-hazards-pilot.vercel.app/ and deploys from Bobdeck/valence-natural-hazards-pilot main through the existing GitHub → Vercel connection. Open_Map.cmd remains a local fallback only.
@@ -28,7 +28,7 @@ Coromandel / Thames-Coromandel District
 Use the single Region selector in the blue Regional overview banner to switch between Bay of Plenty and Coromandel. The current app page is preserved; Site detail moves to the first valid site in the new region, and the portfolio map refits only when the Portfolio page is active. Select a site or matrix cell to drill into Site detail. The selected marker, site summary, hazard cards, evidence detail and map view update together.
 
 FILES
-index.html — Dashboard v0.10.3 multi-region Portfolio, Site Detail, Rules & Sources, Configuration and Reports views with active Coromandel RAG screening, precise Grey reasons and compact mobile status pills
+index.html — Dashboard v0.10.4 multi-region Portfolio, Site Detail, Rules & Sources, Configuration and Reports views with one shared prototype colour policy and separate regional source/scenario mapping
 published-config.json — project-owned published RAG/completeness configuration seed and version record
 Open_Map.cmd — Windows launcher
 serve-map.ps1 — loopback-only local server using an available port
@@ -47,12 +47,13 @@ EVIDENCE RULES
 - Results are original source observations, not professional risk ratings.
 - Green is permitted only where a configured below-threshold rule has adequate connected evidence; it never means safe or cleared. NoData and evidence gaps remain Grey.
 - Evidence is structured as site → hazard → source → scenario/model → screening rule → screening result → presentation state.
-- v0.10.3 preserves the same source/scenario/region-aware RAG and completeness architecture across Bay of Plenty and Coromandel without bespoke regional UI forks or a professional risk score.
+- v0.10.4 separates one shared prototype RAG policy from Regional Data Mapping. The same evidence/scenario meaning maps to the same colour in Bay of Plenty and Coromandel; missing regional data never changes severity.
 - Coromandel clubhouse addresses come from official SLSNZ club pages. Google place pins were visually cross-checked against current satellite imagery before replacing the earlier general Club Finder coordinates.
-- Tairua and Pāuanui remain Grey for flooding because TCDC explicitly records that no settlement model has been undertaken. Whangamatā is Green under the configured 1% AEP rule because the clubhouse lies inside the published model extent and the exact point does not intersect the mapped stormwater-flood layer; this is screening only, not clearance.
+- The shared flooding policy is Red at 2% AEP / 1-in-50, Amber at 1% AEP / 1-in-100 when not Red, Green only where the escalation bands can be excluded with valid coverage, and Grey where the thresholds cannot be evaluated. Tairua and Pāuanui remain Grey because TCDC explicitly records that no settlement model has been undertaken. Whangamatā is Green because the verified point is outside the enclosing mapped 1% AEP extent within valid model coverage; the missing 2% layer does not redefine the shared colours.
 - TCDC's public king-tide, 5% AEP and 1% AEP coastal-inundation vector layers were queried at all three verified clubhouse points. All three points are inside the service extent and none intersects the three scenario layers, so Coastal inundation evaluates Green under the configured complete-evidence rule; this is scenario-specific screening, not clearance.
 - TCDC's Shoreline Management Pathways programme, WRC tsunami/coastal material and GNS national sources remain connected with provenance. Where a coast section, point class, proximity result or approved rule is still unavailable, the app gives the exact Grey reason rather than inferring exposure or safety.
-- Configuration is locked/read-only by default. Unlock exposes direct source, scenario and threshold fields with validation; Save writes to this browser and locks the page again. There is no draft, staging or publish workflow. Shared multi-user writes remain unavailable because the static project has no authenticated backend write path.
+- Configuration is locked/read-only by default. It shows one shared Master RAG Thresholds table followed by a separate Regional Data Mapping table for the selected Region. Unlock enables separate direct edits to shared threshold wording and regional source/scenario mapping; Save writes to this browser and locks the page again. There is no draft, staging or publish workflow. No regional threshold override exists by default.
+- All eight sites × seven hazards were re-evaluated through the shared defaults. Notable changes are Pāpāmoa flooding Red → Amber because its point result is the shared 1% AEP band, and Ōhope liquefaction Amber → Grey because the published class is Undetermined.
 - Public property parcel sources are identified but not connected. No suitable public portfolio dataset for club lease boundaries was identified in this review.
 - Public GIS access does not itself confirm commercial redistribution rights. Retain attribution and confirm council/GNS rights before reproducing source geometry in a client-facing product.
 
@@ -71,10 +72,11 @@ OMANU POINT RESULTS
 
 The Mount Maunganui findings already verified for this pilot are preserved in the dashboard without re-querying or reclassification.
 
-V0.10.3 ARCHITECTURE ASSESSMENT
-- Answer: yes. Coromandel was added primarily through reusable region, site, source, scenario and RAG-rule configuration; no duplicate regional page or component tree was created.
-- Data/config additions: reusable Coromandel point-results for the three TCDC coastal-inundation scenarios, the Whangamatā 1% AEP stormwater layer and model extent, plus Coromandel-scoped RAG rules.
-- Shared-model changes: activeSites/currentRegion selection, region-aware evaluateRag filtering, regional report/marker roll-ups, and source applicability labels. These changes serve any configured region rather than encoding TCDC-specific UI behavior.
+V0.10.4 ARCHITECTURE ASSESSMENT
+- One Master RAG Thresholds table is the authoritative prototype colour policy for all Regions.
+- Regional Data Mapping separately records each Region's organisation, dataset, source link, scenario availability, testable master thresholds, coverage, check date and gap reason.
+- No regional threshold is created automatically and no source gap promotes an available scenario into a different colour.
+- Evaluation, portfolio matrices, cards, reports and exports use the shared policy; regional evidence remains traceable through the same reusable site → hazard → source → scenario → result model.
 - Shared UI refinements include the prominent Regional overview selector, summary-led portfolio hierarchy, compact future-ready RAG matrix, subordinate map-view controls, detailed evidence table, plain-English rule labels with optional technical details, explicit complete-evidence/no-rule wording, and a viewport-contained mobile legend.
 - Regional map fitting is driven by valid configured site coordinates with per-region fallback bounds. It runs at initial load and after an actual region change, not during ordinary portfolio re-renders, so manual pan and zoom are preserved.
-- Unresolved evidence gaps remain explicit: Tairua/Pāuanui have no settlement flood model; tsunami lacks a reproducible clubhouse-point class and configured threshold; coastal erosion lacks the site coast-section/pathway; landslide/liquefaction lack a reproducible point class and regional rule; active faults lacks an appropriately scaled proximity result and distance rule. These remain Grey and are not risk conclusions.
+- Unresolved evidence gaps remain explicit: Tairua/Pāuanui have no settlement flood model; Coromandel tsunami lacks a reproducible clubhouse-point zone result; coastal erosion lacks the site coast-section/pathway; several landslide/liquefaction results lack a reproducible point class; active faults lack high-resolution FAZ/FAA point results. These remain Grey and are not risk conclusions.
