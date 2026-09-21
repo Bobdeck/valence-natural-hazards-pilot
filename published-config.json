@@ -1,6 +1,6 @@
 {
-  "version": "0.10.2",
-  "lastChanged": "2026-09-20",
+  "version": "0.10.3",
+  "lastChanged": "2026-09-21",
   "regionId": "multi-region",
   "persistence": {
     "mode": "repository_seed_plus_direct_browser_edit",
@@ -29,8 +29,9 @@
     { "id": "bop-liquefaction-point-hit", "regionId": "bay-of-plenty", "hazardId": "liquefaction", "priority": 20, "rag": "amber", "when": { "queryStatusAny": ["hit"] } },
     { "id": "bop-liquefaction-covered-no-hit", "regionId": "bay-of-plenty", "hazardId": "liquefaction", "priority": 30, "rag": "green", "when": { "allConnectedNoHit": true, "minConnectedSources": 2, "requiresCompleteness": 100 } },
     { "id": "bop-tsunami-zone-hit", "regionId": "bay-of-plenty", "hazardId": "tsunami", "priority": 10, "rag": "red", "when": { "queryStatusAny": ["hit"] } },
+    { "id": "cor-whangamata-flood-covered-no-hit", "regionId": "coromandel", "hazardId": "flooding", "priority": 30, "rag": "green", "when": { "classificationIncludesAny": ["No mapped 1% AEP stormwater-flood intersection within model extent"], "requiresCompleteness": 100 } },
     { "id": "cor-coastal-inundation-point-hit", "regionId": "coromandel", "hazardId": "coastalInundation", "priority": 10, "rag": "red", "when": { "queryStatusAny": ["hit"] } },
-    { "id": "cor-coastal-inundation-covered-no-hit", "regionId": "coromandel", "hazardId": "coastalInundation", "priority": 30, "rag": "green", "when": { "allConnectedNoHit": true, "minConnectedSources": 2, "requiresCompleteness": 100 } },
+    { "id": "cor-coastal-inundation-covered-no-hit", "regionId": "coromandel", "hazardId": "coastalInundation", "priority": 30, "rag": "green", "when": { "allConnectedNoHit": true, "minConnectedSources": 3, "requiresCompleteness": 100 } },
     { "id": "cor-tsunami-model-hit", "regionId": "coromandel", "hazardId": "tsunami", "priority": 10, "rag": "red", "when": { "queryStatusAny": ["hit"] } },
     { "id": "evidence-gap-fallback", "regionId": "*", "hazardId": "*", "priority": 999, "rag": "grey", "when": { "always": true } }
   ],
@@ -38,6 +39,7 @@
     { "version": "0.9.0", "date": "2026-09-19", "summary": "Initial configurable RAG rules, objective completeness requirements and five-site published seed." },
     { "version": "0.10.0", "date": "2026-09-19", "summary": "Added Coromandel / TCDC as a configuration-led second-region proof with three verified SLSNZ locations and explicit evidence gaps." },
     { "version": "0.10.1", "date": "2026-09-20", "summary": "Added direct regional portfolio switching, corrected the three TCDC clubhouse points, connected TCDC coastal and stormwater coverage evidence, and made regional map fitting deterministic." },
-    { "version": "0.10.2", "date": "2026-09-20", "summary": "Consolidated region state, reconciled coastal and TCDC evidence, simplified direct configuration editing, and aligned site and hazard-filtered reports." }
+    { "version": "0.10.2", "date": "2026-09-20", "summary": "Consolidated region state, reconciled coastal and TCDC evidence, simplified direct configuration editing, and aligned site and hazard-filtered reports." },
+    { "version": "0.10.3", "date": "2026-09-21", "summary": "Activated defensible Coromandel point-screening results, made remaining Grey reasons precise, and fixed mobile hazard-card status pills." }
   ]
 }
