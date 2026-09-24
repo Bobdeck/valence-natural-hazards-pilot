@@ -22,7 +22,7 @@ module.exports=async function coastalMap(req,res){
     if(!printResponse.ok)throw new Error('ArcGIS renderer returned HTTP '+printResponse.status);
     const data=await printResponse.json(),output=(data.results||[]).map(result=>result.value).find(value=>value&&value.url);
     if(!output||!output.url)throw new Error((data.error&&data.error.message)||'ArcGIS renderer returned no image');
-    const imageResponse=await fetch(output.url,{headers:{'User-Agent':'Mozilla/5.0 SLS-Pilot/0.11.3','Accept':'image/png,*/*','Referer':'https://utility.arcgisonline.com/'}});if(!imageResponse.ok)throw new Error('Rendered image returned HTTP '+imageResponse.status);
+    let imageResponse;for(const delay of [0,750,1500,3000]){if(delay)await new Promise(resolve=>setTimeout(resolve,delay));imageResponse=await fetch(output.url,{headers:{'User-Agent':'Mozilla/5.0 SLS-Pilot/0.11.3','Accept':'image/png,*/*','Referer':'https://utility.arcgisonline.com/'}});if(imageResponse.ok)break}if(!imageResponse||!imageResponse.ok)throw new Error('Rendered image returned HTTP '+(imageResponse&&imageResponse.status));
     const image=Buffer.from(await imageResponse.arrayBuffer());
     res.setHeader('Content-Type','image/png');res.setHeader('Cache-Control','public, max-age=300, s-maxage=300');return res.status(200).send(image);
   }catch(error){console.error('Coastal map rendering failed',error);return res.status(502).json({error:'Connected coastal scenario layers could not be rendered.',detail:error&&error.message?error.message:'Unknown renderer error'})}
