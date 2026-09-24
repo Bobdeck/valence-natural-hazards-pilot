@@ -1,5 +1,5 @@
 VALENCE | SURF LIFE SAVING NATURAL HAZARDS PILOT
-Dashboard v0.11.1 | Reporting hardening | checked 25 September 2026 NZST
+Dashboard v0.11.2 | Pilot QA and polish | checked 25 September 2026 NZST
 
 HOSTED TEST INSTANCE
 The live review environment is https://valence-natural-hazards-pilot.vercel.app/ and deploys from Bobdeck/valence-natural-hazards-pilot main through the existing GitHub → Vercel connection. Open_Map.cmd remains a local fallback only.
@@ -28,7 +28,7 @@ Coromandel / Thames-Coromandel District
 Use the single Region selector in the blue Regional overview banner to switch between Bay of Plenty and Coromandel. The current app page is preserved; Site detail moves to the first valid site in the new region, and the portfolio map refits only when the Portfolio page is active. Select a site or matrix cell to drill into Site detail. The selected marker, site summary, hazard cards, evidence detail and map view update together.
 
 FILES
-index.html — Dashboard v0.11.1 multi-region Portfolio, Site Detail, Rules & Sources, Configuration and Reports views with static report maps, print-safe tables, provenance and v0.11 configuration history/rollback
+index.html — Dashboard v0.11.2 multi-region Portfolio, Site Detail, Rules & Sources, Configuration and Reports views with static report maps, print-safe tables, provenance and v0.11 configuration history/rollback
 published-config.json — project-owned RAG/completeness configuration seed, release history and empty audit-history baseline
 Open_Map.cmd — Windows launcher
 serve-map.ps1 — loopback-only local server using an available port
@@ -45,7 +45,7 @@ BASEMAPS AND OVERLAYS
 
 EVIDENCE RULES
 - Results are original source observations, not professional risk ratings.
-- Green is permitted only where a configured below-threshold rule has adequate connected evidence; it never means safe or cleared. NoData and evidence gaps remain Grey.
+- Green is permitted only where a configured below-threshold rule has adequate connected evidence; it never means safe or cleared. Missing point data and evidence gaps remain Grey.
 - Evidence is structured as site → hazard → source → scenario/model → screening rule → screening result → presentation state.
 - v0.11 retains the v0.10.5 evidence and RAG outcomes while adding durable, versioned configuration behaviour.
 - Coromandel clubhouse addresses come from official SLSNZ club pages. Google place pins were visually cross-checked against current satellite imagery before replacing the earlier general Club Finder coordinates.
@@ -74,12 +74,20 @@ OMANU POINT RESULTS
 
 The Mount Maunganui findings already verified for this pilot are preserved in the dashboard without re-querying or reclassification.
 
+V0.11.2 PILOT QA AND POLISH
+- The compact regional matrix now shows R, A, G and Gy abbreviations as well as colour, with an explicit accessible label on every result, so the outcome is not conveyed by colour alone.
+- The unused future overall-score column has been removed. The interface states directly that no overall score is calculated.
+- User-facing filters, rules and report warnings now describe missing point data in plain English while retaining original NoData values in source evidence and returned attributes.
+- Scrollable matrix, rules, configuration and report tables can receive keyboard focus. A consistent visible focus treatment now covers controls, links, evidence summaries and table regions; configuration validation updates are announced as status messages.
+- Region switching no longer repeats report and portfolio-marker rendering. Page, valid site, report context and map-fit behaviour remain preserved.
+- Mobile status pills, responsive table scrolling, map legends, static report maps and A4 landscape print rules were retained and regression-checked across both Regions.
+
 V0.11.1 REPORTING HARDENING
 - Individual Site Report remains fixed to one selected site and all seven hazards. It has no hazard selector.
 - Regional Report supports All hazards or one selected hazard. The summary matrix, evidence gaps, provenance appendix, completeness calculation and map marker status all use the same report scope.
 - Site and regional reports include a deterministic static Esri World Imagery export with verified clubhouse marker overlays. The report caption retains imagery attribution and states that parcel and lease boundaries are not shown.
 - The provenance appendix is a structured table with source organisation, dataset/layer, model/scenario, source link and screening rule, evidence/result, checked date/provenance and configuration version.
-- Report metadata shows report v0.11.1, generated UTC time, configuration version and exact scope. Downloaded report data carries the same report, site, region, hazard and configuration context.
+- Report metadata shows report v0.11.2, generated UTC time, configuration version and exact scope. Downloaded report data carries the same report, site, region, hazard and configuration context.
 - Print / Save PDF uses A4 landscape, repeated table headers, row-safe page breaks, printable map height, unclipped wrapping, a concise report footer and no dashboard controls or browser UI inside the report area.
 - TEST INSTANCE / NOT A SAFETY CLEARANCE and no-overall-score protections remain explicit. No external report service was added; printing uses the browser and static maps use the app's existing Esri provider.
 
