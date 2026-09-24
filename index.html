@@ -2012,7 +2012,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   function revealHazardDetail(){
     const panel=document.getElementById('hazardEvidencePanel'),heading=document.getElementById('hazardDetailTitle');
     if(!panel||!heading)return;
-    requestAnimationFrame(()=>{heading.focus({preventScroll:true});panel.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})});
+    setTimeout(()=>{heading.focus({preventScroll:true});panel.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})},60);
   }
   function switchHazard(id){selectedHazardId=id;renderHazardCards();renderEvidence();if(hazardLayerIds(id).length)showSelectedHazard();revealHazardDetail()}
   function switchSite(id){
