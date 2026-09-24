@@ -1987,6 +1987,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
     return URL.createObjectURL(await imagePromise);
   }
 
+  async function loadPrintOverlayWithRetry(spec){
+    try{return await loadPrintOverlay(spec)}catch(firstError){await new Promise(resolve=>setTimeout(resolve,1200));return loadPrintOverlay(spec)}
+  }
+
   function currentLayerIds(){
     return Object.entries(LAYERS).filter(([,spec])=>spec.regionId===currentSite().regionId&&(!spec.siteIds||spec.siteIds.includes(currentSite().id))&&visibleHazards.has(spec.hazard)).map(([id])=>id);
   }
@@ -2019,7 +2023,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         else if(spec.renderType==='feature'){
           const response=await fetch(featureQueryUrl(spec));if(!response.ok)throw new Error('source returned HTTP '+response.status);const geojson=await response.json();if(geojson.error)throw new Error(geojson.error.message||'source query failed');
           layer=L.geoJSON(geojson,{style:feature=>featureStyle(id,feature),interactive:false,pane:'overlayPane'});
-        }else if(spec.renderType==='print-image'){const url=await loadPrintOverlay(spec);if(refreshToken!==overlayRefreshToken){URL.revokeObjectURL(url);return}renderedOverlayUrls[id]=url;layer=L.imageOverlay(url,map.getBounds(),{opacity:spec.opacity,interactive:false,pane:'overlayPane'})}
+        }else if(spec.renderType==='print-image'){const url=await loadPrintOverlayWithRetry(spec);if(refreshToken!==overlayRefreshToken){URL.revokeObjectURL(url);return}renderedOverlayUrls[id]=url;layer=L.imageOverlay(url,map.getBounds(),{opacity:spec.opacity,interactive:false,pane:'overlayPane'})}
         if(refreshToken!==overlayRefreshToken)return;
         layer.addTo(map);renderedOverlays[id]=layer;overlayLoadState[id]={status:'loaded'};
       }catch(error){if(refreshToken===overlayRefreshToken)overlayLoadState[id]={status:'error',message:error&&error.message?error.message:'source request failed'}}
