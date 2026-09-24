@@ -1,5 +1,5 @@
 VALENCE | SURF LIFE SAVING NATURAL HAZARDS PILOT
-Dashboard v0.11 | Persistent configuration and audit history | checked 25 September 2026 NZST
+Dashboard v0.11.1 | Reporting hardening | checked 25 September 2026 NZST
 
 HOSTED TEST INSTANCE
 The live review environment is https://valence-natural-hazards-pilot.vercel.app/ and deploys from Bobdeck/valence-natural-hazards-pilot main through the existing GitHub → Vercel connection. Open_Map.cmd remains a local fallback only.
@@ -28,7 +28,7 @@ Coromandel / Thames-Coromandel District
 Use the single Region selector in the blue Regional overview banner to switch between Bay of Plenty and Coromandel. The current app page is preserved; Site detail moves to the first valid site in the new region, and the portfolio map refits only when the Portfolio page is active. Select a site or matrix cell to drill into Site detail. The selected marker, site summary, hazard cards, evidence detail and map view update together.
 
 FILES
-index.html — Dashboard v0.11 multi-region Portfolio, Site Detail, Rules & Sources, Configuration and Reports views with one shared prototype colour policy, separate regional source/scenario mapping, audited saves and rollback
+index.html — Dashboard v0.11.1 multi-region Portfolio, Site Detail, Rules & Sources, Configuration and Reports views with static report maps, print-safe tables, provenance and v0.11 configuration history/rollback
 published-config.json — project-owned RAG/completeness configuration seed, release history and empty audit-history baseline
 Open_Map.cmd — Windows launcher
 serve-map.ps1 — loopback-only local server using an available port
@@ -73,6 +73,15 @@ OMANU POINT RESULTS
 - Coastal erosion and coastal inundation: authoritative source found; scenario result not yet connected.
 
 The Mount Maunganui findings already verified for this pilot are preserved in the dashboard without re-querying or reclassification.
+
+V0.11.1 REPORTING HARDENING
+- Individual Site Report remains fixed to one selected site and all seven hazards. It has no hazard selector.
+- Regional Report supports All hazards or one selected hazard. The summary matrix, evidence gaps, provenance appendix, completeness calculation and map marker status all use the same report scope.
+- Site and regional reports include a deterministic static Esri World Imagery export with verified clubhouse marker overlays. The report caption retains imagery attribution and states that parcel and lease boundaries are not shown.
+- The provenance appendix is a structured table with source organisation, dataset/layer, model/scenario, source link and screening rule, evidence/result, checked date/provenance and configuration version.
+- Report metadata shows report v0.11.1, generated UTC time, configuration version and exact scope. Downloaded report data carries the same report, site, region, hazard and configuration context.
+- Print / Save PDF uses A4 landscape, repeated table headers, row-safe page breaks, printable map height, unclipped wrapping, a concise report footer and no dashboard controls or browser UI inside the report area.
+- TEST INSTANCE / NOT A SAFETY CLEARANCE and no-overall-score protections remain explicit. No external report service was added; printing uses the browser and static maps use the app's existing Esri provider.
 
 V0.11 PERSISTENT CONFIGURATION AND AUDIT HISTORY
 - The repository-owned published-config.json remains the clean project seed. The app automatically loads a newer saved configuration from the browser profile's durable local project store on startup.
