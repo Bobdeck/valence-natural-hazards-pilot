@@ -1,5 +1,5 @@
 VALENCE | SURF LIFE SAVING NATURAL HAZARDS PILOT
-Dashboard v0.10.5 | Coromandel spatial evidence activation | checked 22 September 2026 NZST
+Dashboard v0.11 | Persistent configuration and audit history | checked 25 September 2026 NZST
 
 HOSTED TEST INSTANCE
 The live review environment is https://valence-natural-hazards-pilot.vercel.app/ and deploys from Bobdeck/valence-natural-hazards-pilot main through the existing GitHub → Vercel connection. Open_Map.cmd remains a local fallback only.
@@ -28,8 +28,8 @@ Coromandel / Thames-Coromandel District
 Use the single Region selector in the blue Regional overview banner to switch between Bay of Plenty and Coromandel. The current app page is preserved; Site detail moves to the first valid site in the new region, and the portfolio map refits only when the Portfolio page is active. Select a site or matrix cell to drill into Site detail. The selected marker, site summary, hazard cards, evidence detail and map view update together.
 
 FILES
-index.html — Dashboard v0.10.5 multi-region Portfolio, Site Detail, Rules & Sources, Configuration and Reports views with one shared prototype colour policy and separate regional source/scenario mapping
-published-config.json — project-owned published RAG/completeness configuration seed and version record
+index.html — Dashboard v0.11 multi-region Portfolio, Site Detail, Rules & Sources, Configuration and Reports views with one shared prototype colour policy, separate regional source/scenario mapping, audited saves and rollback
+published-config.json — project-owned RAG/completeness configuration seed, release history and empty audit-history baseline
 Open_Map.cmd — Windows launcher
 serve-map.ps1 — loopback-only local server using an available port
 robots.txt — prevents search-engine crawling of the test instance
@@ -47,14 +47,14 @@ EVIDENCE RULES
 - Results are original source observations, not professional risk ratings.
 - Green is permitted only where a configured below-threshold rule has adequate connected evidence; it never means safe or cleared. NoData and evidence gaps remain Grey.
 - Evidence is structured as site → hazard → source → scenario/model → screening rule → screening result → presentation state.
-- v0.10.5 retains one shared prototype RAG policy and activates authoritative point-evaluable Coromandel evidence without changing Bay of Plenty results.
+- v0.11 retains the v0.10.5 evidence and RAG outcomes while adding durable, versioned configuration behaviour.
 - Coromandel clubhouse addresses come from official SLSNZ club pages. Google place pins were visually cross-checked against current satellite imagery before replacing the earlier general Club Finder coordinates.
 - The shared flooding policy is Red at 2% AEP / 1-in-50, Amber at 1% AEP / 1-in-100 when not Red, Green only where the escalation bands can be excluded with valid coverage, and Grey where the thresholds cannot be evaluated. Tairua and Whangamatā are Green because each point is outside an enclosing mapped 1% AEP extent within confirmed model coverage. Pāuanui remains Grey because no applicable local model covers the point.
 - WRC’s maximum-credible-event tsunami inundation zone intersects all three Coromandel clubhouse points, so Tsunami evaluates Red at each site under the shared mapped-zone rule.
 - WRC’s Liquefaction Level A polygons classify all three Coromandel clubhouse points as Possible, so Liquefaction evaluates Amber at each site under the shared category rule.
 - TCDC's public king-tide, 5% AEP and 1% AEP coastal-inundation vector layers were queried at all three verified clubhouse points. All three points are inside the service extent and none intersects the three scenario layers, so Coastal inundation evaluates Green under the configured complete-evidence rule; this is scenario-specific screening, not clearance.
 - TCDC’s coastal-erosion source is connected as published boundary-line geometry, but those lines do not encode which side is inside each current or later-horizon extent; Coastal erosion therefore remains Grey at all three sites. WRC/GNS landslide and active-fault line inventories likewise remain Grey because they do not supply the susceptibility polygons or high-resolution FAZ/FAA coverage required by the shared rules.
-- Configuration is locked/read-only by default. It shows one shared Master RAG Thresholds table followed by a separate Regional Data Mapping table for the selected Region. Unlock enables separate direct edits to shared threshold wording and regional source/scenario mapping; Save writes to this browser and locks the page again. There is no draft, staging or publish workflow. No regional threshold override exists by default.
+- Configuration is locked/read-only by default. It shows one shared Master RAG Thresholds table followed by a separate Regional Data Mapping table for the selected Region. Unlock enables direct edits; Save validates the full configuration, records field-level prior/new values plus an optional reason, writes a new version to the durable local project store, and locks the page again. Rollback restores the immediately previous saved values as another audited version. There is no draft, staging or publish workflow. No regional threshold override exists by default.
 - All eight sites × seven hazards were re-evaluated through the shared defaults. Notable changes are Pāpāmoa flooding Red → Amber because its point result is the shared 1% AEP band, and Ōhope liquefaction Amber → Grey because the published class is Undetermined.
 - Public property parcel sources are identified but not connected. No suitable public portfolio dataset for club lease boundaries was identified in this review.
 - Public GIS access does not itself confirm commercial redistribution rights. Retain attribution and confirm council/GNS rights before reproducing source geometry in a client-facing product.
@@ -73,6 +73,14 @@ OMANU POINT RESULTS
 - Coastal erosion and coastal inundation: authoritative source found; scenario result not yet connected.
 
 The Mount Maunganui findings already verified for this pilot are preserved in the dashboard without re-querying or reclassification.
+
+V0.11 PERSISTENT CONFIGURATION AND AUDIT HISTORY
+- The repository-owned published-config.json remains the clean project seed. The app automatically loads a newer saved configuration from the browser profile's durable local project store on startup.
+- Saved versions survive reloads and later browser sessions in the same profile. The static pilot has no authenticated shared multi-user write service, so a different browser or device starts from the repository seed.
+- Save validation requires all four Master RAG states, distinct rule wording, complete source/dataset/scenario fields, HTTPS source links, no unsafe clearance language, no regional redefinition of shared colour meaning, and no explicit threshold token unsupported by the shared rule or mapped scenario.
+- The read-only change history records version, UTC timestamp, scope, hazard, changed field, prior value, new value and the optional reason.
+- Rollback uses a clear confirmation, validates the stored target shape, restores the values immediately before the latest saved action, and records the rollback as a new version.
+- The shared Master RAG policy remains global. Regional Data Mapping remains separate and cannot create regional colour definitions.
 
 V0.10.5 COROMANDEL SPATIAL EVIDENCE
 - One Master RAG Thresholds table is the authoritative prototype colour policy for all Regions.
