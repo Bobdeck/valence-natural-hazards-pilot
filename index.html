@@ -1484,6 +1484,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   const visibleHazards=new Set(['tsunami']);
   const renderedOverlays={};
   const renderedOverlayUrls={};
+  const coastalOverlayCache=new Map();
   const overlayLoadState={};
   let overlayRefreshToken=0;
   const isLocalFile=window.location.protocol==='file:';
@@ -1977,9 +1978,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
 
   async function loadPrintOverlay(spec){
-    const webMap=printWebMap(spec),response=await fetch('/api/coastal-map',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({extent:webMap.mapOptions.extent,outputSize:webMap.exportOptions.outputSize})});
-    if(!response.ok){let message='renderer returned HTTP '+response.status;try{const data=await response.json();if(data.error)message=data.error}catch(error){}throw new Error(message)}
-    return URL.createObjectURL(await response.blob());
+    const webMap=printWebMap(spec),request={extent:webMap.mapOptions.extent,outputSize:webMap.exportOptions.outputSize},key=JSON.stringify([Object.values(request.extent).map(value=>typeof value==='number'?Math.round(value):value),request.outputSize]);
+    let imagePromise=coastalOverlayCache.get(key);
+    if(!imagePromise){
+      imagePromise=fetch('/api/coastal-map',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(request)}).then(async response=>{if(!response.ok){let message='renderer returned HTTP '+response.status;try{const data=await response.json();if(data.error)message=data.error;if(data.detail)message+=' ('+data.detail+')'}catch(error){}throw new Error(message)}return response.blob()}).catch(error=>{coastalOverlayCache.delete(key);throw error});
+      coastalOverlayCache.set(key,imagePromise);if(coastalOverlayCache.size>12)coastalOverlayCache.delete(coastalOverlayCache.keys().next().value);
+    }
+    return URL.createObjectURL(await imagePromise);
   }
 
   function currentLayerIds(){
