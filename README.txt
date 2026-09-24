@@ -1,5 +1,5 @@
 VALENCE | SURF LIFE SAVING NATURAL HAZARDS PILOT
-Dashboard v0.11.2 | Pilot QA and polish | checked 25 September 2026 NZST
+Dashboard v0.11.3 | Coromandel map layer activation | checked 25 September 2026 NZST
 
 HOSTED TEST INSTANCE
 The live review environment is https://valence-natural-hazards-pilot.vercel.app/ and deploys from Bobdeck/valence-natural-hazards-pilot main through the existing GitHub → Vercel connection. Open_Map.cmd remains a local fallback only.
@@ -28,7 +28,7 @@ Coromandel / Thames-Coromandel District
 Use the single Region selector in the blue Regional overview banner to switch between Bay of Plenty and Coromandel. The current app page is preserved; Site detail moves to the first valid site in the new region, and the portfolio map refits only when the Portfolio page is active. Select a site or matrix cell to drill into Site detail. The selected marker, site summary, hazard cards, evidence detail and map view update together.
 
 FILES
-index.html — Dashboard v0.11.2 multi-region Portfolio, Site Detail, Rules & Sources, Configuration and Reports views with static report maps, print-safe tables, provenance and v0.11 configuration history/rollback
+index.html — Dashboard v0.11.3 multi-region Portfolio, Site Detail, Rules & Sources, Configuration and Reports views with active Coromandel map layers, static report maps, print-safe tables, provenance and v0.11 configuration history/rollback
 published-config.json — project-owned RAG/completeness configuration seed, release history and empty audit-history baseline
 Open_Map.cmd — Windows launcher
 serve-map.ps1 — loopback-only local server using an available port
@@ -73,6 +73,15 @@ OMANU POINT RESULTS
 - Coastal erosion and coastal inundation: authoritative source found; scenario result not yet connected.
 
 The Mount Maunganui findings already verified for this pilot are preserved in the dashboard without re-querying or reclassification.
+
+V0.11.3 COROMANDEL MAP LAYER ACTIVATION
+- Coromandel Site Detail now draws live authoritative mapped services for maximum-credible tsunami inundation, WRC Liquefaction Level A, TCDC east-coast erosion hazard lines, and the applicable local flood model at Tairua or Whangamatā.
+- The coastal-inundation control renders the connected TCDC king-tide, 5% AEP and 1% AEP vector-tile scenarios through ArcGIS's projection-aware map renderer, preserving their published depth symbology over either dashboard basemap.
+- Pāuanui flooding is disabled because no applicable local model covers its clubhouse point. Landslide and active-fault controls are disabled because the connected line/inventory sources do not provide site-evaluable susceptibility or high-resolution FAZ/FAA coverage at clubhouse scale.
+- Disabled reasons are visible beside each control and exposed to assistive technology. On mobile, controls use full-width 44-pixel tap targets without horizontal overflow.
+- Active legends are source-specific and load-state aware. They show only active layers, remain independently closable, and distinguish source symbology from RAG screening colours.
+- Hazard visibility is preserved by hazard when moving between sites and Regions. The selected clubhouse marker is always brought above hazard overlays, and layer refreshes retain ordinary map pan and zoom behaviour.
+- Existing RAG results, Master RAG Thresholds, Regional Data Mapping, reports, evidence provenance, navigation, persistence and safety wording are unchanged.
 
 V0.11.2 PILOT QA AND POLISH
 - Coromandel Site Detail hazard cards now move directly to the selected hazard insight/evidence panel. The selected card exposes its pressed state to assistive technology, focus moves to the updated detail heading, and the no-map-layer message no longer obscures the evidence interaction.
