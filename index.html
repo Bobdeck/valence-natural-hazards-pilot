@@ -2014,7 +2014,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
     if(!panel||!heading)return;
     setTimeout(()=>{heading.focus({preventScroll:true});panel.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})},60);
   }
-  function switchHazard(id){selectedHazardId=id;renderHazardCards();renderEvidence();if(hazardLayerIds(id).length)showSelectedHazard();revealHazardDetail()}
+  function switchHazard(id){
+    if(!HAZARDS.some(hazard=>hazard.id===id))return;
+    selectedHazardId=id;
+    document.querySelectorAll('.hazard-card[data-hazard]').forEach(card=>{const selected=card.dataset.hazard===id;card.classList.toggle('active',selected);card.setAttribute('aria-pressed',String(selected))});
+    renderEvidence();if(hazardLayerIds(id).length)showSelectedHazard();revealHazardDetail();
+  }
   function switchSite(id){
     if(!SITES[id])return;
     selectedSiteId=id;const site=currentSite();
