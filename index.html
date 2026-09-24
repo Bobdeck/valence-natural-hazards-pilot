@@ -939,9 +939,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
       </section>
     </aside>
 
-    <section class="panel evidence-panel" aria-labelledby="hazardDetailTitle">
+    <section class="panel evidence-panel" id="hazardEvidencePanel" aria-labelledby="hazardDetailTitle">
       <div class="evidence-head">
-        <div><p class="eyebrow">Hazard detail</p><h2 id="hazardDetailTitle"></h2><p id="hazardDetailSummary"></p></div>
+        <div><p class="eyebrow">Hazard detail</p><h2 id="hazardDetailTitle" tabindex="-1"></h2><p id="hazardDetailSummary"></p></div>
         <span id="hazardDetailState" class="state"></span>
       </div>
       <div class="evidence-body" id="hazardEvidence"></div>
@@ -1982,7 +1982,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
   function renderHazardCards(){
     const site=currentSite();
-    document.getElementById('hazardCards').innerHTML=HAZARDS.map(spec=>{const hazard=site.hazards[spec.id],display=presentationState(spec,hazard);return '<button class="hazard-card status-'+display.key+' '+(spec.id===selectedHazardId?'active':'')+'" data-hazard="'+spec.id+'" aria-label="'+escapeHtml(spec.name+' · '+display.label)+'"><span class="hazard-icon" aria-hidden="true">'+HAZARD_ICONS[spec.id]+'</span><span class="hazard-name">'+escapeHtml(spec.name)+'</span><span class="hazard-status">'+escapeHtml(hazardStatusPill(display,hazard))+'</span><span class="hazard-blurb">'+escapeHtml(display.reason)+' · '+display.completeness.percent+'% data complete</span></button>'}).join('');
+    document.getElementById('hazardCards').innerHTML=HAZARDS.map(spec=>{const hazard=site.hazards[spec.id],display=presentationState(spec,hazard),selected=spec.id===selectedHazardId;return '<button type="button" class="hazard-card status-'+display.key+' '+(selected?'active':'')+'" data-hazard="'+spec.id+'" aria-label="'+escapeHtml(spec.name+' · '+display.label)+'" aria-pressed="'+String(selected)+'" aria-controls="hazardEvidencePanel"><span class="hazard-icon" aria-hidden="true">'+HAZARD_ICONS[spec.id]+'</span><span class="hazard-name">'+escapeHtml(spec.name)+'</span><span class="hazard-status">'+escapeHtml(hazardStatusPill(display,hazard))+'</span><span class="hazard-blurb">'+escapeHtml(display.reason)+' · '+display.completeness.percent+'% data complete</span></button>'}).join('');
   }
 
   function evidenceRow(label,value){return '<b>'+escapeHtml(label)+'</b><span>'+escapeHtml(value)+'</span>'}
@@ -2009,7 +2009,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
     ids.forEach(id=>visibleLayers.add(id));renderLayerToggles();refreshOverlays();toast('Selected hazard layers are visible on the map.');
   }
 
-  function switchHazard(id){selectedHazardId=id;renderHazardCards();renderEvidence();showSelectedHazard()}
+  function revealHazardDetail(){
+    const panel=document.getElementById('hazardEvidencePanel'),heading=document.getElementById('hazardDetailTitle');
+    if(!panel||!heading)return;
+    requestAnimationFrame(()=>{panel.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});heading.focus({preventScroll:true})});
+  }
+  function switchHazard(id){selectedHazardId=id;renderHazardCards();renderEvidence();if(hazardLayerIds(id).length)showSelectedHazard();revealHazardDetail()}
   function switchSite(id){
     if(!SITES[id])return;
     selectedSiteId=id;const site=currentSite();

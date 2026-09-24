@@ -75,6 +75,7 @@ OMANU POINT RESULTS
 The Mount Maunganui findings already verified for this pilot are preserved in the dashboard without re-querying or reclassification.
 
 V0.11.2 PILOT QA AND POLISH
+- Coromandel Site Detail hazard cards now move directly to the selected hazard insight/evidence panel. The selected card exposes its pressed state to assistive technology, focus moves to the updated detail heading, and the no-map-layer message no longer obscures the evidence interaction.
 - The compact regional matrix now shows R, A, G and Gy abbreviations as well as colour, with an explicit accessible label on every result, so the outcome is not conveyed by colour alone.
 - The unused future overall-score column has been removed. The interface states directly that no overall score is calculated.
 - User-facing filters, rules and report warnings now describe missing point data in plain English while retaining original NoData values in source evidence and returned attributes.
