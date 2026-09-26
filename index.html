@@ -1990,7 +1990,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
 
   function setDashboardView(view){
+    const priorView=selectedView;
     selectedView=['site','rules','config','reports'].includes(view)?view:'portfolio';
+    if(priorView!==selectedView)window.scrollTo({top:0,left:0,behavior:'auto'});
     const dashboard=document.querySelector('.dashboard');dashboard.classList.toggle('portfolio-mode',selectedView==='portfolio');dashboard.classList.toggle('rules-mode',selectedView==='rules');dashboard.classList.toggle('config-mode',selectedView==='config');dashboard.classList.toggle('reports-mode',selectedView==='reports');
     document.querySelectorAll('[data-view]').forEach(button=>{const active=button.dataset.view===selectedView;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))});
     const railSitePicker=document.getElementById('railSitePicker'),showSitePicker=selectedView==='site';railSitePicker.classList.toggle('active',showSitePicker);railSitePicker.setAttribute('aria-hidden',String(!showSitePicker));
